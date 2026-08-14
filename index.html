@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TaskFlow — Gestión de Tareas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── DESIGN TOKENS ─────────────────────────────────────── */
+    :root {
+      --bg:          #0f1117;
+      --surface:     #181c27;
+      --surface2:    #1e2336;
+      --border:      #2a3050;
+      --accent:      #6c63ff;
+      --accent-soft: rgba(108,99,255,.15);
+      --accent-glow: rgba(108,99,255,.35);
+      --success:     #22d4a0;
+      --warning:     #f5a623;
+      --danger:      #ff5c72;
+      --text:        #e8eaf0;
+      --text-muted:  #7b829e;
+      --radius:      10px;
+      --radius-lg:   16px;
+      --shadow:      0 4px 24px rgba(0,0,0,.4);
+      --font-display:'Space Grotesk', sans-serif;
+      --font-body:   'Inter', sans-serif;
+      --sidebar-w:   240px;
+      --transition:  .18s ease;
+    }
+
+    /* ── RESET ────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 15px; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    button { cursor: pointer; font-family: inherit; }
+    input, select, textarea { font-family: inherit; }
+    ul { list-style: none; }
+
+    /* ── UTILITIES ────────────────────────────────────────── */
+    .hidden   { display: none !important; }
+    .flex     { display: flex; }
+    .flex-col { flex-direction: column; }
+    .gap-1    { gap: .4rem; }
+    .gap-2    { gap: .8rem; }
+    .gap-3    { gap: 1.2rem; }
+    .items-center { align-items: center; }
+    .justify-between { justify-content: space-between; }
+    .mt-1 { margin-top: .4rem; }
+    .mt-2 { margin-top: .8rem; }
+    .mt-3 { margin-top: 1.2rem; }
+    .w-full { width: 100%; }
+    .text-muted { color: var(--text-muted); font-size: .85rem; }
+    .text-sm    { font-size: .85rem; }
+    .text-xs    { font-size: .75rem; }
+    .font-semibold { font-weight: 600; }
+    .badge {
+      display: inline-flex; align-items: center; gap: .3rem;
+      padding: .2rem .6rem; border-radius: 20px; font-size: .72rem;
+      font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+    }
+    .badge-admin   { background: var(--accent-soft); color: var(--accent); }
+    .badge-user    { background: rgba(34,212,160,.12); color: var(--success); }
+    .badge-pending { background: rgba(245,166,35,.12); color: var(--warning); }
+    .badge-done    { background: rgba(34,212,160,.12); color: var(--success); }
+
+    /* ── TOAST ────────────────────────────────────────────── */
+    #toast-container {
+      position: fixed; top: 1.2rem; right: 1.2rem;
+      z-index: 9999; display: flex; flex-direction: column; gap: .5rem;
+    }
+    .toast {
+      padding: .75rem 1.1rem; border-radius: var(--radius);
+      font-size: .875rem; font-weight: 500;
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      animation: slideIn .25s ease;
+      max-width: 320px;
+    }
+    .toast-success { background: rgba(34,212,160,.2); border: 1px solid rgba(34,212,160,.4); color: var(--success); }
+    .toast-error   { background: rgba(255,92,114,.2); border: 1px solid rgba(255,92,114,.4); color: var(--danger); }
+    .toast-info    { background: rgba(108,99,255,.2); border: 1px solid rgba(108,99,255,.4); color: var(--accent); }
+    @keyframes slideIn { from { opacity:0; transform: translateX(20px); } to { opacity:1; transform: none; } }
+
+    /* ── MODAL ────────────────────────────────────────────── */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.65);
+      backdrop-filter: blur(4px); z-index: 500;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1rem;
+    }
+    .modal {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 2rem;
+      width: 100%; max-width: 440px; box-shadow: var(--shadow);
+      animation: fadeUp .2s ease;
+    }
+    .modal h3 { font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 1.2rem; }
+    @keyframes fadeUp { from { opacity:0; transform: translateY(12px); } to { opacity:1; transform: none; } }
+
+    /* ── FORMS ────────────────────────────────────────────── */
+    .form-group { display: flex; flex-direction: column; gap: .4rem; }
+    .form-group label { font-size: .82rem; font-weight: 600; color: var(--text-muted); letter-spacing: .04em; text-transform: uppercase; }
+    .form-control {
+      background: var(--bg); border: 1px solid var(--border);
+      color: var(--text); border-radius: var(--radius);
+      padding: .65rem .9rem; font-size: .92rem;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      outline: none; width: 100%;
+    }
+    .form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .form-control::placeholder { color: var(--text-muted); }
+    textarea.form-control { resize: vertical; min-height: 90px; }
+
+    /* ── BUTTONS ──────────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: .45rem; padding: .62rem 1.2rem;
+      border-radius: var(--radius); font-size: .88rem;
+      font-weight: 600; border: none;
+      transition: all var(--transition); white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--accent); color: #fff;
+      box-shadow: 0 2px 12px var(--accent-glow);
+    }
+    .btn-primary:hover { filter: brightness(1.12); }
+    .btn-ghost {
+      background: transparent; color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { background: var(--surface2); color: var(--text); }
+    .btn-danger { background: rgba(255,92,114,.15); color: var(--danger); border: 1px solid rgba(255,92,114,.3); }
+    .btn-danger:hover { background: rgba(255,92,114,.25); }
+    .btn-success { background: rgba(34,212,160,.15); color: var(--success); border: 1px solid rgba(34,212,160,.3); }
+    .btn-success:hover { background: rgba(34,212,160,.25); }
+    .btn-sm { padding: .35rem .75rem; font-size: .8rem; }
+    .btn-icon { padding: .4rem; border-radius: 8px; }
+
+    /* ═══════════════════════════════════════════════════════ */
+    /*  LOGIN SCREEN                                          */
+    /* ═══════════════════════════════════════════════════════ */
+    #screen-login {
+      min-height: 100vh; display: flex;
+      align-items: center; justify-content: center;
+      padding: 1.5rem;
+      background: radial-gradient(ellipse at 20% 50%, rgba(108,99,255,.08) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 20%, rgba(34,212,160,.05) 0%, transparent 50%),
+                  var(--bg);
+    }
+    .login-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 2.5rem;
+      width: 100%; max-width: 400px; box-shadow: var(--shadow);
+    }
+    .login-logo {
+      font-family: var(--font-display); font-size: 1.6rem;
+      font-weight: 700; color: var(--text); margin-bottom: .3rem;
+    }
+    .login-logo span { color: var(--accent); }
+    .login-subtitle { color: var(--text-muted); font-size: .88rem; margin-bottom: 2rem; }
+    .login-divider {
+      display: flex; align-items: center; gap: .75rem;
+      margin: 1.2rem 0; color: var(--text-muted); font-size: .8rem;
+    }
+    .login-divider::before, .login-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    /* ═══════════════════════════════════════════════════════ */
+    /*  APP SHELL (sidebar + main)                           */
+    /* ═══════════════════════════════════════════════════════ */
+    #screen-app {
+      display: flex; min-height: 100vh;
+    }
+
+    /* ── SIDEBAR ──────────────────────────────────────────── */
+    .sidebar {
+      width: var(--sidebar-w); background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex; flex-direction: column;
+      position: fixed; top: 0; left: 0; bottom: 0;
+      z-index: 100;
+      transition: transform var(--transition);
+    }
+    .sidebar-header {
+      padding: 1.4rem 1.2rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-logo {
+      font-family: var(--font-display); font-size: 1.25rem;
+      font-weight: 700; color: var(--text);
+    }
+    .sidebar-logo span { color: var(--accent); }
+    .sidebar-nav { flex: 1; padding: 1rem .75rem; overflow-y: auto; }
+    .nav-section-label {
+      font-size: .68rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--text-muted);
+      padding: .6rem .5rem .3rem; margin-top: .75rem;
+    }
+    .nav-item {
+      display: flex; align-items: center; gap: .7rem;
+      padding: .6rem .75rem; border-radius: var(--radius);
+      color: var(--text-muted); font-size: .88rem; font-weight: 500;
+      cursor: pointer; transition: all var(--transition);
+      margin-bottom: .15rem;
+    }
+    .nav-item:hover { background: var(--surface2); color: var(--text); }
+    .nav-item.active { background: var(--accent-soft); color: var(--accent); }
+    .nav-item svg { width: 17px; height: 17px; flex-shrink: 0; }
+    .sidebar-footer {
+      padding: 1rem .75rem;
+      border-top: 1px solid var(--border);
+    }
+    .user-info {
+      display: flex; align-items: center; gap: .7rem;
+      padding: .5rem .75rem; border-radius: var(--radius);
+      margin-bottom: .6rem;
+    }
+    .avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--accent-soft); border: 2px solid var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: .85rem; color: var(--accent);
+      flex-shrink: 0;
+    }
+    .user-info-text { min-width: 0; }
+    .user-name { font-size: .88rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .user-role { font-size: .72rem; color: var(--text-muted); }
+
+    /* ── MAIN CONTENT ─────────────────────────────────────── */
+    .main-content {
+      margin-left: var(--sidebar-w);
+      flex: 1; padding: 2rem;
+      display: flex; flex-direction: column; gap: 1.5rem;
+      max-width: 100%;
+    }
+    .page-header {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .page-title {
+      font-family: var(--font-display); font-size: 1.5rem; font-weight: 700;
+    }
+    .page-subtitle { color: var(--text-muted); font-size: .88rem; margin-top: .15rem; }
+
+    /* ── PANELS ───────────────────────────────────────────── */
+    .panel {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 1.5rem;
+    }
+    .panel-title {
+      font-family: var(--font-display); font-size: 1rem; font-weight: 600;
+      margin-bottom: 1.2rem; display: flex; align-items: center; gap: .5rem;
+    }
+
+    /* ── STATS ROW ────────────────────────────────────────── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+    }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 1.2rem 1.4rem;
+      display: flex; flex-direction: column; gap: .3rem;
+    }
+    .stat-label { font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); }
+    .stat-value { font-family: var(--font-display); font-size: 2rem; font-weight: 700; }
+    .stat-card.accent .stat-value { color: var(--accent); }
+    .stat-card.success .stat-value { color: var(--success); }
+    .stat-card.warning .stat-value { color: var(--warning); }
+
+    /* ── TASK CARDS ───────────────────────────────────────── */
+    .tasks-list { display: flex; flex-direction: column; gap: .6rem; }
+    .task-card {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1rem 1.1rem;
+      display: flex; align-items: flex-start; gap: .9rem;
+      transition: border-color var(--transition);
+    }
+    .task-card:hover { border-color: var(--accent); }
+    .task-card.done { opacity: .55; }
+    .task-checkbox {
+      width: 20px; height: 20px; border-radius: 6px;
+      border: 2px solid var(--border); background: transparent;
+      flex-shrink: 0; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all var(--transition); margin-top: .1rem;
+    }
+    .task-checkbox:hover { border-color: var(--accent); }
+    .task-checkbox.checked { background: var(--success); border-color: var(--success); }
+    .task-checkbox.checked::after { content: '✓'; color: #000; font-size: .75rem; font-weight: 700; }
+    .task-body { flex: 1; min-width: 0; }
+    .task-title { font-weight: 600; font-size: .92rem; }
+    .task-card.done .task-title { text-decoration: line-through; color: var(--text-muted); }
+    .task-meta { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; margin-top: .3rem; }
+    .task-assignee { font-size: .78rem; color: var(--text-muted); }
+    .task-actions { display: flex; gap: .35rem; flex-shrink: 0; }
+    .task-desc { font-size: .82rem; color: var(--text-muted); margin-top: .25rem; }
+
+    /* ── USER TABLE ───────────────────────────────────────── */
+    .table-wrap { overflow-x: auto; border-radius: var(--radius); }
+    table { width: 100%; border-collapse: collapse; font-size: .875rem; }
+    thead tr { border-bottom: 2px solid var(--border); }
+    th { padding: .7rem .9rem; text-align: left; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-muted); }
+    td { padding: .75rem .9rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--surface2); }
+
+    /* ── EMPTY STATE ──────────────────────────────────────── */
+    .empty-state {
+      text-align: center; padding: 3rem 1rem;
+      color: var(--text-muted);
+    }
+    .empty-state svg { width: 48px; height: 48px; opacity: .3; margin-bottom: .75rem; }
+    .empty-state p { font-size: .88rem; }
+
+    /* ── SECTION VIEWS ────────────────────────────────────── */
+    .view { display: none; flex-direction: column; gap: 1.5rem; }
+    .view.active { display: flex; }
+
+    /* ── PASSWORD RESET LINK ──────────────────────────────── */
+    .forgot-link {
+      font-size: .82rem; color: var(--text-muted);
+      background: none; border: none; padding: 0;
+      cursor: pointer; text-align: left;
+    }
+    .forgot-link:hover { color: var(--accent); }
+
+    /* ── MOBILE TOGGLE ────────────────────────────────────── */
+    .mobile-toggle {
+      display: none; position: fixed; top: 1rem; left: 1rem;
+      z-index: 200; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: .5rem; color: var(--text);
+    }
+    .sidebar-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,.5); z-index: 99;
+    }
+
+    /* ── FILTER BAR ───────────────────────────────────────── */
+    .filter-bar {
+      display: flex; align-items: center; gap: .75rem; flex-wrap: wrap;
+    }
+    .filter-bar .form-control {
+      max-width: 220px; padding: .5rem .8rem; font-size: .85rem;
+    }
+
+    /* ── RESPONSIVE ───────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: none; }
+      .sidebar-overlay.open { display: block; }
+      .main-content { margin-left: 0; padding: 1.2rem; padding-top: 4rem; }
+      .mobile-toggle { display: flex; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ TOAST CONTAINER ═══════════════ -->
+<div id="toast-container"></div>
+
+<!-- ═══════════════ SCREEN: LOGIN ═══════════════════ -->
+<div id="screen-login">
+  <div class="login-card">
+    <div class="login-logo">Task<span>Flow</span></div>
+    <p class="login-subtitle">Inicia sesión para gestionar tus tareas</p>
+
+    <form id="login-form" autocomplete="on" style="display:flex;flex-direction:column;gap:1rem;">
+      <div class="form-group">
+        <label for="login-email">Correo electrónico</label>
+        <input id="login-email" type="email" class="form-control" placeholder="tu@correo.com" required autocomplete="username"/>
+      </div>
+      <div class="form-group">
+        <label for="login-password">Contraseña</label>
+        <input id="login-password" type="password" class="form-control" placeholder="••••••••" required autocomplete="current-password"/>
+      </div>
+      <button type="submit" id="btn-login" class="btn btn-primary w-full mt-1">Iniciar sesión</button>
+    </form>
+
+    <div class="login-divider">¿Olvidaste tu contraseña?</div>
+    <button id="btn-forgot" class="btn btn-ghost w-full">Enviar enlace de recuperación</button>
+  </div>
+</div>
+
+<!-- ═══════════════ SCREEN: APP ═════════════════════ -->
+<div id="screen-app" class="hidden">
+
+  <!-- Mobile toggle -->
+  <button class="mobile-toggle" id="mobile-toggle" aria-label="Menú">
+    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">Task<span>Flow</span></div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Principal</div>
+      <div class="nav-item active" data-view="view-tasks">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+        </svg>
+        Mis Tareas
+      </div>
+      <div class="nav-item hidden" id="nav-all-tasks" data-view="view-all-tasks">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+        </svg>
+        Todas las Tareas
+      </div>
+
+      <div class="nav-section-label admin-only hidden" id="nav-section-admin">Admin</div>
+      <div class="nav-item hidden admin-only" id="nav-users" data-view="view-users">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+        </svg>
+        Usuarios
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="avatar" id="sidebar-avatar">?</div>
+        <div class="user-info-text">
+          <div class="user-name" id="sidebar-name">—</div>
+          <div class="user-role" id="sidebar-role">—</div>
+        </div>
+      </div>
+      <button id="btn-logout" class="btn btn-ghost w-full btn-sm">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+        Cerrar sesión
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <!-- ── VIEW: MIS TAREAS ────────────────────────── -->
+    <div class="view active" id="view-tasks">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Mis Tareas</h1>
+          <p class="page-subtitle" id="tasks-subtitle">Cargando…</p>
+        </div>
+        <button class="btn btn-primary" id="btn-new-task">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nueva tarea
+        </button>
+      </div>
+
+      <div class="stats-row" id="my-stats-row">
+        <div class="stat-card accent"><span class="stat-label">Total</span><span class="stat-value" id="stat-total">0</span></div>
+        <div class="stat-card warning"><span class="stat-label">Pendientes</span><span class="stat-value" id="stat-pending">0</span></div>
+        <div class="stat-card success"><span class="stat-label">Completadas</span><span class="stat-value" id="stat-done">0</span></div>
+      </div>
+
+      <div class="panel">
+        <div class="tasks-list" id="my-tasks-list">
+          <div class="empty-state">
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+            <p>No tienes tareas aún. ¡Crea una!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── VIEW: TODAS LAS TAREAS (ADMIN) ─────────── -->
+    <div class="view" id="view-all-tasks">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Todas las Tareas</h1>
+          <p class="page-subtitle">Vista global del equipo</p>
+        </div>
+        <button class="btn btn-primary" id="btn-new-task-admin">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Asignar tarea
+        </button>
+      </div>
+
+      <div class="filter-bar">
+        <select id="filter-status" class="form-control">
+          <option value="">Todos los estados</option>
+          <option value="pending">Pendientes</option>
+          <option value="done">Completadas</option>
+        </select>
+        <select id="filter-user" class="form-control">
+          <option value="">Todos los usuarios</option>
+        </select>
+      </div>
+
+      <div class="panel">
+        <div class="tasks-list" id="all-tasks-list">
+          <div class="empty-state">
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+            <p>No hay tareas en el sistema.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── VIEW: USUARIOS (ADMIN) ─────────────────── -->
+    <div class="view" id="view-users">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Gestión de Usuarios</h1>
+          <p class="page-subtitle">Administra los miembros del equipo</p>
+        </div>
+        <button class="btn btn-primary" id="btn-new-user">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nuevo usuario
+        </button>
+      </div>
+
+      <div class="panel">
+        <div class="table-wrap">
+          <table id="users-table">
+            <thead>
+              <tr>
+                <th>Usuario</th>
+                <th>Correo</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="users-tbody">
+              <tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--text-muted);">Cargando…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ═══════════════ MODALS ═══════════════════════════ -->
+
+<!-- Modal: Crear / Editar Tarea -->
+<div class="modal-overlay hidden" id="modal-task">
+  <div class="modal">
+    <h3 id="modal-task-title">Nueva tarea</h3>
+    <div style="display:flex;flex-direction:column;gap:1rem;">
+      <input type="hidden" id="task-edit-id"/>
+      <div class="form-group">
+        <label>Título</label>
+        <input id="task-title-input" type="text" class="form-control" placeholder="Ej: Revisar propuesta de cliente" maxlength="120"/>
+      </div>
+      <div class="form-group">
+        <label>Descripción (opcional)</label>
+        <textarea id="task-desc-input" class="form-control" placeholder="Detalles adicionales…"></textarea>
+      </div>
+      <div class="form-group hidden" id="task-assignee-group">
+        <label>Asignar a</label>
+        <select id="task-assignee-input" class="form-control">
+          <option value="">Seleccionar usuario…</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:.75rem;justify-content:flex-end;margin-top:.5rem;">
+        <button class="btn btn-ghost" id="btn-cancel-task">Cancelar</button>
+        <button class="btn btn-primary" id="btn-save-task">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Crear Usuario -->
+<div class="modal-overlay hidden" id="modal-user">
+  <div class="modal">
+    <h3>Registrar nuevo usuario</h3>
+    <p class="text-muted mt-1" style="margin-bottom:1.2rem;">La sesión del administrador se mantendrá activa.</p>
+    <div style="display:flex;flex-direction:column;gap:1rem;">
+      <div class="form-group">
+        <label>Nombre completo</label>
+        <input id="new-user-name" type="text" class="form-control" placeholder="Nombre Apellido"/>
+      </div>
+      <div class="form-group">
+        <label>Correo electrónico</label>
+        <input id="new-user-email" type="email" class="form-control" placeholder="usuario@correo.com"/>
+      </div>
+      <div class="form-group">
+        <label>Contraseña temporal</label>
+        <input id="new-user-pass" type="password" class="form-control" placeholder="Mínimo 6 caracteres"/>
+      </div>
+      <div class="form-group">
+        <label>Rol</label>
+        <select id="new-user-role" class="form-control">
+          <option value="user">Usuario</option>
+          <option value="admin">Administrador</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:.75rem;justify-content:flex-end;margin-top:.5rem;">
+        <button class="btn btn-ghost" id="btn-cancel-user">Cancelar</button>
+        <button class="btn btn-primary" id="btn-save-user">Crear usuario</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Recuperar contraseña -->
+<div class="modal-overlay hidden" id="modal-forgot">
+  <div class="modal">
+    <h3>Recuperar contraseña</h3>
+    <p class="text-muted mt-1" style="margin-bottom:1.2rem;">Introduce tu correo y recibirás un enlace para restablecer tu contraseña.</p>
+    <div style="display:flex;flex-direction:column;gap:1rem;">
+      <div class="form-group">
+        <label>Correo electrónico</label>
+        <input id="forgot-email-input" type="email" class="form-control" placeholder="tu@correo.com"/>
+      </div>
+      <div style="display:flex;gap:.75rem;justify-content:flex-end;margin-top:.5rem;">
+        <button class="btn btn-ghost" id="btn-cancel-forgot">Cancelar</button>
+        <button class="btn btn-primary" id="btn-send-reset">Enviar enlace</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Confirmar eliminación de usuario -->
+<div class="modal-overlay hidden" id="modal-delete-user">
+  <div class="modal">
+    <h3>Desactivar usuario</h3>
+    <p class="text-muted mt-1" style="margin-bottom:1.2rem;">
+      Se marcará al usuario como <strong>inactivo</strong> en Firestore y no podrá acceder al sistema.<br/>
+      <span style="font-size:.8rem;color:var(--warning);">⚠ La eliminación completa de Auth requiere un Cloud Function con Admin SDK.</span>
+    </p>
+    <input type="hidden" id="delete-user-id"/>
+    <div style="display:flex;gap:.75rem;justify-content:flex-end;">
+      <button class="btn btn-ghost" id="btn-cancel-delete">Cancelar</button>
+      <button class="btn btn-danger" id="btn-confirm-delete">Desactivar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ FIREBASE LOGIC ═══════════════════ -->
+<script type="module">
+import { initializeApp }            from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+import { getAnalytics }             from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  sendPasswordResetEmail,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+import {
+  getFirestore,
+  collection, doc, getDoc, getDocs, setDoc, addDoc, updateDoc,
+  query, where, orderBy, onSnapshot, serverTimestamp, deleteDoc,
+} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+/* ── CONFIG ──────────────────────────────────────────────── */
+const firebaseConfig = {
+  apiKey:            "AIzaSyCdeeINqpJu7rOD_WdXAQ1fluyiXfK_jQs",
+  authDomain:        "consultorasistente.firebaseapp.com",
+  projectId:         "consultorasistente",
+  storageBucket:     "consultorasistente.firebasestorage.app",
+  messagingSenderId: "758138650708",
+  appId:             "1:758138650708:web:f5ab8ceaefc4d503956dc1",
+  measurementId:     "G-PF5PFSGNJ9",
+};
+const app       = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const auth      = getAuth(app);
+const db        = getFirestore(app);
+
+/* ── ESTADO GLOBAL ───────────────────────────────────────── */
+let currentUser   = null;   // objeto { uid, email, displayName, role }
+let allUsersCache = [];     // caché de usuarios (para selects y tabla)
+let tasksUnsub    = null;   // unsubscribe de la escucha en tiempo real de tareas
+
+/* ═════════════════════════════════════════════════════════ */
+/*  UTILIDADES UI                                           */
+/* ═════════════════════════════════════════════════════════ */
+
+function toast(msg, type = 'info') {
+  const el = document.createElement('div');
+  el.className = `toast toast-${type}`;
+  el.textContent = msg;
+  document.getElementById('toast-container').appendChild(el);
+  setTimeout(() => el.remove(), 3500);
+}
+
+function showScreen(id) {
+  ['screen-login', 'screen-app'].forEach(s =>
+    document.getElementById(s).classList.toggle('hidden', s !== id)
+  );
+}
+
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const view = document.getElementById(id);
+  if (view) view.classList.add('active');
+  const navItem = document.querySelector(`[data-view="${id}"]`);
+  if (navItem) navItem.classList.add('active');
+  closeSidebar();
+}
+
+function openModal(id)  { document.getElementById(id).classList.remove('hidden'); }
+function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+/* ── SIDEBAR MOBILE ──────────────────────────────────────── */
+function openSidebar()  {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebar-overlay').classList.add('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+}
+
+document.getElementById('mobile-toggle').addEventListener('click', openSidebar);
+document.getElementById('sidebar-overlay').addEventListener('click', closeSidebar);
+
+/* ── NAVEGACIÓN ──────────────────────────────────────────── */
+document.querySelectorAll('.nav-item[data-view]').forEach(item => {
+  item.addEventListener('click', () => showView(item.dataset.view));
+});
+
+/* ═════════════════════════════════════════════════════════ */
+/*  AUTH                                                    */
+/* ═════════════════════════════════════════════════════════ */
+
+/* Login */
+document.getElementById('login-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const email = document.getElementById('login-email').value.trim();
+  const pass  = document.getElementById('login-password').value;
+  const btn   = document.getElementById('btn-login');
+  btn.disabled = true; btn.textContent = 'Iniciando…';
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+  } catch (err) {
+    toast(friendlyAuthError(err.code), 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Iniciar sesión';
+  }
+});
+
+/* Logout */
+document.getElementById('btn-logout').addEventListener('click', async () => {
+  if (tasksUnsub) { tasksUnsub(); tasksUnsub = null; }
+  await signOut(auth);
+});
+
+/* Forgot password — abre modal */
+document.getElementById('btn-forgot').addEventListener('click', () => {
+  document.getElementById('forgot-email-input').value =
+    document.getElementById('login-email').value;
+  openModal('modal-forgot');
+});
+document.getElementById('btn-cancel-forgot').addEventListener('click', () => closeModal('modal-forgot'));
+document.getElementById('btn-send-reset').addEventListener('click', async () => {
+  const email = document.getElementById('forgot-email-input').value.trim();
+  if (!email) { toast('Introduce un correo', 'error'); return; }
+  try {
+    await sendPasswordResetEmail(auth, email);
+    toast('Enlace enviado. Revisa tu bandeja.', 'success');
+    closeModal('modal-forgot');
+  } catch (err) {
+    toast(friendlyAuthError(err.code), 'error');
+  }
+});
+
+/* Auth state observer — punto central de la app */
+onAuthStateChanged(auth, async user => {
+  if (!user) {
+    currentUser = null;
+    showScreen('screen-login');
+    return;
+  }
+  /* Cargar perfil desde Firestore */
+  const snap = await getDoc(doc(db, 'users', user.uid));
+  if (!snap.exists()) {
+    /* Perfil no encontrado: puede ser primer admin — crear perfil básico */
+    await setDoc(doc(db, 'users', user.uid), {
+      displayName: user.displayName || user.email.split('@')[0],
+      email:       user.email,
+      role:        'user',
+      active:      true,
+      createdAt:   serverTimestamp(),
+    });
+  }
+  const profile = snap.exists() ? snap.data() : { role: 'user', displayName: user.email };
+
+  /* Verificar que el usuario esté activo */
+  if (profile.active === false) {
+    toast('Tu cuenta ha sido desactivada. Contacta al administrador.', 'error');
+    await signOut(auth);
+    return;
+  }
+
+  currentUser = { uid: user.uid, email: user.email, ...profile };
+  initApp();
+});
+
+/* ═════════════════════════════════════════════════════════ */
+/*  INIT APP                                                */
+/* ═════════════════════════════════════════════════════════ */
+async function initApp() {
+  showScreen('screen-app');
+  const isAdmin = currentUser.role === 'admin';
+
+  /* Sidebar info */
+  const initials = (currentUser.displayName || currentUser.email)
+    .split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('sidebar-avatar').textContent = initials;
+  document.getElementById('sidebar-name').textContent = currentUser.displayName || currentUser.email;
+  document.getElementById('sidebar-role').textContent = isAdmin ? '👑 Administrador' : '👤 Usuario';
+
+  /* Mostrar/ocultar elementos según rol */
+  document.querySelectorAll('.admin-only').forEach(el => el.classList.toggle('hidden', !isAdmin));
+  document.getElementById('nav-all-tasks').classList.toggle('hidden', !isAdmin);
+  document.getElementById('task-assignee-group').classList.toggle('hidden', !isAdmin);
+
+  /* Cargar usuarios si es admin */
+  if (isAdmin) {
+    await loadAllUsers();
+  }
+
+  /* Suscribir a tareas propias */
+  subscribeToMyTasks();
+  showView('view-tasks');
+}
+
+/* ═════════════════════════════════════════════════════════ */
+/*  USUARIOS                                                */
+/* ═════════════════════════════════════════════════════════ */
+
+async function loadAllUsers() {
+  const snap = await getDocs(collection(db, 'users'));
+  allUsersCache = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderUsersTable();
+  populateUserSelects();
+}
+
+function renderUsersTable() {
+  const tbody = document.getElementById('users-tbody');
+  if (!allUsersCache.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--text-muted);">No hay usuarios registrados.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = allUsersCache.map(u => `
+    <tr>
+      <td>
+        <div style="display:flex;align-items:center;gap:.6rem;">
+          <div class="avatar" style="width:28px;height:28px;font-size:.72rem;">
+            ${(u.displayName||u.email||'?').slice(0,2).toUpperCase()}
+          </div>
+          <span class="font-semibold">${u.displayName || '—'}</span>
+        </div>
+      </td>
+      <td class="text-muted">${u.email}</td>
+      <td><span class="badge ${u.role === 'admin' ? 'badge-admin' : 'badge-user'}">${u.role === 'admin' ? '👑 Admin' : '👤 Usuario'}</span></td>
+      <td><span class="badge ${u.active !== false ? 'badge-done' : 'badge-pending'}">${u.active !== false ? 'Activo' : 'Inactivo'}</span></td>
+      <td>
+        ${u.id !== currentUser.uid ? `
+          <button class="btn btn-danger btn-sm btn-icon" onclick="window._disableUser('${u.id}')">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+            </svg>
+          </button>
+        ` : '<span class="text-xs text-muted">Tú</span>'}
+      </td>
+    </tr>
+  `).join('');
+}
+
+function populateUserSelects() {
+  /* Select en modal de tarea */
+  const sel = document.getElementById('task-assignee-input');
+  sel.innerHTML = '<option value="">Seleccionar usuario…</option>' +
+    allUsersCache.filter(u => u.active !== false).map(u =>
+      `<option value="${u.id}">${u.displayName || u.email} (${u.role})</option>`
+    ).join('');
+
+  /* Select en filtro de todas las tareas */
+  const filterSel = document.getElementById('filter-user');
+  filterSel.innerHTML = '<option value="">Todos los usuarios</option>' +
+    allUsersCache.map(u =>
+      `<option value="${u.id}">${u.displayName || u.email}</option>`
+    ).join('');
+}
+
+/* Exponer a onclick inline */
+window._disableUser = (uid) => {
+  document.getElementById('delete-user-id').value = uid;
+  openModal('modal-delete-user');
+};
+
+/* Botón abrir modal nuevo usuario */
+document.getElementById('btn-new-user').addEventListener('click', () => {
+  document.getElementById('new-user-name').value  = '';
+  document.getElementById('new-user-email').value = '';
+  document.getElementById('new-user-pass').value  = '';
+  document.getElementById('new-user-role').value  = 'user';
+  openModal('modal-user');
+});
+document.getElementById('btn-cancel-user').addEventListener('click', () => closeModal('modal-user'));
+
+/*
+ * ─── CLAVE: Crear usuario sin cerrar sesión del admin ──────────────────────
+ * Usamos una segunda instancia de FirebaseApp solo para registrar al nuevo
+ * usuario. Esto evita que createUserWithEmailAndPassword() cambie el estado
+ * de autenticación de la app principal.
+ */
+document.getElementById('btn-save-user').addEventListener('click', async () => {
+  const name  = document.getElementById('new-user-name').value.trim();
+  const email = document.getElementById('new-user-email').value.trim();
+  const pass  = document.getElementById('new-user-pass').value;
+  const role  = document.getElementById('new-user-role').value;
+
+  if (!name || !email || !pass) { toast('Completa todos los campos', 'error'); return; }
+  if (pass.length < 6)          { toast('La contraseña debe tener al menos 6 caracteres', 'error'); return; }
+
+  const btn = document.getElementById('btn-save-user');
+  btn.disabled = true; btn.textContent = 'Creando…';
+
+  try {
+    /* Segunda instancia de Firebase App para no desplazar la sesión del admin */
+    const { initializeApp: initApp2 }                             = await import("https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js");
+    const { getAuth: getAuth2, createUserWithEmailAndPassword: createUser2, updateProfile: updateProfile2, signOut: signOut2 }
+          = await import("https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js");
+
+    const secondaryApp  = initApp2(firebaseConfig, `secondary-${Date.now()}`);
+    const secondaryAuth = getAuth2(secondaryApp);
+
+    const cred = await createUser2(secondaryAuth, email, pass);
+    await updateProfile2(cred.user, { displayName: name });
+
+    /* Guardar perfil en Firestore */
+    await setDoc(doc(db, 'users', cred.user.uid), {
+      displayName: name,
+      email,
+      role,
+      active:    true,
+      createdAt: serverTimestamp(),
+      createdBy: currentUser.uid,
+    });
+
+    /* Cerrar sesión en la app secundaria y eliminarla */
+    await signOut2(secondaryAuth);
+    await secondaryApp.delete();
+
+    toast(`Usuario ${name} creado correctamente.`, 'success');
+    closeModal('modal-user');
+    await loadAllUsers();
+  } catch (err) {
+    toast(friendlyAuthError(err.code) || err.message, 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Crear usuario';
+  }
+});
+
+/* Confirmar desactivar usuario */
+document.getElementById('btn-cancel-delete').addEventListener('click', () => closeModal('modal-delete-user'));
+document.getElementById('btn-confirm-delete').addEventListener('click', async () => {
+  const uid = document.getElementById('delete-user-id').value;
+  if (!uid) return;
+  try {
+    await updateDoc(doc(db, 'users', uid), { active: false });
+    toast('Usuario desactivado.', 'success');
+    closeModal('modal-delete-user');
+    await loadAllUsers();
+  } catch (err) {
+    toast('Error al desactivar: ' + err.message, 'error');
+  }
+});
+
+/* ═════════════════════════════════════════════════════════ */
+/*  TAREAS                                                  */
+/* ═════════════════════════════════════════════════════════ */
+
+function subscribeToMyTasks() {
+  if (tasksUnsub) tasksUnsub();
+
+  const q = query(
+    collection(db, 'tasks'),
+    where('assignedTo', '==', currentUser.uid),
+    orderBy('createdAt', 'desc')
+  );
+
+  tasksUnsub = onSnapshot(q, snap => {
+    const tasks = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderMyTasks(tasks);
+  }, err => {
+    console.error('tasks snapshot error', err);
+    toast('Error al cargar tareas: ' + err.message, 'error');
+  });
+}
+
+function renderMyTasks(tasks) {
+  const list    = document.getElementById('my-tasks-list');
+  const total   = tasks.length;
+  const done    = tasks.filter(t => t.status === 'done').length;
+  const pending = total - done;
+
+  document.getElementById('stat-total').textContent   = total;
+  document.getElementById('stat-done').textContent    = done;
+  document.getElementById('stat-pending').textContent = pending;
+  document.getElementById('tasks-subtitle').textContent =
+    `${pending} pendiente${pending !== 1 ? 's' : ''} · ${done} completada${done !== 1 ? 's' : ''}`;
+
+  if (!tasks.length) {
+    list.innerHTML = `<div class="empty-state">
+      <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+      <p>No tienes tareas aún. ¡Crea una!</p></div>`;
+    return;
+  }
+  list.innerHTML = tasks.map(t => renderTaskCard(t, false)).join('');
+  attachTaskEvents(list);
+}
+
+async function loadAllTasksAdmin() {
+  const filterStatus = document.getElementById('filter-status').value;
+  const filterUser   = document.getElementById('filter-user').value;
+
+  let q = query(collection(db, 'tasks'), orderBy('createdAt', 'desc'));
+  /* Firestore no permite múltiples where en campos diferentes sin índice compuesto;
+     filtramos uno en BD y el otro en memoria */
+  if (filterUser)   q = query(collection(db, 'tasks'), where('assignedTo', '==', filterUser), orderBy('createdAt', 'desc'));
+  if (filterStatus) q = query(collection(db, 'tasks'), where('status', '==', filterStatus),   orderBy('createdAt', 'desc'));
+
+  try {
+    const snap  = await getDocs(q);
+    let tasks = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    /* Segundo filtro en memoria si ambos activos */
+    if (filterUser   && filterStatus) tasks = tasks.filter(t => t.status === filterStatus);
+    renderAllTasks(tasks);
+  } catch (err) {
+    toast('Error al cargar tareas: ' + err.message, 'error');
+  }
+}
+
+function renderAllTasks(tasks) {
+  const list = document.getElementById('all-tasks-list');
+  if (!tasks.length) {
+    list.innerHTML = `<div class="empty-state">
+      <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+      <p>No hay tareas que coincidan.</p></div>`;
+    return;
+  }
+  list.innerHTML = tasks.map(t => renderTaskCard(t, true)).join('');
+  attachTaskEvents(list);
+}
+
+function renderTaskCard(t, showAssignee) {
+  const isDone    = t.status === 'done';
+  const assignee  = showAssignee
+    ? (allUsersCache.find(u => u.id === t.assignedTo)?.displayName || t.assignedToEmail || t.assignedTo || '—')
+    : '';
+  return `
+  <div class="task-card ${isDone ? 'done' : ''}" data-id="${t.id}">
+    <div class="task-checkbox ${isDone ? 'checked' : ''}" data-toggle="${t.id}" title="${isDone ? 'Marcar pendiente' : 'Marcar completada'}"></div>
+    <div class="task-body">
+      <div class="task-title">${escapeHtml(t.title)}</div>
+      ${t.description ? `<div class="task-desc">${escapeHtml(t.description)}</div>` : ''}
+      <div class="task-meta">
+        <span class="badge ${isDone ? 'badge-done' : 'badge-pending'}">${isDone ? '✓ Completada' : '⏳ Pendiente'}</span>
+        ${showAssignee ? `<span class="task-assignee">→ ${escapeHtml(assignee)}</span>` : ''}
+        ${t.createdAt ? `<span class="text-xs text-muted">${formatDate(t.createdAt)}</span>` : ''}
+      </div>
+    </div>
+    <div class="task-actions">
+      <button class="btn btn-ghost btn-sm btn-icon" data-edit="${t.id}" title="Editar">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+          <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+        </svg>
+      </button>
+      <button class="btn btn-danger btn-sm btn-icon" data-delete="${t.id}" title="Eliminar">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
+          <path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/>
+        </svg>
+      </button>
+    </div>
+  </div>`;
+}
+
+function attachTaskEvents(container) {
+  /* Toggle completada */
+  container.querySelectorAll('[data-toggle]').forEach(el => {
+    el.addEventListener('click', async () => {
+      const id   = el.dataset.toggle;
+      const card = container.querySelector(`[data-id="${id}"]`);
+      const done = card.classList.contains('done');
+      try {
+        await updateDoc(doc(db, 'tasks', id), {
+          status:      done ? 'pending' : 'done',
+          completedAt: done ? null : serverTimestamp(),
+        });
+        /* Si estamos en vista admin, recargar manualmente */
+        if (document.getElementById('view-all-tasks').classList.contains('active')) {
+          loadAllTasksAdmin();
+        }
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    });
+  });
+
+  /* Editar */
+  container.querySelectorAll('[data-edit]').forEach(el => {
+    el.addEventListener('click', async () => {
+      const id   = el.dataset.edit;
+      const snap = await getDoc(doc(db, 'tasks', id));
+      if (!snap.exists()) return;
+      const t = snap.data();
+      document.getElementById('task-edit-id').value       = id;
+      document.getElementById('task-title-input').value   = t.title;
+      document.getElementById('task-desc-input').value    = t.description || '';
+      document.getElementById('task-assignee-input').value = t.assignedTo || '';
+      document.getElementById('modal-task-title').textContent = 'Editar tarea';
+      openModal('modal-task');
+    });
+  });
+
+  /* Eliminar */
+  container.querySelectorAll('[data-delete]').forEach(el => {
+    el.addEventListener('click', async () => {
+      if (!confirm('¿Eliminar esta tarea?')) return;
+      try {
+        await deleteDoc(doc(db, 'tasks', el.dataset.delete));
+        toast('Tarea eliminada.', 'success');
+        if (document.getElementById('view-all-tasks').classList.contains('active')) {
+          loadAllTasksAdmin();
+        }
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    });
+  });
+}
+
+/* Abrir modal nueva tarea (usuario) */
+document.getElementById('btn-new-task').addEventListener('click', () => {
+  document.getElementById('task-edit-id').value     = '';
+  document.getElementById('task-title-input').value = '';
+  document.getElementById('task-desc-input').value  = '';
+  document.getElementById('task-assignee-input').value = currentUser.uid;
+  document.getElementById('modal-task-title').textContent = 'Nueva tarea';
+  openModal('modal-task');
+});
+
+/* Abrir modal nueva tarea (admin — desde vista "todas") */
+document.getElementById('btn-new-task-admin').addEventListener('click', () => {
+  document.getElementById('task-edit-id').value     = '';
+  document.getElementById('task-title-input').value = '';
+  document.getElementById('task-desc-input').value  = '';
+  document.getElementById('task-assignee-input').value = '';
+  document.getElementById('modal-task-title').textContent = 'Asignar nueva tarea';
+  openModal('modal-task');
+});
+
+document.getElementById('btn-cancel-task').addEventListener('click', () => closeModal('modal-task'));
+
+/* Guardar tarea */
+document.getElementById('btn-save-task').addEventListener('click', async () => {
+  const title    = document.getElementById('task-title-input').value.trim();
+  const desc     = document.getElementById('task-desc-input').value.trim();
+  const editId   = document.getElementById('task-edit-id').value;
+  const isAdmin  = currentUser.role === 'admin';
+  const assignTo = isAdmin
+    ? (document.getElementById('task-assignee-input').value || currentUser.uid)
+    : currentUser.uid;
+
+  if (!title) { toast('El título es obligatorio', 'error'); return; }
+
+  const btn = document.getElementById('btn-save-task');
+  btn.disabled = true; btn.textContent = 'Guardando…';
+
+  try {
+    const assignedUser = allUsersCache.find(u => u.id === assignTo);
+    const payload = {
+      title,
+      description:     desc,
+      assignedTo:      assignTo,
+      assignedToEmail: assignedUser?.email || currentUser.email,
+      updatedAt:       serverTimestamp(),
+    };
+
+    if (editId) {
+      await updateDoc(doc(db, 'tasks', editId), payload);
+      toast('Tarea actualizada.', 'success');
+    } else {
+      await addDoc(collection(db, 'tasks'), {
+        ...payload,
+        status:    'pending',
+        createdBy: currentUser.uid,
+        createdAt: serverTimestamp(),
+      });
+      toast('Tarea creada.', 'success');
+    }
+    closeModal('modal-task');
+    if (document.getElementById('view-all-tasks').classList.contains('active')) {
+      loadAllTasksAdmin();
+    }
+  } catch (err) {
+    toast('Error al guardar: ' + err.message, 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Guardar';
+  }
+});
+
+/* Filtros en vista todas las tareas */
+document.getElementById('filter-status').addEventListener('change', loadAllTasksAdmin);
+document.getElementById('filter-user').addEventListener('change', loadAllTasksAdmin);
+
+/* Cargar tareas al navegar a la vista admin */
+document.getElementById('nav-all-tasks').addEventListener('click', () => {
+  showView('view-all-tasks');
+  loadAllTasksAdmin();
+});
+
+/* ═════════════════════════════════════════════════════════ */
+/*  HELPERS                                                 */
+/* ═════════════════════════════════════════════════════════ */
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function formatDate(ts) {
+  if (!ts || !ts.seconds) return '';
+  return new Date(ts.seconds * 1000).toLocaleDateString('es-ES', {
+    day:'numeric', month:'short', year:'numeric'
+  });
+}
+
+function friendlyAuthError(code) {
+  const map = {
+    'auth/invalid-credential':          'Correo o contraseña incorrectos.',
+    'auth/user-not-found':              'No existe una cuenta con ese correo.',
+    'auth/wrong-password':              'Contraseña incorrecta.',
+    'auth/email-already-in-use':        'Ese correo ya está registrado.',
+    'auth/weak-password':               'La contraseña es demasiado débil.',
+    'auth/invalid-email':               'El formato del correo no es válido.',
+    'auth/too-many-requests':           'Demasiados intentos. Espera un momento.',
+    'auth/network-request-failed':      'Error de red. Verifica tu conexión.',
+    'auth/operation-not-allowed':       'Operación no permitida en Firebase.',
+  };
+  return map[code] || `Error de autenticación (${code})`;
+}
+</script>
+</body>
+</html>
