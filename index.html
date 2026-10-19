@@ -608,6 +608,159 @@
     .date-range { display: flex; align-items: center; gap: .4rem; }
     .date-range span { font-size: .8rem; color: var(--text-muted); }
     .date-range .form-control { width: 150px; font-size: .82rem; padding: .45rem .7rem; }
+
+    /* ════════════════════════════════════════════════════
+       v3.1 — GRUPOS, TAREAS GRUPALES, CHECKLIST, QUICK ADD
+    ════════════════════════════════════════════════════ */
+    .modal.modal-xl { max-width: 760px; }
+
+    /* avatar stack */
+    .avatar-stack { display: inline-flex; align-items: center; }
+    .avatar-stack .avatar { margin-left: -5px; border-width: 1.5px; box-shadow: 0 0 0 2px var(--surface2); background: #15203a; }
+    .avatar-stack .avatar:first-child { margin-left: 0; }
+    .avatar-stack .avatar.av-admin { background: #2a1f1a; }
+    .avatar-stack .avatar.av-superadmin { background: #231f3a; }
+    .avatar-stack .avatar.is-done { border-color: var(--success); color: var(--success); background: #0f2e27; }
+    .avatar-stack .more { margin-left: 4px; font-size: .68rem; color: var(--text-muted); font-family: var(--font-mono); }
+
+    .badge-group  { background: var(--purple-soft); color: var(--purple); }
+    .badge-batch  { background: var(--info-soft);   color: var(--info); }
+    .badge-part   { background: var(--success-soft); color: var(--success); }
+    .task-card.part-done { opacity: .7; }
+    .task-card.part-done .task-checkbox { background: var(--success-soft); border-color: var(--success); }
+    .task-card.part-done .task-checkbox::after { content: '½'; color: var(--success); font-size: .7rem; font-weight: 800; }
+
+    .progress-mini { display: inline-flex; align-items: center; gap: .35rem; font-size: .7rem; color: var(--text-muted); font-family: var(--font-mono); }
+    .progress-mini .track { width: 54px; height: 4px; border-radius: 4px; background: var(--surface3); overflow: hidden; }
+    .progress-mini .fill { height: 100%; background: var(--success); border-radius: 4px; transition: width .5s ease; }
+
+    /* mode switch dentro del form */
+    .mode-switch { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+    .mode-opt {
+      display: flex; align-items: center; gap: .6rem; padding: .7rem .85rem;
+      border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg2);
+      color: var(--text-muted); text-align: left; transition: all var(--t); font-size: .84rem;
+    }
+    .mode-opt strong { display: block; color: var(--text); font-size: .86rem; }
+    .mode-opt small { font-size: .72rem; color: var(--text-dim); }
+    .mode-opt:hover { border-color: var(--border2); }
+    .mode-opt.active { border-color: var(--orbit); background: var(--orbit-soft); }
+    .mode-opt.active strong { color: var(--orbit); }
+    .mode-opt .ico { font-size: 1.15rem; flex-shrink: 0; }
+    .mode-opt:disabled { opacity: .45; cursor: not-allowed; }
+
+    .group-box { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem; display: flex; flex-direction: column; gap: .9rem; background: var(--surface2); }
+    .chip-row { display: flex; gap: .4rem; flex-wrap: wrap; }
+    .group-chip {
+      display: inline-flex; align-items: center; gap: .4rem; padding: .32rem .7rem;
+      border-radius: 20px; font-size: .78rem; font-weight: 600;
+      background: var(--bg2); border: 1px solid var(--border2); color: var(--text-muted); transition: all var(--t);
+    }
+    .group-chip:hover { color: var(--text); border-color: var(--orbit-soft); }
+    .group-chip.active { color: var(--orbit); border-color: var(--orbit); background: var(--orbit-soft); }
+    .group-chip .dot { width: 8px; height: 8px; border-radius: 50%; }
+    .group-chip .n { font-family: var(--font-mono); font-size: .68rem; opacity: .7; }
+
+    /* member picker */
+    .picker { border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg2); overflow: hidden; }
+    .picker-head { display: flex; gap: .4rem; align-items: center; padding: .5rem; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+    .picker-head .search-wrap { max-width: none; min-width: 140px; }
+    .picker-head .form-control { padding: .42rem .7rem; font-size: .82rem; }
+    .picker-count { font-size: .74rem; font-family: var(--font-mono); color: var(--orbit); margin-left: auto; white-space: nowrap; }
+    .picker-list { max-height: 230px; overflow-y: auto; padding: .3rem; }
+    .picker-row {
+      display: flex; align-items: center; gap: .6rem; padding: .45rem .55rem; border-radius: 8px;
+      cursor: pointer; user-select: none; transition: background var(--t); width: 100%;
+      background: transparent; border: none; color: var(--text); text-align: left;
+    }
+    .picker-row:hover { background: var(--surface2); }
+    .picker-row.on { background: var(--orbit-soft); }
+    .picker-row .pk { width: 17px; height: 17px; border-radius: 5px; border: 1.5px solid var(--border2); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .picker-row.on .pk { background: var(--orbit); border-color: var(--orbit); }
+    .picker-row.on .pk::after { content: '✓'; color: #1a0e04; font-size: .62rem; font-weight: 800; }
+    .picker-row .nm { font-size: .84rem; font-weight: 600; }
+    .picker-row .sb { font-size: .7rem; color: var(--text-muted); }
+    .picker-empty { padding: 1rem; text-align: center; color: var(--text-dim); font-size: .8rem; }
+
+    .radio-cards { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+    .form-group label.radio-card { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--text); font-size: .85rem; }
+    .radio-card { display: flex; gap: .55rem; align-items: flex-start; padding: .65rem .75rem; border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; background: var(--bg2); transition: all var(--t); }
+    .radio-card input { margin-top: .2rem; accent-color: var(--orbit); }
+    .radio-card strong { display: block; font-size: .82rem; }
+    .radio-card small { font-size: .72rem; color: var(--text-muted); line-height: 1.35; display: block; }
+    .radio-card:has(input:checked) { border-color: var(--orbit); background: var(--orbit-soft); }
+    .check-line { display: flex; align-items: center; gap: .5rem; font-size: .82rem; color: var(--text-muted); cursor: pointer; }
+    .check-line input { accent-color: var(--orbit); width: 15px; height: 15px; }
+
+    /* batch group (equipo) */
+    .batch-group { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface2); overflow: hidden; }
+    .batch-group.open { border-color: var(--border2); }
+    .batch-head { display: flex; align-items: center; gap: .8rem; padding: .85rem 1rem; cursor: pointer; flex-wrap: wrap; }
+    .batch-head:hover { background: var(--surface3); }
+    .batch-chev { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: transform var(--t); flex-shrink: 0; }
+    .batch-group.open .batch-chev { transform: rotate(90deg); color: var(--orbit); }
+    .batch-main { flex: 1; min-width: 180px; }
+    .batch-title { font-weight: 600; font-size: .91rem; word-break: break-word; }
+    .batch-sub { display: flex; gap: .4rem; flex-wrap: wrap; align-items: center; margin-top: .3rem; }
+    .batch-side { display: flex; align-items: center; gap: .7rem; }
+    .batch-body { padding: .2rem .7rem .7rem 2.2rem; display: flex; flex-direction: column; gap: .45rem; border-top: 1px dashed var(--border); padding-top: .7rem; }
+    .batch-actions { display: flex; gap: .3rem; }
+
+    .filter-chip { display: inline-flex; align-items: center; gap: .5rem; padding: .4rem .5rem .4rem .8rem; border-radius: 20px; background: var(--info-soft); color: var(--info); font-size: .8rem; font-weight: 600; align-self: flex-start; }
+    .filter-chip button { background: transparent; border: none; color: inherit; font-size: .9rem; padding: 0 .3rem; }
+
+    /* groups view */
+    .groups-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1rem; }
+    .group-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.2rem; display: flex; flex-direction: column; gap: .8rem; position: relative; overflow: hidden; transition: all var(--t); }
+    .group-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gc, var(--orbit)); }
+    .group-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+    .group-card h4 { font-family: var(--font-display); font-size: 1.02rem; font-weight: 600; word-break: break-word; }
+    .group-card .gdesc { font-size: .8rem; color: var(--text-muted); word-break: break-word; }
+    .group-card .gstats { display: flex; gap: 1rem; font-size: .75rem; color: var(--text-muted); }
+    .group-card .gstats b { font-family: var(--font-mono); color: var(--text); font-size: .9rem; }
+    .group-card .gfoot { display: flex; gap: .4rem; margin-top: auto; }
+    .swatches { display: flex; gap: .45rem; flex-wrap: wrap; }
+    .swatch { width: 26px; height: 26px; border-radius: 8px; border: 2px solid transparent; padding: 0; box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); }
+    .swatch.active { border-color: var(--text); }
+
+    /* detail: miembros + checklist */
+    .member-list { display: flex; flex-direction: column; gap: .35rem; }
+    .member-row { display: flex; align-items: center; gap: .6rem; padding: .45rem .7rem; border-radius: var(--radius); background: var(--surface2); border: 1px solid var(--border); font-size: .83rem; }
+    .member-row .st { margin-left: auto; font-size: .72rem; font-weight: 600; }
+    .member-row.ok .st { color: var(--success); }
+    .member-row .st.wait { color: var(--text-dim); }
+    .my-part-bar { display: flex; align-items: center; justify-content: space-between; gap: .6rem; flex-wrap: wrap; padding: .6rem .8rem; border: 1px dashed var(--border2); border-radius: var(--radius); margin-top: .5rem; font-size: .82rem; color: var(--text-muted); }
+
+    .checklist { display: flex; flex-direction: column; gap: .25rem; }
+    .cl-item { display: flex; align-items: center; gap: .6rem; padding: .4rem .55rem; border-radius: 8px; transition: background var(--t); }
+    .cl-item:hover { background: var(--surface2); }
+    .cl-item .task-checkbox { width: 18px; height: 18px; margin-top: 0; }
+    .cl-item .cl-text { flex: 1; font-size: .85rem; word-break: break-word; }
+    .cl-item.done .cl-text { text-decoration: line-through; color: var(--text-muted); }
+    .cl-item .cl-del { opacity: 0; background: transparent; border: none; color: var(--text-dim); font-size: .8rem; }
+    .cl-item:hover .cl-del { opacity: 1; }
+    .cl-item .cl-del:hover { color: var(--danger); }
+    .cl-progress { height: 4px; background: var(--surface3); border-radius: 4px; overflow: hidden; margin-bottom: .4rem; }
+    .cl-progress div { height: 100%; background: var(--success); transition: width .4s ease; }
+
+    /* quick add */
+    .quick-add { display: flex; align-items: center; gap: .6rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: .45rem .5rem .45rem .9rem; transition: border-color var(--t), box-shadow var(--t); }
+    .quick-add:focus-within { border-color: var(--orbit); box-shadow: 0 0 0 3px var(--orbit-soft); }
+    .quick-add .plus { color: var(--orbit); font-size: 1.2rem; font-weight: 700; }
+    .quick-add input { flex: 1; background: transparent; border: none; outline: none; color: var(--text); font-size: .92rem; min-width: 0; }
+    .quick-add input::placeholder { color: var(--text-dim); }
+    .quick-preview { font-size: .74rem; color: var(--text-muted); display: flex; gap: .35rem; flex-wrap: wrap; padding: 0 .4rem; min-height: 1rem; }
+
+    .group-progress-row { display: flex; align-items: center; gap: .8rem; padding: .6rem .4rem; border-bottom: 1px solid var(--border); cursor: pointer; border-radius: 6px; }
+    .group-progress-row:hover { background: var(--surface2); }
+    .group-progress-row:last-child { border-bottom: none; }
+    .group-progress-row .gp-main { flex: 1; min-width: 0; }
+    .group-progress-row .gp-title { font-size: .85rem; font-weight: 600; }
+
+    @media (max-width: 768px) {
+      .mode-switch, .radio-cards { grid-template-columns: 1fr; }
+      .batch-body { padding-left: .7rem; }
+    }
   </style>
 </head>
 <body>
@@ -695,6 +848,11 @@
         <span id="nav-team-label">Tareas del equipo</span>
         <span class="nav-count" id="nav-team-count"></span>
       </div>
+      <div class="nav-item hidden" data-role="manager" data-view="view-groups" tabindex="0">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9.5" r="2.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M15.5 14.4c.5-.1 1-.2 1.5-.2 2.8 0 4.5 1.9 4.5 4.8"/></svg>
+        Grupos
+        <span class="nav-count" id="nav-groups-count"></span>
+      </div>
       <div class="nav-item hidden" data-role="manager" data-view="view-dashboard" tabindex="0">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
         Dashboard
@@ -778,11 +936,26 @@
         </div>
       </div>
 
+      <div>
+        <form class="quick-add" id="quick-add-form" autocomplete="off">
+          <span class="plus">+</span>
+          <input id="quick-add" placeholder="Captura rápida: “Contar caja !alta #caja @mañana 10:00”  ( Q )" maxlength="200"/>
+          <button type="submit" class="btn btn-primary btn-sm">Agregar</button>
+        </form>
+        <div class="quick-preview mt-1" id="quick-preview"></div>
+      </div>
+
       <div class="filter-bar">
         <div class="search-wrap">
           <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           <input class="form-control" id="my-search" placeholder="Buscar tarea…  ( / )"/>
         </div>
+        <select id="my-filter-kind" class="form-control">
+          <option value="">Tipo</option>
+          <option value="single">👤 Individuales</option>
+          <option value="shared">👥 Compartidas</option>
+          <option value="batch">📦 Asignación grupal</option>
+        </select>
         <select id="my-filter-status" class="form-control">
           <option value="">Estado</option>
           <option value="open">Abiertas</option>
@@ -888,6 +1061,9 @@
             <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Exportar CSV
           </button>
+          <button class="btn btn-ghost" id="btn-new-group-task" data-tip="Atajo: G">
+            👥 Tarea en grupo
+          </button>
           <button class="btn btn-primary" id="btn-new-task-team">
             <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             Asignar tarea
@@ -919,6 +1095,12 @@
           <option value="media">🟡 Media</option>
           <option value="baja">🟢 Baja</option>
         </select>
+        <select id="team-filter-kind" class="form-control">
+          <option value="">Tipo</option>
+          <option value="single">👤 Individuales</option>
+          <option value="shared">👥 Compartidas</option>
+          <option value="batch">📦 Asignación grupal</option>
+        </select>
         <select id="team-filter-user" class="form-control"><option value="">Asignado a</option></select>
         <select id="team-filter-creator" class="form-control hidden" data-role="super"><option value="">Creada por</option></select>
         <select id="team-filter-tag" class="form-control"><option value="">Etiqueta</option></select>
@@ -938,6 +1120,11 @@
         <button class="filter-clear hidden" id="team-clear-filters">Limpiar filtros</button>
       </div>
 
+      <div class="filter-chip hidden" id="team-batch-chip">
+        <span id="team-batch-chip-text">Lote</span>
+        <button id="team-batch-chip-clear" aria-label="Quitar filtro de lote">✕</button>
+      </div>
+
       <div class="bulk-bar hidden" id="team-bulk-bar">
         <span class="bulk-count" id="team-bulk-count">0 seleccionadas</span>
         <button class="btn btn-ghost btn-sm" data-bulk-action="select-all" data-scope="team">Seleccionar todo</button>
@@ -950,10 +1137,15 @@
       <div class="panel">
         <div class="panel-header">
           <div class="panel-title" id="team-panel-title">Tareas del equipo</div>
+          <div class="flex gap-1 items-center">
+          <button class="btn btn-ghost btn-sm active" id="btn-team-group-batches" data-tip="Agrupa las copias de una asignación grupal">
+            📦 Agrupar lotes
+          </button>
           <button class="btn btn-ghost btn-sm" id="btn-team-bulk-mode" data-scope="team">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="5" height="5" rx="1"/><rect x="3" y="10" width="5" height="5" rx="1"/><rect x="3" y="17" width="5" height="5" rx="1"/><line x1="11" y1="5" x2="21" y2="5"/><line x1="11" y1="12" x2="21" y2="12"/><line x1="11" y1="19" x2="21" y2="19"/></svg>
             Seleccionar
           </button>
+          </div>
         </div>
         <div class="tasks-list" id="team-tasks-list"></div>
       </div>
@@ -987,6 +1179,7 @@
         <div class="panel"><div class="panel-title">Distribución por prioridad</div><canvas id="chart-priority"></canvas></div>
         <div class="panel"><div class="panel-title">Tareas por persona</div><canvas id="chart-users"></canvas></div>
         <div class="panel"><div class="panel-title">⚠ Tareas vencidas</div><div id="dash-overdue-list"></div></div>
+        <div class="panel" style="grid-column:1 / -1;"><div class="panel-title">👥 Trabajo en grupo</div><div id="dash-groupwork"></div></div>
         <div class="panel hidden" data-role="super" style="grid-column:1 / -1;"><div class="panel-title">🏬 Tareas por tienda / admin</div><canvas id="chart-teams" style="max-height:280px;"></canvas></div>
       </div>
 
@@ -1004,6 +1197,31 @@
         <div class="panel-title">⚡ Actividad reciente</div>
         <div id="dash-activity-feed"></div>
       </div>
+    </div>
+
+    <!-- ── GRUPOS (admin / super) ─────────────────────── -->
+    <div class="view" id="view-groups">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Grupos</h1>
+          <p class="page-subtitle" id="groups-subtitle">—</p>
+        </div>
+        <div class="page-header-actions">
+          <div class="search-wrap" style="min-width:200px;">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input class="form-control" id="groups-search" placeholder="Buscar grupo o persona…" style="padding:.5rem .8rem;font-size:.85rem;"/>
+          </div>
+          <button class="btn btn-primary" id="btn-new-group">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Nuevo grupo
+          </button>
+        </div>
+      </div>
+      <div class="scope-note">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/></svg>
+        <span>Guarda equipos de trabajo (turno matutino, cajeros, bodega…) y asígnales tareas con un clic: una tarea compartida o una copia para cada integrante.</span>
+      </div>
+      <div class="groups-grid" id="groups-grid"></div>
     </div>
 
     <!-- ── USUARIOS / MI EQUIPO ───────────────────────── -->
@@ -1063,11 +1281,55 @@
         <label for="task-desc-input">Descripción</label>
         <textarea id="task-desc-input" class="form-control" placeholder="Detalles adicionales…" maxlength="4000"></textarea>
       </div>
+      <div class="form-group hidden" id="task-mode-group">
+        <label>¿A quién?</label>
+        <div class="mode-switch" id="task-mode-switch">
+          <button type="button" class="mode-opt active" data-mode="single"><span class="ico">👤</span><span><strong>Una persona</strong><small>Asignación individual</small></span></button>
+          <button type="button" class="mode-opt" data-mode="group"><span class="ico">👥</span><span><strong>Un grupo</strong><small>Varias personas a la vez</small></span></button>
+        </div>
+      </div>
+
       <div class="form-group hidden" id="task-assignee-group">
         <label for="task-assignee-input">Asignar a</label>
         <select id="task-assignee-input" class="form-control"></select>
         <span class="form-hint" id="task-assignee-hint"></span>
       </div>
+
+      <div class="group-box hidden" id="task-group-box">
+        <div class="form-group" id="task-saved-groups-wrap">
+          <label>Grupos guardados</label>
+          <div class="chip-row" id="task-group-chips"></div>
+        </div>
+        <div class="form-group">
+          <label>Integrantes</label>
+          <div class="picker" id="task-member-picker"></div>
+        </div>
+        <div class="form-group" id="task-distribution-wrap">
+          <label>Cómo se reparte</label>
+          <div class="radio-cards">
+            <label class="radio-card"><input type="radio" name="task-dist" value="shared" checked/><span><strong>👥 Una tarea compartida</strong><small>Todos colaboran en la misma tarea, con comentarios y adjuntos en común.</small></span></label>
+            <label class="radio-card"><input type="radio" name="task-dist" value="batch"/><span><strong>📦 Una copia para cada uno</strong><small>Cada integrante recibe su propia tarea y la completa por separado.</small></span></label>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="task-group-name">Nombre del grupo / lote</label>
+            <input id="task-group-name" type="text" class="form-control" placeholder="Ej: Turno matutino" maxlength="60"/>
+          </div>
+          <div class="form-group" id="task-completion-wrap">
+            <label for="task-completion">Se completa cuando</label>
+            <select id="task-completion" class="form-control">
+              <option value="all">Todos marcan su parte</option>
+              <option value="any">Cualquiera la completa</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <label class="check-line hidden" id="task-apply-batch-wrap">
+        <input type="checkbox" id="task-apply-batch"/>
+        <span id="task-apply-batch-text">Aplicar título, descripción, prioridad, fecha y etiquetas a todas las copias del lote</span>
+      </label>
       <div class="form-row">
         <div class="form-group">
           <label for="task-priority-input">Prioridad</label>
@@ -1095,6 +1357,11 @@
         <input id="task-tags-input" type="text" class="form-control" placeholder="Ej: inventario, urgente, caja" list="tags-datalist"/>
         <datalist id="tags-datalist"></datalist>
       </div>
+      <div class="form-group" id="task-checklist-group">
+        <label for="task-checklist-input">Lista de verificación (una por línea)</label>
+        <textarea id="task-checklist-input" class="form-control" placeholder="Contar billetes&#10;Contar monedas&#10;Firmar corte" style="min-height:64px;"></textarea>
+        <span class="form-hint">Opcional. Podrás marcar y agregar pasos desde el detalle de la tarea.</span>
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-ghost" data-close="modal-task">Cancelar</button>
         <button type="submit" class="btn btn-primary" id="btn-save-task">
@@ -1112,6 +1379,7 @@
     <div class="modal-header">
       <h3 id="detail-title">Detalle de tarea</h3>
       <div class="modal-header-actions">
+        <button class="btn btn-ghost btn-sm hidden" id="btn-detail-duplicate" data-tip="Crear una copia">⧉ Duplicar</button>
         <button class="btn btn-ghost btn-sm hidden" id="btn-detail-edit">✎ Editar</button>
         <button class="modal-close" data-close="modal-task-detail" aria-label="Cerrar">✕</button>
       </div>
@@ -1128,7 +1396,30 @@
       </div>
     </div>
 
-    <div class="pomodoro-bar">
+    <div id="detail-members-wrap" class="hidden">
+      <div class="detail-section-label" style="margin-top:0;">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/></svg>
+        <span id="detail-members-label">Integrantes</span>
+      </div>
+      <div class="member-list" id="detail-members"></div>
+      <div class="my-part-bar hidden" id="detail-my-part">
+        <span id="detail-my-part-text">Tu parte</span>
+        <button class="btn btn-success btn-sm" id="btn-my-part">✓ Marcar mi parte como lista</button>
+      </div>
+    </div>
+
+    <div class="detail-section-label">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      Lista de verificación <span class="mono text-xs" id="detail-cl-count"></span>
+    </div>
+    <div class="cl-progress hidden" id="detail-cl-progress"><div style="width:0%"></div></div>
+    <div class="checklist" id="detail-checklist"></div>
+    <div class="comment-input-row" id="detail-cl-add-row">
+      <input class="form-control" id="detail-cl-input" placeholder="Agregar paso… (Enter)" maxlength="200"/>
+      <button class="btn btn-ghost btn-sm" id="btn-cl-add">+ Agregar</button>
+    </div>
+
+    <div class="pomodoro-bar mt-3">
       <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
       <span class="pomodoro-time" id="pomodoro-time">25:00</span>
       <span class="pomodoro-label">Temporizador de enfoque</span>
@@ -1200,6 +1491,33 @@
   </div>
 </div>
 
+<!-- Crear / Editar Grupo -->
+<div class="modal-overlay hidden" id="modal-group">
+  <div class="modal modal-wide" role="dialog" aria-modal="true" aria-labelledby="group-modal-title">
+    <div class="modal-header">
+      <h3 id="group-modal-title">Nuevo grupo</h3>
+      <button class="modal-close" data-close="modal-group" aria-label="Cerrar">✕</button>
+    </div>
+    <form id="group-form" class="form-stack">
+      <input type="hidden" id="group-edit-id"/>
+      <div class="form-row">
+        <div class="form-group"><label for="group-name">Nombre *</label><input id="group-name" type="text" class="form-control" placeholder="Ej: Turno matutino" maxlength="60" data-autofocus/></div>
+        <div class="form-group"><label>Color</label><div class="swatches" id="group-swatches"></div></div>
+      </div>
+      <div class="form-group"><label for="group-desc">Descripción</label><input id="group-desc" type="text" class="form-control" placeholder="Opcional" maxlength="140"/></div>
+      <div class="form-group">
+        <label>Integrantes *</label>
+        <div class="picker" id="group-member-picker"></div>
+        <span class="form-hint" id="group-picker-hint"></span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" data-close="modal-group">Cancelar</button>
+        <button type="submit" class="btn btn-primary" id="btn-save-group">Guardar grupo</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <!-- Recuperar contraseña -->
 <div class="modal-overlay hidden" id="modal-forgot">
   <div class="modal modal-sm" role="dialog" aria-modal="true">
@@ -1246,7 +1564,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 import {
   getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc, updateDoc, deleteDoc,
-  query, where, orderBy, onSnapshot, serverTimestamp, arrayUnion, arrayRemove, Timestamp, writeBatch,
+  query, where, orderBy, onSnapshot, serverTimestamp, arrayUnion, arrayRemove, Timestamp, writeBatch, runTransaction,
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 import {
   getStorage, ref as storageRef, uploadBytes, getDownloadURL, deleteObject,
@@ -1282,6 +1600,8 @@ const PRIORITY_LABEL  = { alta: 'Alta', media: 'Media', baja: 'Baja' };
 const STATUS_LABEL    = { pending: 'Pendiente', in_progress: 'En progreso', done: 'Completada' };
 const STATUS_ORDER    = ['pending', 'in_progress', 'done'];
 const PRIORITY_WEIGHT = { alta: 3, media: 2, baja: 1 };
+const KIND_LABEL      = { single: 'Individual', shared: 'Compartida', batch: 'Asignación grupal' };
+const GROUP_COLORS    = ['#ff8a3d', '#45d9c8', '#a78bfa', '#60a5fa', '#34d399', '#fbbf24', '#f87171', '#f472b6'];
 
 /* ── ESTADO GLOBAL ──────────────────────────────────────── */
 const state = {
@@ -1289,7 +1609,14 @@ const state = {
   users: [],
   myTasks: [],
   teamTasks: [],
+  groups: [],
   unsubs: [],
+  groupBatches: true,
+  expandedBatches: new Set(),
+  teamBatchFilter: null,
+  form: { mode: 'single', groupId: null },
+  groupForm: { color: GROUP_COLORS[0] },
+  seenAssigned: new Set(),
   commentsUnsub: null,
   detailId: null,
   detailFromCache: false,
@@ -1397,7 +1724,7 @@ document.querySelectorAll('.nav-item[data-view]').forEach(item => {
 function activeView() { return document.querySelector('.view.active')?.id; }
 function showView(id) {
   if (!state.me) return;
-  const needsManager = ['view-team', 'view-dashboard', 'view-users'].includes(id);
+  const needsManager = ['view-team', 'view-dashboard', 'view-users', 'view-groups'].includes(id);
   if (needsManager && !isManager()) id = 'view-tasks';
   document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === id));
   document.querySelectorAll('.nav-item[data-view]').forEach(n => n.classList.toggle('active', n.dataset.view === id));
@@ -1412,6 +1739,7 @@ function renderView(id = activeView()) {
   else if (id === 'view-team') renderTeamTasks();
   else if (id === 'view-dashboard') renderDashboard();
   else if (id === 'view-users') renderUsersTable();
+  else if (id === 'view-groups') renderGroups();
 }
 
 /* ── ATAJOS DE TECLADO ──────────────────────────────────── */
@@ -1426,9 +1754,16 @@ document.addEventListener('keydown', e => {
   const tag = (e.target.tagName || '').toLowerCase();
   if (['input', 'textarea', 'select'].includes(tag) || e.metaKey || e.ctrlKey || e.altKey) return;
   if (document.querySelector('.modal-overlay:not(.hidden)')) return;
-  if (e.key === 'n' || e.key === 'N') { e.preventDefault(); openTaskForm(null, { forTeam: activeView() === 'view-team' }); }
+  const k = e.key.toLowerCase();
+  if (k === 'n') {
+    e.preventDefault();
+    if (activeView() === 'view-groups' && isManager()) openGroupForm();
+    else openTaskForm(null, { forTeam: activeView() === 'view-team' });
+  }
+  if (k === 'g' && isManager()) { e.preventDefault(); openTaskForm(null, { forTeam: true, mode: 'group' }); }
+  if (k === 'q') { e.preventDefault(); showView('view-tasks'); $('quick-add').focus(); }
   if (e.key === '/') {
-    const s = { 'view-tasks': 'my-search', 'view-team': 'team-search', 'view-kanban': 'kanban-search', 'view-users': 'users-search' }[activeView()];
+    const s = { 'view-tasks': 'my-search', 'view-team': 'team-search', 'view-kanban': 'kanban-search', 'view-users': 'users-search', 'view-groups': 'groups-search' }[activeView()];
     if (s) { e.preventDefault(); $(s).focus(); }
   }
 });
@@ -1515,8 +1850,9 @@ function teardown() {
   stopPomo();
   Object.values(state.charts).forEach(c => c?.destroy());
   state.charts = {};
-  state.users = []; state.myTasks = []; state.teamTasks = [];
-  state.notified.clear(); state.bellPrimed = false;
+  state.users = []; state.myTasks = []; state.teamTasks = []; state.groups = [];
+  state.notified.clear(); state.bellPrimed = false; state.seenAssigned.clear();
+  state.expandedBatches.clear(); state.teamBatchFilter = null;
   state.bulk = { mine: false, team: false };
   state.selected.mine.clear(); state.selected.team.clear();
   state.kanbanScope = 'mine';
@@ -1552,7 +1888,9 @@ function initApp() {
 
   state.users = [state.me];
   subscribeMyTasks();
-  if (isManager()) { subscribeTeamTasks(); subscribeUsers(); }
+  if (isManager()) { subscribeTeamTasks(); subscribeUsers(); subscribeGroups(); }
+  $('btn-team-group-batches').classList.toggle('active', state.groupBatches);
+  $('team-batch-chip').classList.add('hidden');
 
   state.tickTimer = setInterval(() => { renderBell(); updateNavBadge(); renderView(); }, 60000);
   showView('view-tasks');
@@ -1582,12 +1920,56 @@ function onDataChanged() {
 }
 
 function subscribeMyTasks() {
-  const q = query(collection(db, 'tasks'), where('assignedTo', '==', state.me.uid));
-  state.unsubs.push(onSnapshot(q, snap => {
-    state.myTasks = mapDocs(snap);
+  // Dos fuentes: tareas individuales (assignedTo) y compartidas (assignees). Se fusionan por id.
+  const sources = { direct: new Map(), shared: new Map() };
+  const primed  = { direct: false, shared: false };
+  const merge = () => {
+    const m = new Map([...sources.shared, ...sources.direct]);
+    state.myTasks = [...m.values()];
     populateTagSelect($('my-filter-tag'), state.myTasks);
     onDataChanged();
-  }, err => toast('Error al cargar tus tareas: ' + errMsg(err), 'error')));
+  };
+  const listen = (key, q, onErr) => state.unsubs.push(onSnapshot(q, snap => {
+    sources[key] = new Map(snap.docs.map(d => [d.id, { id: d.id, ...d.data() }]));
+    if (primed[key]) {
+      snap.docChanges().filter(c => c.type === 'added').forEach(c => announceNewAssignment({ id: c.doc.id, ...c.doc.data() }));
+    } else {
+      snap.docs.forEach(d => state.seenAssigned.add(d.id));
+      primed[key] = true;
+    }
+    merge();
+  }, onErr));
+
+  listen('direct', query(collection(db, 'tasks'), where('assignedTo', '==', state.me.uid)),
+    err => toast('Error al cargar tus tareas: ' + errMsg(err), 'error'));
+  listen('shared', query(collection(db, 'tasks'), where('assignees', 'array-contains', state.me.uid)),
+    err => { console.warn('Tareas compartidas no disponibles (¿reglas de Firestore sin actualizar?)', err); });
+}
+
+function announceNewAssignment(t) {
+  if (state.seenAssigned.has(t.id)) return;
+  state.seenAssigned.add(t.id);
+  if (!t.createdBy || t.createdBy === state.me.uid) return;
+  const who = t.createdByName || 'Alguien';
+  const what = t.kind === 'shared' ? `te sumó a la tarea grupal “${t.title}”` : `te asignó “${t.title}”`;
+  toast(`${who} ${what}`, 'info');
+  if ('Notification' in window && Notification.permission === 'granted' && document.hidden) {
+    new Notification('Nueva tarea — Orbiscorp', { body: `${who} ${what}` });
+  }
+}
+
+function subscribeGroups() {
+  const q = isSuper()
+    ? collection(db, 'groups')
+    : query(collection(db, 'groups'), where('ownerId', '==', state.me.uid));
+  state.unsubs.push(onSnapshot(q, snap => {
+    state.groups = mapDocs(snap).sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+    $('nav-groups-count').textContent = state.groups.length || '';
+    onDataChanged();
+  }, err => {
+    console.warn('Grupos no disponibles', err);
+    if (err?.code === 'permission-denied') toast('Los grupos guardados necesitan las nuevas reglas de Firestore.', 'info');
+  }));
 }
 
 function subscribeTeamTasks() {
@@ -1623,7 +2005,43 @@ function subscribeUsers() {
 ══════════════════════════════════════════════════════════ */
 function userById(id) { return id === state.me?.uid ? state.me : state.users.find(u => u.id === id); }
 function userName(id, fallback) { const u = userById(id); return u?.displayName || u?.email || fallback || '—'; }
-function assigneeName(t) { return userName(t.assignedTo, t.assignedToName || t.assignedToEmail); }
+function kindOf(t) { return t.kind === 'shared' || t.kind === 'batch' ? t.kind : 'single'; }
+function taskAssignees(t) {
+  if (Array.isArray(t.assignees) && t.assignees.length) return t.assignees;
+  return t.assignedTo ? [t.assignedTo] : [];
+}
+function memberName(t, uid) { return userName(uid, t.assigneeNames?.[uid] || (uid === t.assignedTo ? (t.assignedToName || t.assignedToEmail) : '')); }
+function assigneeName(t) {
+  if (kindOf(t) === 'shared') {
+    const n = taskAssignees(t).length;
+    return t.groupName ? `${t.groupName} (${n})` : `Grupo de ${n}`;
+  }
+  return userName(t.assignedTo, t.assignedToName || t.assignedToEmail);
+}
+function peopleText(t) { return taskAssignees(t).map(u => memberName(t, u)).join(' ') + ' ' + (t.groupName || t.batchName || '') + ' ' + creatorName(t); }
+function isAssignedToMe(t) { return taskAssignees(t).includes(state.me?.uid); }
+function partMode(t) { return kindOf(t) === 'shared' && t.completion !== 'any'; }
+function myPartDone(t) { return partMode(t) && (t.doneBy || []).includes(state.me?.uid); }
+function doneForMe(t) { return t.status === 'done' || myPartDone(t); }
+function memberDone(t, uid) { return t.status === 'done' || (kindOf(t) === 'shared' && (t.doneBy || []).includes(uid)); }
+function sharedProgress(t) {
+  const a = taskAssignees(t);
+  const d = t.status === 'done' ? a.length : a.filter(u => (t.doneBy || []).includes(u)).length;
+  return { done: d, total: a.length };
+}
+function newId() { return (crypto.randomUUID?.() || (Date.now().toString(36) + Math.random().toString(36).slice(2))).replace(/-/g, '').slice(0, 20); }
+function avatarStack(ids, { max = 4, doneFn = null, nameFn = userName } = {}) {
+  const shown = ids.slice(0, max);
+  return `<span class="avatar-stack">${shown.map(id => {
+    const n = nameFn(id);
+    const done = doneFn ? doneFn(id) : false;
+    return `<span class="avatar av-xs av-${userRole(userById(id))} ${done ? 'is-done' : ''}" title="${escHtml(n)}${done ? ' ✓' : ''}">${escHtml(initials(n))}</span>`;
+  }).join('')}${ids.length > max ? `<span class="more">+${ids.length - max}</span>` : ''}</span>`;
+}
+function progressMini(done, total) {
+  const pct = total ? Math.round(done / total * 100) : 0;
+  return `<span class="progress-mini"><span class="track"><span class="fill" style="width:${pct}%;display:block;"></span></span>${done}/${total}</span>`;
+}
 function creatorName(t)  { return userName(t.createdBy, t.createdByName); }
 function userRole(u)     { return SUPER_ADMINS.includes(u?.id) ? 'superadmin' : (u?.role === 'admin' ? 'admin' : 'user'); }
 function teamLabel(adminId) {
@@ -1634,7 +2052,8 @@ function teamLabel(adminId) {
 
 function findTask(id) { return state.myTasks.find(t => t.id === id) || state.teamTasks.find(t => t.id === id); }
 function canEdit(t)         { return isSuper() || t.createdBy === state.me.uid; }
-function canChangeStatus(t) { return canEdit(t) || t.assignedTo === state.me.uid; }
+function canChangeStatus(t) { return canEdit(t) || isAssignedToMe(t); }
+function assignableUsers() { return state.users.filter(u => u.active !== false); }
 
 /* ══════════════════════════════════════════════════════════
    HELPERS: FECHAS / ORDEN / FILTROS
@@ -1692,6 +2111,7 @@ function populateTagSelect(el, tasks) {
 function smartScore(t) {
   // abiertas primero; vencidas → hoy → pronto; luego prioridad y fecha
   if (t.status === 'done') return 1e15 - (tsMs(t.completedAt) || tsMs(t.updatedAt) || 0) / 1000;
+  if (myPartDone(t)) return 5e14 + (dueDateMs(t) || 0) / 1000;   // mi parte lista: después de lo pendiente
   const due = dueDateMs(t);
   const urg = isOverdue(t) ? 0 : isDueToday(t) ? 1 : isDueSoon(t) ? 2 : 3;
   return urg * 1e13 + (3 - (PRIORITY_WEIGHT[t.priority] || 2)) * 1e12 + (due ? due / 1000 : 9e11);
@@ -1710,15 +2130,19 @@ function sortTasks(tasks, sortVal) {
 
 function matchFilters(t, f) {
   if (f.search) {
-    const hay = `${t.title || ''} ${t.description || ''} ${(t.tags || []).join(' ')} ${f.withPeople ? assigneeName(t) + ' ' + creatorName(t) : ''}`.toLowerCase();
+    const hay = `${t.title || ''} ${t.description || ''} ${(t.tags || []).join(' ')} ${t.groupName || ''} ${t.batchName || ''} ${f.withPeople ? peopleText(t) : ''}`.toLowerCase();
     if (!hay.includes(f.search)) return false;
   }
-  if (f.status === 'overdue') { if (!isOverdue(t)) return false; }
-  else if (f.status === 'open') { if (t.status === 'done') return false; }
+  const isDone = f.personal ? doneForMe(t) : t.status === 'done';
+  if (f.status === 'overdue') { if (!isOverdue(t) || isDone) return false; }
+  else if (f.status === 'open') { if (isDone) return false; }
+  else if (f.status === 'done') { if (!isDone) return false; }
   else if (f.status && t.status !== f.status) return false;
   if (f.priority && t.priority !== f.priority) return false;
   if (f.tag && !(t.tags || []).includes(f.tag)) return false;
-  if (f.user && t.assignedTo !== f.user) return false;
+  if (f.kind && kindOf(t) !== f.kind) return false;
+  if (f.batch && t.batchId !== f.batch) return false;
+  if (f.user && !taskAssignees(t).includes(f.user)) return false;
   if (f.creator && t.createdBy !== f.creator) return false;
   if (f.from || f.to) {
     const ms = dueDateMs(t);
@@ -1728,14 +2152,15 @@ function matchFilters(t, f) {
   }
   return true;
 }
-function hasActiveFilters(f) { return !!(f.search || f.status || f.priority || f.tag || f.user || f.creator || f.from || f.to); }
+function hasActiveFilters(f) { return !!(f.search || f.status || f.priority || f.tag || f.kind || f.user || f.creator || f.from || f.to); }
 
 function myFilters() {
   return {
-    search: $('my-search').value.trim().toLowerCase(),
+    search: $('my-search').value.trim().toLowerCase(), withPeople: true, personal: true,
     status: $('my-filter-status').value,
     priority: $('my-filter-priority').value,
     tag: $('my-filter-tag').value,
+    kind: $('my-filter-kind').value,
   };
 }
 function teamFilters() {
@@ -1743,6 +2168,8 @@ function teamFilters() {
     search: $('team-search').value.trim().toLowerCase(), withPeople: true,
     status: $('team-filter-status').value,
     priority: $('team-filter-priority').value,
+    kind: $('team-filter-kind').value,
+    batch: state.teamBatchFilter,
     user: $('team-filter-user').value,
     creator: isSuper() ? $('team-filter-creator').value : '',
     tag: $('team-filter-tag').value,
@@ -1761,9 +2188,9 @@ function visibleMyTasks() { return sortTasks(state.myTasks.filter(t => matchFilt
 function renderMyTasks() {
   const all     = state.myTasks;
   const total   = all.length;
-  const done    = all.filter(t => t.status === 'done').length;
+  const done    = all.filter(doneForMe).length;
   const open    = total - done;
-  const overdue = all.filter(isOverdue).length;
+  const overdue = all.filter(t => isOverdue(t) && !myPartDone(t)).length;
   const pct     = total ? Math.round((done / total) * 100) : 0;
 
   $('stat-total').textContent   = total;
@@ -1793,12 +2220,12 @@ function renderMyTasks() {
 }
 
 const rerenderMine = debounce(renderMyTasks, 120);
-['my-search', 'my-filter-status', 'my-filter-priority', 'my-filter-tag', 'my-sort'].forEach(id => {
+['my-search', 'my-filter-status', 'my-filter-priority', 'my-filter-tag', 'my-filter-kind', 'my-sort'].forEach(id => {
   $(id).addEventListener('input', rerenderMine);
   $(id).addEventListener('change', rerenderMine);
 });
 $('my-clear-filters').addEventListener('click', () => {
-  ['my-search', 'my-filter-status', 'my-filter-priority', 'my-filter-tag'].forEach(id => $(id).value = '');
+  ['my-search', 'my-filter-status', 'my-filter-priority', 'my-filter-tag', 'my-filter-kind'].forEach(id => $(id).value = '');
   renderMyTasks();
 });
 document.querySelectorAll('#view-tasks .stat-card[data-filter]').forEach(card => {
@@ -1826,19 +2253,112 @@ function renderTeamTasks() {
       : `<div class="empty-state">${EMPTY_ICON}<p>${isSuper() ? 'No hay tareas en el sistema.' : 'Aún no has asignado tareas.'}</p><div class="empty-action"><button class="btn btn-primary btn-sm" data-new-task-team>+ Asignar una tarea</button></div></div>`;
     return;
   }
-  list.innerHTML = tasks.map(t => renderTaskCard(t, { scope: 'team', showAssignee: true, showCreator: isSuper() })).join('');
+  const cardOpts = { scope: 'team', showAssignee: true, showCreator: isSuper() };
+  if (!state.groupBatches || state.teamBatchFilter) {
+    list.innerHTML = tasks.map(t => renderTaskCard(t, cardOpts)).join('');
+    return;
+  }
+  // Agrupa copias de una misma asignación grupal, conservando el orden del primer elemento
+  const out = [], seen = new Map();
+  tasks.forEach(t => {
+    if (kindOf(t) === 'batch' && t.batchId) {
+      if (!seen.has(t.batchId)) { const g = { batchId: t.batchId, items: [] }; seen.set(t.batchId, g); out.push(g); }
+      seen.get(t.batchId).items.push(t);
+    } else out.push(t);
+  });
+  list.innerHTML = out.map(x => x.items
+    ? (x.items.length > 1 ? renderBatchGroup(x, cardOpts) : renderTaskCard(x.items[0], cardOpts))
+    : renderTaskCard(x, cardOpts)).join('');
 }
 
+function batchTasks(batchId) { return state.teamTasks.filter(t => t.batchId === batchId); }
+
+function renderBatchGroup(g, cardOpts) {
+  const all   = batchTasks(g.batchId);
+  const first = all[0] || g.items[0];
+  const done  = all.filter(t => t.status === 'done').length;
+  const over  = all.filter(isOverdue).length;
+  const open  = state.expandedBatches.has(g.batchId);
+  const ids   = all.map(t => t.assignedTo);
+  const editable = all.every(canEdit);
+  const nameOf = id => userName(id, all.find(t => t.assignedTo === id)?.assignedToName);
+  const sel = state.bulk.team ? `<span class="text-xs text-muted">${g.items.filter(t => state.selected.team.has(t.id)).length} sel.</span>` : '';
+  return `
+  <div class="batch-group ${open ? 'open' : ''}" data-batch-id="${escHtml(g.batchId)}">
+    <div class="batch-head" data-batch-action="toggle">
+      <span class="batch-chev"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></span>
+      <div class="batch-main">
+        <div class="batch-title">${escHtml(first.title)}</div>
+        <div class="batch-sub">
+          <span class="badge badge-batch">📦 ${escHtml(first.batchName || 'Asignación grupal')} · ${all.length}</span>
+          <span class="badge badge-priority-${escHtml(first.priority || 'media')}">${PRIORITY_LABEL[first.priority] || 'Media'}</span>
+          ${over ? `<span class="badge badge-overdue">⚠ ${over} vencida${over !== 1 ? 's' : ''}</span>` : ''}
+          ${first.dueDate ? `<span class="due-chip">${fmtDT(first)}</span>` : ''}
+          ${g.items.length !== all.length ? `<span class="text-xs text-muted">${g.items.length} visibles con filtros</span>` : ''}
+          ${sel}
+        </div>
+      </div>
+      <div class="batch-side">
+        ${avatarStack(ids, { max: 5, doneFn: id => all.find(t => t.assignedTo === id)?.status === 'done', nameFn: nameOf })}
+        ${progressMini(done, all.length)}
+        <div class="batch-actions">
+          <button class="btn btn-ghost btn-sm btn-icon" data-batch-action="only" data-tip="Ver solo este lote" aria-label="Ver solo este lote">🔍</button>
+          ${editable ? `
+          <button class="btn btn-ghost btn-sm btn-icon" data-batch-action="edit" data-tip="Editar todo el lote" aria-label="Editar lote">✎</button>
+          <button class="btn btn-danger btn-sm btn-icon" data-batch-action="delete" data-tip="Eliminar lote" aria-label="Eliminar lote">🗑</button>` : ''}
+        </div>
+      </div>
+    </div>
+    ${open ? `<div class="batch-body">${g.items.map(t => renderTaskCard(t, { ...cardOpts, inBatch: true })).join('')}</div>` : ''}
+  </div>`;
+}
+
+$('team-tasks-list').addEventListener('click', async e => {
+  const el = e.target.closest('[data-batch-action]'); if (!el) return;
+  const id = el.closest('[data-batch-id]')?.dataset.batchId; if (!id) return;
+  const action = el.dataset.batchAction;
+  if (action !== 'toggle') e.stopPropagation();
+  const all = batchTasks(id);
+  if (action === 'toggle') {
+    if (e.target.closest('.batch-actions')) return;
+    state.expandedBatches.has(id) ? state.expandedBatches.delete(id) : state.expandedBatches.add(id);
+    renderTeamTasks();
+  } else if (action === 'only') {
+    setTeamBatchFilter(id);
+  } else if (action === 'edit') {
+    if (all[0]) openTaskForm(all[0], { applyBatch: true });
+  } else if (action === 'delete') {
+    if (!await confirmDialog(`¿Eliminar la asignación “${all[0]?.title}” para las ${all.length} personas? Se borran sus comentarios y adjuntos.`, { title: 'Eliminar lote', confirmText: 'Eliminar todo' })) return;
+    try { await Promise.all(all.filter(canEdit).map(deleteTask)); toast(`Lote eliminado (${plural(all.length, 'tarea', 'tareas')}).`, 'success'); }
+    catch (err) { toast('Error: ' + errMsg(err), 'error'); }
+  }
+});
+
+function setTeamBatchFilter(batchId) {
+  state.teamBatchFilter = batchId;
+  const first = batchId ? state.teamTasks.find(t => t.batchId === batchId) : null;
+  $('team-batch-chip').classList.toggle('hidden', !batchId);
+  if (first) $('team-batch-chip-text').textContent = `📦 Lote: ${first.batchName || first.title}`;
+  if (activeView() !== 'view-team') showView('view-team'); else renderTeamTasks();
+}
+$('team-batch-chip-clear').addEventListener('click', () => setTeamBatchFilter(null));
+$('btn-team-group-batches').addEventListener('click', () => {
+  state.groupBatches = !state.groupBatches;
+  $('btn-team-group-batches').classList.toggle('active', state.groupBatches);
+  renderTeamTasks();
+});
+
 const rerenderTeam = debounce(renderTeamTasks, 120);
-['team-search', 'team-filter-status', 'team-filter-priority', 'team-filter-user', 'team-filter-creator', 'team-filter-tag', 'team-sort', 'team-date-from', 'team-date-to'].forEach(id => {
+['team-search', 'team-filter-status', 'team-filter-priority', 'team-filter-kind', 'team-filter-user', 'team-filter-creator', 'team-filter-tag', 'team-sort', 'team-date-from', 'team-date-to'].forEach(id => {
   $(id).addEventListener('input', rerenderTeam);
   $(id).addEventListener('change', rerenderTeam);
 });
 $('team-clear-filters').addEventListener('click', () => {
-  ['team-search', 'team-filter-status', 'team-filter-priority', 'team-filter-user', 'team-filter-creator', 'team-filter-tag', 'team-date-from', 'team-date-to'].forEach(id => $(id).value = '');
-  renderTeamTasks();
+  ['team-search', 'team-filter-status', 'team-filter-priority', 'team-filter-kind', 'team-filter-user', 'team-filter-creator', 'team-filter-tag', 'team-date-from', 'team-date-to'].forEach(id => $(id).value = '');
+  setTeamBatchFilter(null);
 });
 document.addEventListener('click', e => { if (e.target.closest('[data-new-task-team]')) openTaskForm(null, { forTeam: true }); });
+$('btn-new-group-task').addEventListener('click', () => openTaskForm(null, { forTeam: true, mode: 'group' }));
 
 function populateUserFilters() {
   const sortU = list => [...list].sort((a, b) => (ROLE_ORDER[userRole(a)] - ROLE_ORDER[userRole(b)]) || (a.displayName || a.email || '').localeCompare(b.displayName || b.email || ''));
@@ -1863,14 +2383,21 @@ function populateUserFilters() {
 }
 
 /* ── EXPORT CSV ─────────────────────────────────────────── */
-function csvCell(v) { const s = String(v ?? ''); return /[",\n;]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; }
+function csvCell(v) {
+  let s = String(v ?? '');
+  if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;   // evita inyección de fórmulas en Excel
+  return /[",\n;]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+}
 $('btn-export-csv').addEventListener('click', () => {
   const tasks = visibleTeamTasks();
   if (!tasks.length) { toast('No hay tareas para exportar', 'error'); return; }
-  const headers = ['Título', 'Descripción', 'Estado', 'Prioridad', 'Asignado a', 'Creada por', 'Fecha límite', 'Vencida', 'Etiquetas', 'Creada', 'Completada'];
+  const headers = ['Título', 'Descripción', 'Estado', 'Prioridad', 'Tipo', 'Grupo / lote', 'Asignado a', 'Avance grupo', 'Creada por', 'Fecha límite', 'Vencida', 'Etiquetas', 'Creada', 'Completada'];
   const rows = tasks.map(t => [
     t.title, t.description, STATUS_LABEL[t.status] || '', PRIORITY_LABEL[t.priority] || '',
-    assigneeName(t), creatorName(t), fmtDT(t), isOverdue(t) ? 'Sí' : 'No',
+    KIND_LABEL[kindOf(t)], t.groupName || t.batchName || '',
+    taskAssignees(t).map(u => memberName(t, u)).join('; '),
+    kindOf(t) === 'shared' ? `${sharedProgress(t).done}/${sharedProgress(t).total}` : '',
+    creatorName(t), fmtDT(t), isOverdue(t) ? 'Sí' : 'No',
     (t.tags || []).join(', '), fmtDateOnly(t.createdAt), fmtDateOnly(t.completedAt),
   ].map(csvCell).join(','));
   const csv  = [headers.join(','), ...rows].join('\n');
@@ -1885,10 +2412,13 @@ $('btn-export-csv').addEventListener('click', () => {
 /* ══════════════════════════════════════════════════════════
    TARJETA DE TAREA + EVENTOS (delegados)
 ══════════════════════════════════════════════════════════ */
-function renderTaskCard(t, { scope, showAssignee = false, showCreator = false }) {
+function renderTaskCard(t, { scope, showAssignee = false, showCreator = false, inBatch = false }) {
   const me       = state.me.uid;
   const isDone   = t.status === 'done';
-  const overdue  = isOverdue(t);
+  const kind     = kindOf(t);
+  const partCard = scope === 'mine' && partMode(t) && isAssignedToMe(t);
+  const partDone = partCard && myPartDone(t) && !isDone;
+  const overdue  = isOverdue(t) && !partDone;
   const today    = isDueToday(t);
   const soon     = isDueSoon(t);
   const bulk     = state.bulk[scope];
@@ -1897,14 +2427,28 @@ function renderTaskCard(t, { scope, showAssignee = false, showCreator = false })
   const statusOk = canChangeStatus(t);
   const tagsArr  = t.tags || [];
   const tags     = tagsArr.slice(0, 3).map(tag => `<span class="tag-chip">#${escHtml(tag)}</span>`).join('') + (tagsArr.length > 3 ? `<span class="tag-chip">+${tagsArr.length - 3}</span>` : '');
-  const cls      = ['task-card', isDone && 'done', overdue && 'overdue', today && !isDone && 'today-due', selected && 'selected'].filter(Boolean).join(' ');
+  const cls      = ['task-card', isDone && 'done', partDone && 'part-done', overdue && 'overdue', today && !isDone && !partDone && 'today-due', selected && 'selected'].filter(Boolean).join(' ');
   const assignedByOther = scope === 'mine' && t.createdBy && t.createdBy !== me;
   const nAtt = (t.attachments || []).length;
+  const cl   = t.checklist || [];
+  const clDone = cl.filter(i => i.done).length;
+  const chkTitle = partCard ? (partDone ? 'Desmarcar mi parte' : 'Marcar mi parte como lista') : (isDone ? 'Marcar pendiente' : 'Marcar completada');
+
+  let groupMeta = '';
+  if (kind === 'shared') {
+    const p = sharedProgress(t);
+    groupMeta = `<span class="badge badge-group">👥 ${escHtml(t.groupName || 'Grupal')}</span>
+      ${avatarStack(taskAssignees(t), { max: 4, doneFn: u => memberDone(t, u), nameFn: u => memberName(t, u) })}
+      ${partMode(t) ? progressMini(p.done, p.total) : ''}
+      ${partDone ? `<span class="badge badge-part">✓ Tu parte lista</span>` : ''}`;
+  } else if (kind === 'batch' && !inBatch) {
+    groupMeta = `<span class="badge badge-batch" ${scope === 'team' ? `data-action="batch" style="cursor:pointer;" title="Ver lote completo"` : ''}>📦 ${escHtml(t.batchName || 'Asignación grupal')}</span>`;
+  }
 
   return `
   <div class="${cls}" data-id="${escHtml(t.id)}">
     ${bulk ? `<button class="task-bulk-check ${selected ? 'checked' : ''}" data-action="bulk" aria-label="Seleccionar"></button>` : ''}
-    <button class="task-checkbox ${isDone ? 'checked' : ''}" data-action="toggle" ${statusOk ? '' : 'disabled'} title="${isDone ? 'Marcar pendiente' : 'Marcar completada'}" aria-label="${isDone ? 'Marcar pendiente' : 'Marcar completada'}"></button>
+    <button class="task-checkbox ${isDone ? 'checked' : ''}" data-action="${partCard ? 'part' : 'toggle'}" ${statusOk ? '' : 'disabled'} title="${chkTitle}" aria-label="${chkTitle}"></button>
     <div class="task-body">
       <div class="task-title" data-action="detail">${escHtml(t.title)}</div>
       ${t.description ? `<div class="task-desc">${escHtml(t.description)}</div>` : ''}
@@ -1913,8 +2457,10 @@ function renderTaskCard(t, { scope, showAssignee = false, showCreator = false })
         <span class="badge badge-priority-${escHtml(t.priority || 'media')}">${PRIORITY_LABEL[t.priority] || 'Media'}</span>
         ${overdue ? `<span class="badge badge-overdue">⚠ Vencida</span>` : (today ? `<span class="badge badge-today">📅 Hoy</span>` : (soon ? `<span class="badge badge-soon">⏰ Pronto</span>` : ''))}
         ${t.dueDate ? `<span class="due-chip ${overdue ? 'is-overdue' : ''}">${fmtDT(t)}${relDue(t) ? ' · ' + relDue(t) : ''}</span>` : ''}
-        ${showAssignee ? `<span class="task-assignee"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>${escHtml(t.assignedTo === me ? 'Yo' : assigneeName(t))}</span>` : ''}
+        ${groupMeta}
+        ${showAssignee && kind !== 'shared' ? `<span class="task-assignee"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>${escHtml(t.assignedTo === me ? 'Yo' : assigneeName(t))}</span>` : ''}
         ${(showCreator || assignedByOther) ? `<span class="task-assignee by" title="Creada por">↳ ${escHtml(t.createdBy === me ? 'ti' : creatorName(t))}</span>` : ''}
+        ${cl.length ? `<span class="meta-icon" title="Lista de verificación">☑ ${clDone}/${cl.length}</span>` : ''}
         ${nAtt ? `<span class="meta-icon">📎 ${nAtt}</span>` : ''}
         ${tags}
       </div>
@@ -1946,6 +2492,8 @@ function wireTaskList(containerId, scope) {
         break;
       }
       case 'toggle': await setTaskStatus(t, t.status === 'done' ? 'pending' : 'done'); break;
+      case 'part':   await toggleMyPart(t, !myPartDone(t) && t.status !== 'done'); break;
+      case 'batch':  if (t.batchId) setTeamBatchFilter(t.batchId); break;
       case 'detail': openTaskDetail(id); break;
       case 'edit':   openTaskForm(t); break;
       case 'delete':
@@ -1964,10 +2512,39 @@ async function setTaskStatus(t, status) {
   if (!canChangeStatus(t)) { toast('No puedes cambiar el estado de esta tarea.', 'error'); return; }
   if (t.status === status) return;
   try {
-    await updateDoc(doc(db, 'tasks', t.id), {
-      status, completedAt: status === 'done' ? serverTimestamp() : null, updatedAt: serverTimestamp(),
-    });
+    const upd = { status, completedAt: status === 'done' ? serverTimestamp() : null, updatedAt: serverTimestamp() };
+    if (partMode(t) && status === 'pending') upd.doneBy = [];   // reiniciar avance del grupo
+    await updateDoc(doc(db, 'tasks', t.id), upd);
     if (status === 'done') toast('¡Tarea completada! 🚀', 'success');
+  } catch (err) { toast('Error: ' + errMsg(err), 'error'); }
+}
+
+/* Tarea compartida: cada integrante marca su parte. Cuando todos terminan, se completa sola. */
+async function toggleMyPart(t, done) {
+  if (!isAssignedToMe(t)) return;
+  const me = state.me.uid;
+  try {
+    const result = await runTransaction(db, async tx => {
+      const ref  = doc(db, 'tasks', t.id);
+      const snap = await tx.get(ref);
+      if (!snap.exists()) throw new Error('La tarea ya no existe.');
+      const d = snap.data();
+      const members = taskAssignees(d);
+      const doneBy  = new Set((d.doneBy || []).filter(u => members.includes(u)));
+      done ? doneBy.add(me) : doneBy.delete(me);
+      let status = d.status || 'pending';
+      const allDone = members.length > 0 && members.every(u => doneBy.has(u));
+      if (allDone) status = 'done';
+      else if (status === 'done' || (status === 'pending' && doneBy.size)) status = 'in_progress';
+      tx.update(ref, {
+        doneBy: [...doneBy], status,
+        completedAt: status === 'done' ? (d.status === 'done' ? d.completedAt ?? serverTimestamp() : serverTimestamp()) : null,
+        updatedAt: serverTimestamp(),
+      });
+      return { allDone, n: doneBy.size, total: members.length };
+    });
+    if (result.allDone && done) toast('¡Todos terminaron! Tarea grupal completada 🚀', 'success');
+    else if (done) toast(`Tu parte quedó lista (${result.n}/${result.total}).`, 'success');
   } catch (err) { toast('Error: ' + errMsg(err), 'error'); }
 }
 
@@ -2065,32 +2642,219 @@ function assigneeOptions(selectedId) {
   return html;
 }
 
-function openTaskForm(t = null, { forTeam = false } = {}) {
-  if (t && !canEdit(t)) { toast('Solo quien creó la tarea puede editarla.', 'error'); return; }
+/* ── Selector de integrantes (reutilizable en tarea y grupo) ── */
+function sortPeople(list) {
+  return [...list].sort((a, b) => (ROLE_ORDER[userRole(a)] - ROLE_ORDER[userRole(b)]) || (a.displayName || a.email || '').localeCompare(b.displayName || b.email || ''));
+}
+function safeColor(c) { return GROUP_COLORS.includes(c) ? c : GROUP_COLORS[0]; }
+
+function createPicker(root, { onChange } = {}) {
+  root.innerHTML = `
+    <div class="picker-head">
+      <div class="search-wrap">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input class="form-control" data-pk-search placeholder="Buscar persona…"/>
+      </div>
+      <button type="button" class="btn btn-ghost btn-sm" data-pk="all">Todos</button>
+      <button type="button" class="btn btn-ghost btn-sm" data-pk="none">Ninguno</button>
+      <span class="picker-count"></span>
+    </div>
+    <div class="picker-list"></div>`;
+  const p = { selected: new Set(), candidates: [], q: '' };
+  const listEl = root.querySelector('.picker-list');
+  const countEl = root.querySelector('.picker-count');
+  const searchEl = root.querySelector('[data-pk-search]');
+  const visible = () => p.candidates.filter(u => !p.q || `${u.displayName || ''} ${u.email || ''} ${u.store || ''}`.toLowerCase().includes(p.q));
+
+  p.render = () => {
+    const n = p.selected.size;
+    countEl.textContent = `${n} seleccionada${n !== 1 ? 's' : ''}`;
+    const vis = visible();
+    if (!p.candidates.length) { listEl.innerHTML = '<div class="picker-empty">No hay personas disponibles. Un super admin debe asignarte equipo.</div>'; return; }
+    if (!vis.length) { listEl.innerHTML = '<div class="picker-empty">Sin coincidencias.</div>'; return; }
+    const top = listEl.scrollTop;
+    listEl.innerHTML = vis.map(u => {
+      const on = p.selected.has(u.id);
+      const r = userRole(u);
+      const name = u.displayName || u.email;
+      const sub = [u.id === state.me.uid ? 'Tú' : ROLE_LABEL[r], r === 'admin' && u.store ? u.store : '', r === 'user' && isSuper() && u.managerId ? teamLabel(u.managerId) : ''].filter(Boolean).join(' · ');
+      return `<button type="button" class="picker-row ${on ? 'on' : ''}" data-pk-id="${escHtml(u.id)}" role="checkbox" aria-checked="${on}">
+        <span class="pk"></span>
+        <span class="avatar av-sm av-${r}">${escHtml(initials(name))}</span>
+        <span style="min-width:0;"><div class="nm truncate">${escHtml(name)}</div><div class="sb truncate">${escHtml(sub)}</div></span>
+      </button>`;
+    }).join('');
+    listEl.scrollTop = top;
+  };
+  p.set = (ids, candidates) => {
+    if (candidates) p.candidates = sortPeople(candidates);
+    p.selected = new Set((ids || []).filter(id => p.candidates.some(u => u.id === id)));
+    p.q = ''; searchEl.value = '';
+    p.render();
+  };
+  p.values = () => [...p.selected];
+
+  root.addEventListener('click', e => {
+    const row = e.target.closest('[data-pk-id]');
+    if (row) {
+      const id = row.dataset.pkId;
+      p.selected.has(id) ? p.selected.delete(id) : p.selected.add(id);
+      p.render(); onChange?.(p); return;
+    }
+    const b = e.target.closest('[data-pk]'); if (!b) return;
+    visible().forEach(u => b.dataset.pk === 'all' ? p.selected.add(u.id) : p.selected.delete(u.id));
+    p.render(); onChange?.(p);
+  });
+  searchEl.addEventListener('input', () => { p.q = searchEl.value.trim().toLowerCase(); p.render(); });
+  searchEl.addEventListener('keydown', e => { if (e.key === 'Enter') e.preventDefault(); });
+  return p;
+}
+
+const taskPicker = createPicker($('task-member-picker'), {
+  onChange: p => {
+    const g = state.groups.find(x => x.id === state.form.groupId);
+    if (g) {
+      const live = groupLiveMembers(g);
+      const same = live.length === p.selected.size && live.every(id => p.selected.has(id));
+      if (!same) state.form.groupId = null;
+    }
+    renderGroupChips();
+  },
+});
+
+/* ── Grupos guardados como atajo dentro del formulario ───── */
+function groupLiveMembers(g) {
+  const ok = new Set(assignableUsers().map(u => u.id));
+  return (g.members || []).filter(id => ok.has(id));
+}
+function renderGroupChips() {
+  const groups = state.groups.map(g => ({ g, live: groupLiveMembers(g) })).filter(x => x.live.length);
+  $('task-saved-groups-wrap').classList.toggle('hidden', !groups.length);
+  $('task-group-chips').innerHTML = groups.map(({ g, live }) => `
+    <button type="button" class="group-chip ${state.form.groupId === g.id ? 'active' : ''}" data-gid="${escHtml(g.id)}" title="${escHtml(live.map(id => userName(id)).join(', '))}">
+      <span class="dot" style="background:${safeColor(g.color)};"></span>${escHtml(g.name)}<span class="n">${live.length}</span>
+    </button>`).join('');
+}
+$('task-group-chips').addEventListener('click', e => {
+  const chip = e.target.closest('[data-gid]'); if (!chip) return;
+  const g = state.groups.find(x => x.id === chip.dataset.gid); if (!g) return;
+  if (state.form.groupId === g.id) {
+    state.form.groupId = null;
+    taskPicker.set([]);
+    if ($('task-group-name').value === g.name) $('task-group-name').value = '';
+  } else {
+    state.form.groupId = g.id;
+    taskPicker.set(groupLiveMembers(g));
+    $('task-group-name').value = g.name;
+  }
+  renderGroupChips();
+});
+
+/* ── Modo del formulario ─────────────────────────────────── */
+function taskDist() { return document.querySelector('input[name="task-dist"]:checked')?.value || 'shared'; }
+function setFormMode(mode) {
+  state.form.mode = mode;
+  const mgr = isManager();
+  document.querySelectorAll('#task-mode-switch .mode-opt').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+  $('task-assignee-group').classList.toggle('hidden', !mgr || mode !== 'single');
+  $('task-group-box').classList.toggle('hidden', !mgr || mode !== 'group');
+  $('modal-task').querySelector('.modal').classList.toggle('modal-xl', mgr && mode === 'group');
+  syncDist();
+}
+function syncDist() {
+  const shared = taskDist() === 'shared';
+  $('task-completion-wrap').classList.toggle('hidden', !shared);
+}
+$('task-mode-switch').addEventListener('click', e => {
+  const b = e.target.closest('[data-mode]'); if (!b || b.disabled) return;
+  setFormMode(b.dataset.mode);
+});
+document.querySelectorAll('input[name="task-dist"]').forEach(r => r.addEventListener('change', syncDist));
+
+/* ── Abrir formulario ────────────────────────────────────── */
+function openTaskForm(t = null, { forTeam = false, mode = null, groupId = null, duplicate = false, applyBatch = false } = {}) {
+  const editing = !!t && !duplicate;
+  if (editing && !canEdit(t)) { toast('Solo quien creó la tarea puede editarla.', 'error'); return; }
+  const kind = t ? kindOf(t) : null;
   $('task-form').reset();
-  $('task-edit-id').value = t?.id || '';
-  $('task-title-input').value    = t?.title || '';
+  $('task-edit-id').value        = editing ? t.id : '';
+  $('task-title-input').value    = t ? (duplicate ? `${t.title} (copia)` : t.title) : '';
   $('task-desc-input').value     = t?.description || '';
   $('task-priority-input').value = t?.priority || 'media';
-  $('task-status-input').value   = t?.status || 'pending';
+  $('task-status-input').value   = t && !duplicate ? (t.status || 'pending') : 'pending';
   $('task-tags-input').value     = (t?.tags || []).join(', ');
   const ms = t ? dueDateMs(t) : null;
-  $('task-due-input').value = ms ? new Date(ms - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16) : '';
+  $('task-due-input').value = ms ? new Date(ms - new Date(ms).getTimezoneOffset() * 60000).toISOString().slice(0, 16) : '';
+  $('task-checklist-group').classList.toggle('hidden', editing);
+  $('task-checklist-input').value = duplicate ? (t.checklist || []).map(i => i.text).join('\n') : '';
 
-  if (isManager()) {
-    const sel = $('task-assignee-input');
-    const target = t?.assignedTo || (forTeam ? '' : state.me.uid);
-    sel.innerHTML = (forTeam && !t ? '<option value="">Seleccionar persona…</option>' : '') + assigneeOptions(target);
-    sel.value = target;
-    const teamSize = state.users.filter(u => u.id !== state.me.uid && u.active !== false).length;
-    $('task-assignee-hint').textContent = isAdmin() && !teamSize ? 'Aún no tienes equipo. Un super admin debe asignarte personas.' : '';
+  state.form.groupId = null;
+  const mgr = isManager();
+  $('task-mode-group').classList.toggle('hidden', !mgr || (editing && kind === 'batch'));
+  $('task-apply-batch-wrap').classList.toggle('hidden', !(editing && kind === 'batch'));
+  if (editing && kind === 'batch') {
+    const n = batchTasks(t.batchId).length;
+    $('task-apply-batch').checked = applyBatch;
+    $('task-apply-batch-text').textContent = `Aplicar título, descripción, prioridad, fecha y etiquetas a las ${n} copias del lote “${t.batchName || 'grupal'}”`;
   }
-  $('modal-task-title').textContent = t ? 'Editar tarea' : (forTeam ? 'Asignar nueva tarea' : 'Nueva tarea');
+
+  if (mgr) {
+    let startMode = mode || 'single';
+    if (kind === 'shared') startMode = 'group';
+    if (kind === 'batch') startMode = 'single';
+    if (groupId) startMode = 'group';
+
+    // Una persona
+    const sel = $('task-assignee-input');
+    const target = kind === 'shared' ? '' : (t?.assignedTo || (forTeam ? '' : state.me.uid));
+    sel.innerHTML = (!target ? '<option value="">Seleccionar persona…</option>' : '') + assigneeOptions(target);
+    sel.value = target;
+    const teamSize = assignableUsers().filter(u => u.id !== state.me.uid).length;
+    $('task-assignee-hint').textContent = isAdmin() && !teamSize ? 'Aún no tienes equipo. Un super admin debe asignarte personas.' : '';
+
+    // Grupo
+    let members = [];
+    if (kind === 'shared') members = taskAssignees(t);
+    const g = groupId ? state.groups.find(x => x.id === groupId) : null;
+    if (g) { members = groupLiveMembers(g); state.form.groupId = g.id; }
+    else if (kind === 'shared' && t.groupId) state.form.groupId = t.groupId;
+    taskPicker.set(members, assignableUsers());
+    $('task-group-name').value = t?.groupName || g?.name || '';
+    $('task-completion').value = t?.completion === 'any' ? 'any' : 'all';
+    document.querySelector(`input[name="task-dist"][value="shared"]`).checked = true;
+    $('task-distribution-wrap').classList.toggle('hidden', editing);
+    renderGroupChips();
+    setFormMode(startMode);
+  } else {
+    setFormMode('single');
+  }
+
+  $('modal-task-title').textContent = editing
+    ? (kind === 'shared' ? 'Editar tarea grupal' : kind === 'batch' ? 'Editar copia del lote' : 'Editar tarea')
+    : duplicate ? 'Duplicar tarea'
+    : state.form.mode === 'group' ? 'Asignar tarea a un grupo'
+    : forTeam ? 'Asignar nueva tarea' : 'Nueva tarea';
   openModal('modal-task');
 }
 
 $('btn-new-task').addEventListener('click', () => openTaskForm());
 $('btn-new-task-team').addEventListener('click', () => openTaskForm(null, { forTeam: true }));
+
+/* ── Guardar ─────────────────────────────────────────────── */
+function parseChecklist(raw) {
+  return raw.split('\n').map(s => s.trim()).filter(Boolean).slice(0, 40).map(text => ({ id: newId(), text: text.slice(0, 200), done: false }));
+}
+function personFields(uid) {
+  const u = userById(uid);
+  return { assignedTo: uid, assignees: [uid], assignedToName: u?.displayName || '', assignedToEmail: u?.email || '' };
+}
+async function commitInChunks(ops) {
+  for (let i = 0; i < ops.length; i += 450) {
+    const b = writeBatch(db);
+    ops.slice(i, i + 450).forEach(fn => fn(b));
+    await b.commit();
+  }
+}
 
 $('task-form').addEventListener('submit', async e => {
   e.preventDefault();
@@ -2102,35 +2866,80 @@ $('task-form').addEventListener('submit', async e => {
   const tags     = [...new Set($('task-tags-input').value.split(',').map(s => s.trim().toLowerCase().replace(/^#/, '')).filter(Boolean))].slice(0, 10);
   const editId   = $('task-edit-id').value;
   const existing = editId ? findTask(editId) : null;
-  const assignTo = isManager() ? $('task-assignee-input').value : state.me.uid;
+  const mode     = isManager() ? state.form.mode : 'single';
 
   if (!title) { toast('El título es obligatorio', 'error'); $('task-title-input').focus(); return; }
-  if (!assignTo) { toast('Elige a quién asignar la tarea', 'error'); return; }
 
-  const assignee = userById(assignTo);
-  const payload = {
+  const base = {
     title, description: desc, priority, status, tags,
-    assignedTo: assignTo,
-    assignedToName:  assignee?.displayName || existing?.assignedToName || '',
-    assignedToEmail: assignee?.email || existing?.assignedToEmail || '',
     dueDate: dueRaw ? Timestamp.fromDate(new Date(dueRaw)) : null,
     updatedAt: serverTimestamp(),
   };
-  if (status === 'done' && existing?.status !== 'done') payload.completedAt = serverTimestamp();
-  if (status !== 'done') payload.completedAt = null;
+  if (status === 'done' && existing?.status !== 'done') base.completedAt = serverTimestamp();
+  if (status !== 'done') base.completedAt = null;
+  const creator = { createdBy: state.me.uid, createdByName: state.me.displayName || state.me.email, createdAt: serverTimestamp() };
+  const checklistRaw = editId ? null : $('task-checklist-input').value;
 
   const btn = $('btn-save-task'); setBusy(btn, true);
   try {
-    if (editId) {
-      await updateDoc(doc(db, 'tasks', editId), payload);
-      toast('Tarea actualizada.', 'success');
+    if (mode === 'single') {
+      const assignTo = isManager() ? $('task-assignee-input').value : state.me.uid;
+      if (!assignTo) { toast('Elige a quién asignar la tarea', 'error'); return; }
+      const payload = { ...base, ...personFields(assignTo) };
+      if (existing && !userById(assignTo)) { payload.assignedToName = existing.assignedToName || ''; payload.assignedToEmail = existing.assignedToEmail || ''; }
+
+      if (existing) {
+        if (kindOf(existing) === 'shared') Object.assign(payload, { kind: 'single', groupName: '', completion: null, doneBy: [], assigneeNames: {} });
+        if (kindOf(existing) === 'batch' && $('task-apply-batch').checked) {
+          const shared = { title, description: desc, priority, tags, dueDate: base.dueDate, updatedAt: serverTimestamp() };
+          const others = batchTasks(existing.batchId).filter(x => x.id !== existing.id && canEdit(x));
+          await commitInChunks([
+            b => b.update(doc(db, 'tasks', existing.id), payload),
+            ...others.map(x => b => b.update(doc(db, 'tasks', x.id), shared)),
+          ]);
+          toast(`Lote actualizado (${plural(others.length + 1, 'tarea', 'tareas')}).`, 'success');
+        } else {
+          await updateDoc(doc(db, 'tasks', editId), payload);
+          toast('Tarea actualizada.', 'success');
+        }
+      } else {
+        await addDoc(collection(db, 'tasks'), { ...payload, kind: 'single', attachments: [], checklist: parseChecklist(checklistRaw || ''), ...creator });
+        toast(assignTo === state.me.uid ? 'Tarea creada.' : `Tarea asignada a ${userName(assignTo, 'la persona')}.`, 'success');
+      }
     } else {
-      await addDoc(collection(db, 'tasks'), {
-        ...payload, attachments: [],
-        createdBy: state.me.uid, createdByName: state.me.displayName || state.me.email,
-        createdAt: serverTimestamp(),
-      });
-      toast(assignTo === state.me.uid ? 'Tarea creada.' : `Tarea asignada a ${assignee?.displayName || 'la persona'}.`, 'success');
+      const members = taskPicker.values();
+      if (!members.length) { toast('Elige al menos una persona del grupo', 'error'); return; }
+      const dist = existing ? 'shared' : taskDist();
+      const savedGroup = state.groups.find(g => g.id === state.form.groupId);
+      const gName = $('task-group-name').value.trim() || savedGroup?.name || `Grupo de ${members.length}`;
+      const groupId = state.form.groupId || null;
+
+      if (dist === 'shared') {
+        const assigneeNames = Object.fromEntries(members.map(u => [u, userName(u, existing?.assigneeNames?.[u] || '')]));
+        const payload = {
+          ...base, kind: 'shared', assignedTo: null, assignees: members, assigneeNames,
+          assignedToName: '', assignedToEmail: '', groupName: gName, groupId,
+          completion: $('task-completion').value === 'any' ? 'any' : 'all',
+        };
+        if (existing) {
+          payload.doneBy = status === 'pending' && existing.status !== 'pending' ? [] : (existing.doneBy || []).filter(u => members.includes(u));
+          await updateDoc(doc(db, 'tasks', editId), payload);
+          toast('Tarea grupal actualizada.', 'success');
+        } else {
+          payload.doneBy = status === 'done' ? members : [];
+          await addDoc(collection(db, 'tasks'), { ...payload, attachments: [], checklist: parseChecklist(checklistRaw || ''), ...creator });
+          toast(`Tarea compartida con ${plural(members.length, 'persona', 'personas')}.`, 'success');
+        }
+      } else {
+        const batchId = newId();
+        await commitInChunks(members.map(uid => b => b.set(doc(collection(db, 'tasks')), {
+          ...base, ...personFields(uid), kind: 'batch',
+          batchId, batchName: gName, batchSize: members.length, groupId,
+          attachments: [], checklist: parseChecklist(checklistRaw || ''), ...creator,
+        })));
+        state.expandedBatches.add(batchId);
+        toast(`Se creó una tarea para cada una de las ${plural(members.length, 'persona', 'personas')}.`, 'success');
+      }
     }
     hideModal('modal-task');
   } catch (err) { toast('Error al guardar: ' + errMsg(err), 'error'); }
@@ -2176,6 +2985,9 @@ function kanbanCardHtml(t, showPeople) {
     <div class="kanban-card-meta">
       <span class="badge badge-priority-${escHtml(t.priority || 'media')}">${PRIORITY_LABEL[t.priority] || 'Media'}</span>
       ${overdue ? `<span class="badge badge-overdue">⚠ Vencida</span>` : (today ? `<span class="badge badge-today">📅 Hoy</span>` : '')}
+      ${kindOf(t) === 'shared' ? `<span class="badge badge-group">👥 ${sharedProgress(t).done}/${sharedProgress(t).total}</span>` : ''}
+      ${kindOf(t) === 'batch' ? `<span class="badge badge-batch">📦</span>` : ''}
+      ${(t.checklist || []).length ? `<span class="meta-icon">☑ ${(t.checklist || []).filter(i => i.done).length}/${t.checklist.length}</span>` : ''}
       ${(t.tags || []).slice(0, 2).map(tag => `<span class="tag-chip">#${escHtml(tag)}</span>`).join('')}
     </div>
     <div class="kanban-card-footer">
@@ -2185,7 +2997,9 @@ function kanbanCardHtml(t, showPeople) {
           ${idx > 0 ? `<button data-kaction="prev" aria-label="Mover atrás" title="Mover a ${STATUS_LABEL[STATUS_ORDER[idx - 1]]}">◀</button>` : ''}
           ${idx < 2 ? `<button data-kaction="next" aria-label="Mover adelante" title="Mover a ${STATUS_LABEL[STATUS_ORDER[idx + 1]]}">▶</button>` : ''}
         </div>` : ''}
-        ${showPeople ? `<div class="avatar av-xs av-${aRole}" title="${escHtml(aName)}">${escHtml(initials(aName))}</div>` : ''}
+        ${kindOf(t) === 'shared'
+          ? avatarStack(taskAssignees(t), { max: 3, doneFn: u => memberDone(t, u), nameFn: u => memberName(t, u) })
+          : (showPeople ? `<div class="avatar av-xs av-${aRole}" title="${escHtml(aName)}">${escHtml(initials(aName))}</div>` : '')}
       </div>
     </div>
   </div>`;
@@ -2234,6 +3048,7 @@ async function openTaskDetail(taskId) {
   }
   state.detailId = taskId;
   $('detail-comment-input').value = '';
+  $('detail-cl-input').value = '';
   $('detail-file-input').value = '';
   renderDetail(t);
   resetPomo();
@@ -2261,8 +3076,12 @@ function renderDetail(t) {
     ${overdue ? `<span class="badge badge-overdue">⚠ Vencida</span>` : ''}
     ${(t.tags || []).map(tag => `<span class="tag-chip">#${escHtml(tag)}</span>`).join('')}`;
   const me = state.me.uid;
+  const kind = kindOf(t);
   $('detail-meta').innerHTML = `
-    <span>Asignada a <strong>${escHtml(t.assignedTo === me ? 'ti' : assigneeName(t))}</strong></span>
+    ${kind === 'shared'
+      ? `<span>Tarea compartida · <strong>${escHtml(t.groupName || 'Grupo')}</strong></span>`
+      : `<span>Asignada a <strong>${escHtml(t.assignedTo === me ? 'ti' : assigneeName(t))}</strong></span>`}
+    ${kind === 'batch' ? `<span>Lote <strong>${escHtml(t.batchName || 'grupal')}</strong>${t.batchSize ? ` · ${t.batchSize} personas` : ''}</span>` : ''}
     <span>Creada por <strong>${escHtml(t.createdBy === me ? 'ti' : creatorName(t))}</strong></span>
     ${t.dueDate ? `<span>Vence <strong style="${overdue ? 'color:var(--danger)' : ''}">${fmtDT(t)}</strong>${relDue(t) ? ' · ' + relDue(t) : ''}</span>` : ''}
     ${t.createdAt ? `<span>Creada ${fmtDateOnly(t.createdAt)}</span>` : ''}
@@ -2277,8 +3096,104 @@ function renderDetail(t) {
     b.disabled = !statusOk;
   });
   $('btn-detail-edit').classList.toggle('hidden', !canEdit(t));
+  $('btn-detail-duplicate').classList.toggle('hidden', !(canEdit(t) || isManager()));
+  renderMembers(t);
+  renderChecklist(t);
   renderAttachments(t);
 }
+
+function renderMembers(t) {
+  const kind = kindOf(t);
+  const wrap = $('detail-members-wrap');
+  let rows = [];
+  if (kind === 'shared') {
+    const p = sharedProgress(t);
+    $('detail-members-label').textContent = partMode(t) ? `Integrantes · ${p.done}/${p.total} listos` : `Integrantes (${p.total}) · basta con que uno la complete`;
+    rows = taskAssignees(t).map(u => ({ id: u, name: memberName(t, u), ok: memberDone(t, u) }));
+  } else if (kind === 'batch' && isManager()) {
+    const all = batchTasks(t.batchId);
+    if (all.length > 1) {
+      $('detail-members-label').textContent = `Lote · ${all.filter(x => x.status === 'done').length}/${all.length} completadas`;
+      rows = all.map(x => ({ id: x.assignedTo, name: userName(x.assignedTo, x.assignedToName), ok: x.status === 'done', status: x.status, taskId: x.id, self: x.id === t.id }));
+    }
+  }
+  wrap.classList.toggle('hidden', !rows.length);
+  $('detail-members').innerHTML = rows.map(r => `
+    <div class="member-row ${r.ok ? 'ok' : ''}" ${r.taskId && !r.self ? `data-open="${escHtml(r.taskId)}" style="cursor:pointer;"` : ''}>
+      <span class="avatar av-xs av-${userRole(userById(r.id))}">${escHtml(initials(r.name))}</span>
+      <span>${escHtml(r.id === state.me.uid ? `${r.name} (tú)` : r.name)}${r.self ? ' <span class="text-xs text-muted">· esta copia</span>' : ''}</span>
+      <span class="st ${r.ok ? '' : 'wait'}">${r.ok ? '✓ Lista' : (r.status === 'in_progress' ? '🚀 En progreso' : 'Pendiente')}</span>
+    </div>`).join('');
+
+  const showPart = kind === 'shared' && partMode(t) && isAssignedToMe(t) && t.status !== 'done';
+  $('detail-my-part').classList.toggle('hidden', !showPart);
+  if (showPart) {
+    const mine = myPartDone(t);
+    $('detail-my-part-text').textContent = mine ? 'Marcaste tu parte como lista. Esperando al resto del grupo.' : 'Cuando termines lo que te toca, márcalo aquí.';
+    const b = $('btn-my-part');
+    b.textContent = mine ? '↺ Desmarcar mi parte' : '✓ Marcar mi parte como lista';
+    b.className = 'btn btn-sm ' + (mine ? 'btn-ghost' : 'btn-success');
+  }
+}
+$('btn-my-part').addEventListener('click', () => {
+  const t = findTask(state.detailId); if (t) toggleMyPart(t, !myPartDone(t));
+});
+
+/* ── Lista de verificación (subtareas) ───────────────────── */
+function renderChecklist(t) {
+  const items = t.checklist || [];
+  const done = items.filter(i => i.done).length;
+  const can = canChangeStatus(t);
+  $('detail-cl-count').textContent = items.length ? `(${done}/${items.length})` : '';
+  $('detail-cl-progress').classList.toggle('hidden', !items.length);
+  $('detail-cl-progress').firstElementChild.style.width = (items.length ? Math.round(done / items.length * 100) : 0) + '%';
+  $('detail-cl-add-row').classList.toggle('hidden', !can);
+  $('detail-checklist').innerHTML = items.length ? items.map(i => `
+    <div class="cl-item ${i.done ? 'done' : ''}" data-cl="${escHtml(i.id)}">
+      <button class="task-checkbox ${i.done ? 'checked' : ''}" data-cl-act="toggle" ${can ? '' : 'disabled'} aria-label="Marcar paso"></button>
+      <span class="cl-text">${escHtml(i.text)}</span>
+      ${i.done && i.doneByName ? `<span class="text-xs text-muted">${escHtml(i.doneBy === state.me.uid ? 'tú' : i.doneByName)}</span>` : ''}
+      ${can ? `<button class="cl-del" data-cl-act="del" aria-label="Quitar paso">✕</button>` : ''}
+    </div>`).join('') : '<p class="text-muted text-sm">Sin pasos. Divide la tarea en pasos para ver el avance.</p>';
+}
+
+async function mutateChecklist(fn) {
+  const id = state.detailId; if (!id) return;
+  try {
+    await runTransaction(db, async tx => {
+      const ref = doc(db, 'tasks', id);
+      const snap = await tx.get(ref);
+      if (!snap.exists()) throw new Error('La tarea ya no existe.');
+      const list = (snap.data().checklist || []).map(i => ({ ...i }));
+      tx.update(ref, { checklist: fn(list), updatedAt: serverTimestamp() });
+    });
+  } catch (err) { toast('Error: ' + errMsg(err), 'error'); }
+}
+$('detail-checklist').addEventListener('click', e => {
+  const b = e.target.closest('[data-cl-act]'); if (!b || b.disabled) return;
+  const itemId = b.closest('[data-cl]').dataset.cl;
+  if (b.dataset.clAct === 'toggle') {
+    mutateChecklist(list => list.map(i => i.id !== itemId ? i : (i.done
+      ? { id: i.id, text: i.text, done: false }
+      : { ...i, done: true, doneBy: state.me.uid, doneByName: state.me.displayName || state.me.email })));
+  } else {
+    mutateChecklist(list => list.filter(i => i.id !== itemId));
+  }
+});
+function addChecklistItem() {
+  const input = $('detail-cl-input');
+  const text = input.value.trim(); if (!text) return;
+  input.value = '';
+  mutateChecklist(list => list.length >= 40 ? (toast('Máximo 40 pasos', 'error'), list) : [...list, { id: newId(), text: text.slice(0, 200), done: false }]);
+}
+$('btn-cl-add').addEventListener('click', addChecklistItem);
+$('detail-cl-input').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); addChecklistItem(); } });
+
+$('btn-detail-duplicate').addEventListener('click', () => {
+  const t = findTask(state.detailId); if (!t) return;
+  closeDetail();
+  openTaskForm(t, { duplicate: true, forTeam: isManager() && t.assignedTo !== state.me.uid });
+});
 
 $('detail-status').addEventListener('click', e => {
   const b = e.target.closest('button[data-status]'); if (!b || b.disabled) return;
@@ -2425,12 +3340,15 @@ $('btn-pomo-reset').addEventListener('click', resetPomo);
 function statsByAssignee(tasks) {
   const map = {};
   tasks.forEach(t => {
-    const k = t.assignedTo || '—';
-    map[k] ??= { id: k, total: 0, done: 0, inprog: 0, overdue: 0 };
-    map[k].total++;
-    if (t.status === 'done') map[k].done++;
-    if (t.status === 'in_progress') map[k].inprog++;
-    if (isOverdue(t)) map[k].overdue++;
+    const people = taskAssignees(t);
+    (people.length ? people : ['—']).forEach(k => {
+      map[k] ??= { id: k, total: 0, done: 0, inprog: 0, overdue: 0, name: memberName(t, k) };
+      const ok = memberDone(t, k);
+      map[k].total++;
+      if (ok) map[k].done++;
+      else if (t.status === 'in_progress') map[k].inprog++;
+      if (isOverdue(t) && !ok) map[k].overdue++;
+    });
   });
   return map;
 }
@@ -2485,7 +3403,51 @@ function renderDashboard() {
   renderCharts(tasks);
   renderPerformance(tasks);
   renderActivityFeed(tasks);
+  renderGroupWork(tasks);
 }
+
+function renderGroupWork(tasks) {
+  const items = [];
+  const batches = new Map();
+  tasks.forEach(t => {
+    const k = kindOf(t);
+    if (k === 'shared') {
+      const p = sharedProgress(t);
+      items.push({ kind: 'shared', id: t.id, title: t.title, name: t.groupName || 'Grupo', people: taskAssignees(t), done: p.done, total: p.total,
+        doneFn: u => memberDone(t, u), nameFn: u => memberName(t, u), overdue: isOverdue(t), closed: t.status === 'done', ts: tsMs(t.updatedAt) || tsMs(t.createdAt) || 0, due: t });
+    } else if (k === 'batch' && t.batchId) {
+      if (!batches.has(t.batchId)) batches.set(t.batchId, []);
+      batches.get(t.batchId).push(t);
+    }
+  });
+  batches.forEach((list, id) => {
+    const f = list[0];
+    items.push({ kind: 'batch', id, title: f.title, name: f.batchName || 'Lote', people: list.map(x => x.assignedTo),
+      done: list.filter(x => x.status === 'done').length, total: list.length,
+      doneFn: u => list.find(x => x.assignedTo === u)?.status === 'done', nameFn: u => userName(u, list.find(x => x.assignedTo === u)?.assignedToName),
+      overdue: list.some(isOverdue), closed: list.every(x => x.status === 'done'), ts: Math.max(...list.map(x => tsMs(x.updatedAt) || 0)), due: f });
+  });
+  items.sort((a, b) => (a.closed - b.closed) || (b.overdue - a.overdue) || b.ts - a.ts);
+  const box = $('dash-groupwork');
+  if (!items.length) {
+    box.innerHTML = `<div class="empty-state" style="padding:1.5rem;"><p>Aún no hay tareas grupales.</p><div class="empty-action"><button class="btn btn-ghost btn-sm" data-new-group-task>👥 Asignar una tarea en grupo</button></div></div>`;
+    return;
+  }
+  box.innerHTML = items.slice(0, 10).map(it => `
+    <div class="group-progress-row" ${it.kind === 'shared' ? `data-open="${escHtml(it.id)}"` : `data-open-batch="${escHtml(it.id)}"`}>
+      <span class="badge ${it.kind === 'shared' ? 'badge-group' : 'badge-batch'}">${it.kind === 'shared' ? '👥 Compartida' : '📦 Lote'}</span>
+      <div class="gp-main">
+        <div class="gp-title truncate">${escHtml(it.title)}</div>
+        <div class="text-xs text-muted truncate">${escHtml(it.name)}${it.due.dueDate ? ` · vence ${fmtDT(it.due)}` : ''}${it.overdue ? ' · <span style="color:var(--danger);">⚠ vencida</span>' : ''}</div>
+      </div>
+      ${avatarStack(it.people, { max: 5, doneFn: it.doneFn, nameFn: it.nameFn })}
+      ${progressMini(it.done, it.total)}
+    </div>`).join('') + (items.length > 10 ? `<p class="text-xs text-muted mt-1">+${items.length - 10} más en Tareas del equipo</p>` : '');
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-open-batch]'); if (b) { state.expandedBatches.add(b.dataset.openBatch); setTeamBatchFilter(b.dataset.openBatch); }
+  if (e.target.closest('[data-new-group-task]')) openTaskForm(null, { forTeam: true, mode: 'group' });
+});
 
 document.addEventListener('click', e => {
   const r = e.target.closest('[data-open]'); if (r) openTaskDetail(r.dataset.open);
@@ -2512,7 +3474,7 @@ function renderCharts(tasks) {
   });
 
   const per = Object.values(statsByAssignee(tasks)).sort((a, b) => b.total - a.total).slice(0, 8);
-  const labels = per.map(p => p.id === state.me.uid ? 'Yo' : userName(p.id, tasks.find(t => t.assignedTo === p.id)?.assignedToName));
+  const labels = per.map(p => p.id === state.me.uid ? 'Yo' : userName(p.id, p.name));
   upsertChart('users', 'chart-users', {
     type: 'bar',
     data: { labels, datasets: [
@@ -2547,7 +3509,7 @@ function renderPerformance(tasks) {
   const per = Object.values(statsByAssignee(tasks)).sort((a, b) => b.overdue - a.overdue || b.total - a.total);
   $('dash-perf-tbody').innerHTML = per.length ? per.map(p => {
     const pct = p.total ? Math.round(p.done / p.total * 100) : 0;
-    const name = p.id === state.me.uid ? 'Yo' : userName(p.id, tasks.find(t => t.assignedTo === p.id)?.assignedToName);
+    const name = p.id === state.me.uid ? 'Yo' : userName(p.id, p.name);
     const role = userRole(userById(p.id));
     return `<tr>
       <td><div class="cell-user"><div class="avatar av-sm av-${role}">${escHtml(initials(name))}</div><span class="font-semibold">${escHtml(name)}</span></div></td>
@@ -2560,14 +3522,23 @@ function renderPerformance(tasks) {
 }
 
 function renderActivityFeed(tasks) {
-  const recent = [...tasks].filter(t => tsMs(t.updatedAt)).sort((a, b) => tsMs(b.updatedAt) - tsMs(a.updatedAt)).slice(0, 10);
+  const seenBatch = new Set();
+  const recent = [...tasks].filter(t => tsMs(t.updatedAt)).sort((a, b) => tsMs(b.updatedAt) - tsMs(a.updatedAt))
+    .filter(t => {
+      // un lote recién creado aparece una sola vez en el feed
+      const fresh = Math.abs((tsMs(t.updatedAt) || 0) - (tsMs(t.createdAt) || 0)) < 3000;
+      if (!t.batchId || !fresh) return true;
+      if (seenBatch.has(t.batchId)) return false;
+      seenBatch.add(t.batchId); return true;
+    }).slice(0, 10);
   const box = $('dash-activity-feed');
   if (!recent.length) { box.innerHTML = '<p class="text-muted text-sm">Sin actividad registrada.</p>'; return; }
   box.innerHTML = recent.map(t => {
     const dotColor = t.status === 'done' ? 'var(--success)' : t.status === 'in_progress' ? 'var(--info)' : 'var(--warning)';
     const created  = Math.abs((tsMs(t.updatedAt) || 0) - (tsMs(t.createdAt) || 0)) < 3000;
+    const who = t.batchId && created ? `${t.batchName || 'un grupo'} (${t.batchSize || batchTasks(t.batchId).length} personas)` : assigneeName(t);
     const text = created
-      ? `<strong>${escHtml(creatorName(t))}</strong> asignó <strong>${escHtml(t.title)}</strong> a ${escHtml(assigneeName(t))}`
+      ? `<strong>${escHtml(creatorName(t))}</strong> asignó <strong>${escHtml(t.title)}</strong> a ${escHtml(who)}`
       : `<strong>${escHtml(t.title)}</strong> (${escHtml(assigneeName(t))}) ${t.status === 'done' ? 'se completó' : t.status === 'in_progress' ? 'está en progreso' : 'se actualizó'}`;
     return `
     <div class="activity-item" data-open="${escHtml(t.id)}">
@@ -2790,6 +3761,194 @@ $('user-form').addEventListener('submit', async e => {
 });
 
 /* ══════════════════════════════════════════════════════════
+   GRUPOS GUARDADOS (admin: los suyos · super: todos)
+══════════════════════════════════════════════════════════ */
+const groupPicker = createPicker($('group-member-picker'), { onChange: () => {} });
+
+function renderGroups() {
+  if (!isManager()) return;
+  const q = $('groups-search').value.trim().toLowerCase();
+  const list = state.groups.filter(g => !q || `${g.name || ''} ${g.description || ''} ${(g.members || []).map(id => userName(id)).join(' ')}`.toLowerCase().includes(q));
+  $('groups-subtitle').textContent = state.groups.length
+    ? `${plural(state.groups.length, 'grupo guardado', 'grupos guardados')}${isSuper() ? ' en toda la organización' : ''}`
+    : 'Crea tu primer grupo para asignar tareas en bloque';
+  const grid = $('groups-grid');
+  if (!list.length) {
+    grid.innerHTML = `<div class="panel" style="grid-column:1 / -1;"><div class="empty-state">${EMPTY_ICON}<p>${state.groups.length ? 'No hay grupos que coincidan.' : 'Todavía no tienes grupos guardados.'}</p>
+      ${state.groups.length ? '' : '<div class="empty-action"><button class="btn btn-primary btn-sm" data-group-new>+ Crear grupo</button></div>'}</div></div>`;
+    return;
+  }
+  grid.innerHTML = list.map(g => {
+    const live = groupLiveMembers(g);
+    const gone = (g.members || []).length - live.length;
+    const related = state.teamTasks.filter(t => t.groupId === g.id);
+    const open = related.filter(t => t.status !== 'done').length;
+    const over = related.filter(isOverdue).length;
+    const mine = g.ownerId === state.me.uid;
+    return `
+    <div class="group-card" style="--gc:${safeColor(g.color)};" data-group-id="${escHtml(g.id)}">
+      <div class="flex justify-between items-center gap-1">
+        <h4>${escHtml(g.name)}</h4>
+        ${isSuper() && !mine ? `<span class="text-xs text-muted truncate" style="max-width:45%;">${escHtml(teamLabel(g.ownerId))}</span>` : ''}
+      </div>
+      ${g.description ? `<div class="gdesc">${escHtml(g.description)}</div>` : ''}
+      <div class="flex items-center gap-2">
+        ${avatarStack(live, { max: 7 })}
+        <span class="text-xs text-muted">${plural(live.length, 'persona', 'personas')}${gone ? ` · ${gone} sin acceso` : ''}</span>
+      </div>
+      <div class="gstats">
+        <span><b>${open}</b> abiertas</span>
+        <span><b style="color:${over ? 'var(--danger)' : 'inherit'};">${over}</b> vencidas</span>
+        <span><b>${related.length}</b> total</span>
+      </div>
+      <div class="gfoot">
+        <button class="btn btn-primary btn-sm" data-group-act="assign" ${live.length ? '' : 'disabled'}>👥 Asignar tarea</button>
+        <button class="btn btn-ghost btn-sm btn-icon" data-group-act="edit" data-tip="Editar" aria-label="Editar grupo">${ICON_EDIT}</button>
+        <button class="btn btn-danger btn-sm btn-icon" data-group-act="delete" data-tip="Eliminar" aria-label="Eliminar grupo">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+$('groups-search').addEventListener('input', debounce(renderGroups, 120));
+$('btn-new-group').addEventListener('click', () => openGroupForm());
+document.addEventListener('click', e => { if (e.target.closest('[data-group-new]')) openGroupForm(); });
+
+$('groups-grid').addEventListener('click', async e => {
+  const b = e.target.closest('[data-group-act]'); if (!b) return;
+  const g = state.groups.find(x => x.id === b.closest('[data-group-id]')?.dataset.groupId); if (!g) return;
+  if (b.dataset.groupAct === 'assign') openTaskForm(null, { forTeam: true, mode: 'group', groupId: g.id });
+  if (b.dataset.groupAct === 'edit') openGroupForm(g);
+  if (b.dataset.groupAct === 'delete') {
+    if (!await confirmDialog(`¿Eliminar el grupo “${g.name}”? Las tareas ya asignadas no se borran.`, { title: 'Eliminar grupo', confirmText: 'Eliminar' })) return;
+    try { await deleteDoc(doc(db, 'groups', g.id)); toast('Grupo eliminado.', 'success'); }
+    catch (err) { toast('Error: ' + errMsg(err), 'error'); }
+  }
+});
+
+function renderSwatches() {
+  $('group-swatches').innerHTML = GROUP_COLORS.map(c =>
+    `<button type="button" class="swatch ${state.groupForm.color === c ? 'active' : ''}" data-color="${c}" style="background:${c};" aria-label="Color ${c}"></button>`).join('');
+}
+$('group-swatches').addEventListener('click', e => {
+  const s = e.target.closest('[data-color]'); if (!s) return;
+  state.groupForm.color = s.dataset.color; renderSwatches();
+});
+
+function openGroupForm(g = null) {
+  if (!isManager()) return;
+  $('group-form').reset();
+  $('group-edit-id').value = g?.id || '';
+  $('group-modal-title').textContent = g ? `Editar grupo · ${g.name}` : 'Nuevo grupo';
+  $('group-name').value = g?.name || '';
+  $('group-desc').value = g?.description || '';
+  state.groupForm.color = safeColor(g?.color || GROUP_COLORS[state.groups.length % GROUP_COLORS.length]);
+  renderSwatches();
+  const candidates = assignableUsers();
+  groupPicker.set(g?.members || [], candidates);
+  $('group-picker-hint').textContent = isAdmin()
+    ? (candidates.length > 1 ? 'Solo puedes incluir a personas de tu equipo (y a ti).' : 'Aún no tienes equipo. Un super admin debe asignarte personas.')
+    : 'Puedes combinar personas de distintas tiendas.';
+  openModal('modal-group');
+}
+
+$('group-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const id = $('group-edit-id').value;
+  const name = $('group-name').value.trim();
+  const members = groupPicker.values();
+  if (!name) { toast('El nombre del grupo es obligatorio', 'error'); $('group-name').focus(); return; }
+  if (!members.length) { toast('Agrega al menos una persona', 'error'); return; }
+  if (state.groups.some(g => g.id !== id && (g.name || '').toLowerCase() === name.toLowerCase() && g.ownerId === state.me.uid)) {
+    toast('Ya tienes un grupo con ese nombre', 'error'); return;
+  }
+  const data = { name, description: $('group-desc').value.trim(), color: safeColor(state.groupForm.color), members, updatedAt: serverTimestamp() };
+  const btn = $('btn-save-group'); setBusy(btn, true);
+  try {
+    if (id) await updateDoc(doc(db, 'groups', id), data);
+    else await addDoc(collection(db, 'groups'), { ...data, ownerId: state.me.uid, ownerName: state.me.displayName || state.me.email, createdAt: serverTimestamp() });
+    toast(id ? 'Grupo actualizado.' : `Grupo “${name}” creado.`, 'success');
+    hideModal('modal-group');
+  } catch (err) { toast('Error: ' + errMsg(err), 'error'); }
+  finally { setBusy(btn, false); }
+});
+
+/* ══════════════════════════════════════════════════════════
+   CAPTURA RÁPIDA  —  "Texto !alta #etiqueta @mañana 10:00"
+══════════════════════════════════════════════════════════ */
+const WEEKDAYS = { domingo: 0, lunes: 1, martes: 2, miercoles: 3, 'miércoles': 3, jueves: 4, viernes: 5, sabado: 6, 'sábado': 6 };
+function parseQuick(raw) {
+  let text = ' ' + raw + ' ';
+  const out = { priority: 'media', tags: [], due: null };
+  text = text.replace(/\s!(alta|media|baja)\b/gi, (_, p) => { out.priority = p.toLowerCase(); return ' '; });
+  text = text.replace(/\s#([\wáéíóúñü-]+)/gi, (_, tg) => { out.tags.push(tg.toLowerCase()); return ' '; });
+  let day = null;
+  text = text.replace(/\s@(hoy|mañana|manana|pasado|lunes|martes|mi[eé]rcoles|jueves|viernes|s[aá]bado|domingo|\d{1,2}\/\d{1,2}(?:\/\d{2,4})?)\b/gi, (_, d) => {
+    d = d.toLowerCase();
+    const now = new Date(); const dt = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    if (d === 'hoy') {}
+    else if (d === 'mañana' || d === 'manana') dt.setDate(dt.getDate() + 1);
+    else if (d === 'pasado') dt.setDate(dt.getDate() + 2);
+    else if (d in WEEKDAYS || d.normalize('NFD').replace(/[̀-ͯ]/g, '') in WEEKDAYS) {
+      const target = WEEKDAYS[d] ?? WEEKDAYS[d.normalize('NFD').replace(/[̀-ͯ]/g, '')];
+      let diff = (target - dt.getDay() + 7) % 7; if (diff === 0) diff = 7;
+      dt.setDate(dt.getDate() + diff);
+    } else {
+      const [dd, mm, yy] = d.split('/').map(Number);
+      dt.setFullYear(yy ? (yy < 100 ? 2000 + yy : yy) : now.getFullYear(), mm - 1, dd);
+      if (!yy && dt < new Date(now.getFullYear(), now.getMonth(), now.getDate())) dt.setFullYear(dt.getFullYear() + 1);
+    }
+    day = dt; return ' ';
+  });
+  if (day) {
+    let h = 18, m = 0, found = false;
+    text = text.replace(/\s(\d{1,2})(?::(\d{2}))?\s?(am|pm|h)?(?=\s)/gi, (all, hh, mi, ap) => {
+      if (found || (!mi && !ap)) return all;   // un número suelto no es hora
+      found = true;
+      h = +hh; m = +(mi || 0);
+      if (ap?.toLowerCase() === 'pm' && h < 12) h += 12;
+      if (ap?.toLowerCase() === 'am' && h === 12) h = 0;
+      return ' ';
+    });
+    day.setHours(Math.min(h, 23), Math.min(m, 59), 0, 0);
+    out.due = day;
+  }
+  out.title = text.replace(/\s+/g, ' ').trim();
+  return out;
+}
+function renderQuickPreview() {
+  const raw = $('quick-add').value;
+  const box = $('quick-preview');
+  if (!raw.trim()) { box.innerHTML = '<span>Tokens: <kbd>!alta</kbd> <kbd>#etiqueta</kbd> <kbd>@hoy</kbd> <kbd>@mañana</kbd> <kbd>@viernes</kbd> <kbd>@25/10</kbd> + hora <kbd>10:30</kbd></span>'; return; }
+  const p = parseQuick(raw);
+  box.innerHTML = `
+    <span class="badge badge-priority-${p.priority}">${PRIORITY_LABEL[p.priority]}</span>
+    ${p.due ? `<span class="due-chip">📅 ${p.due.toLocaleString('es-MX', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</span>` : ''}
+    ${p.tags.map(t => `<span class="tag-chip">#${escHtml(t)}</span>`).join('')}
+    <span>→ ${escHtml(p.title || '…')}</span>`;
+}
+$('quick-add').addEventListener('input', renderQuickPreview);
+$('quick-add').addEventListener('keydown', e => { if (e.key === 'Escape') { e.target.value = ''; renderQuickPreview(); e.target.blur(); } });
+renderQuickPreview();
+$('quick-add-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const p = parseQuick($('quick-add').value);
+  if (!p.title) { toast('Escribe el título de la tarea', 'error'); return; }
+  try {
+    await addDoc(collection(db, 'tasks'), {
+      title: p.title.slice(0, 120), description: '', priority: p.priority, status: 'pending', tags: [...new Set(p.tags)].slice(0, 10),
+      dueDate: p.due ? Timestamp.fromDate(p.due) : null, kind: 'single', ...personFields(state.me.uid),
+      attachments: [], checklist: [], completedAt: null,
+      createdBy: state.me.uid, createdByName: state.me.displayName || state.me.email,
+      createdAt: serverTimestamp(), updatedAt: serverTimestamp(),
+    });
+    $('quick-add').value = ''; renderQuickPreview();
+    toast('Tarea creada.', 'success');
+  } catch (err) { toast('Error: ' + errMsg(err), 'error'); }
+});
+
+/* ══════════════════════════════════════════════════════════
    NOTIFICACIONES
 ══════════════════════════════════════════════════════════ */
 $('bell-btn').addEventListener('click', e => {
@@ -2805,8 +3964,9 @@ $('bell-panel').addEventListener('click', e => {
 
 function renderBell() {
   if (!state.me) return;
-  const overdue = sortTasks(state.myTasks.filter(isOverdue), 'due');
-  const soon    = sortTasks(state.myTasks.filter(isDueSoon), 'due');
+  const pending = state.myTasks.filter(t => !myPartDone(t));
+  const overdue = sortTasks(pending.filter(isOverdue), 'due');
+  const soon    = sortTasks(pending.filter(isDueSoon), 'due');
   const items   = [...overdue, ...soon];
   const dot     = $('bell-dot');
   if (items.length) { dot.textContent = items.length > 9 ? '9+' : items.length; dot.classList.remove('hidden'); }
@@ -2827,7 +3987,7 @@ function renderBell() {
 }
 
 function updateNavBadge() {
-  const overdue = state.myTasks.filter(isOverdue).length;
+  const overdue = state.myTasks.filter(t => isOverdue(t) && !myPartDone(t)).length;
   const badge = $('nav-badge-tasks');
   if (overdue > 0) { badge.textContent = overdue; badge.classList.remove('hidden'); }
   else badge.classList.add('hidden');
