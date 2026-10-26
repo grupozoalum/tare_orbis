@@ -761,6 +761,115 @@
       .mode-switch, .radio-cards { grid-template-columns: 1fr; }
       .batch-body { padding-left: .7rem; }
     }
+
+    /* ════════════════════════════════════════════════════
+       v3.2 — ESPACIO DE GRUPO, TAREAS DISPONIBLES, NOVEDADES
+    ════════════════════════════════════════════════════ */
+    .radio-cards { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+    .badge-pool { background: var(--sat-soft); color: var(--sat); }
+    .nav-badge.sat { background: var(--sat); color: #04221e; }
+    .task-claim { flex-shrink: 0; align-self: center; }
+    .group-card { cursor: pointer; }
+    .group-card:focus-visible { outline: 2px solid var(--orbit); outline-offset: 2px; }
+    .group-card .gnew { display: flex; gap: .4rem; flex-wrap: wrap; }
+
+    .gs-hero { display: flex; gap: 1.4rem; align-items: center; flex-wrap: wrap; position: relative; overflow: hidden; }
+    .gs-hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gc, var(--orbit)); }
+    .gs-hero .gs-desc { flex: 1; min-width: 220px; font-size: .86rem; color: var(--text-muted); }
+    .gs-stats { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+    .gs-stat { display: flex; flex-direction: column; gap: .15rem; }
+    .gs-stat b { font-family: var(--font-mono); font-size: 1.4rem; line-height: 1; }
+    .gs-stat span { font-size: .66rem; text-transform: uppercase; letter-spacing: .07em; color: var(--text-muted); font-weight: 700; }
+    .gs-tabs .btn .nav-badge { margin-left: .2rem; }
+    #gs-quick-form select { width: auto; padding: .4rem .6rem; font-size: .8rem; }
+
+    .feed { display: flex; flex-direction: column; }
+    .feed-item { display: flex; gap: .75rem; padding: .75rem .2rem; border-bottom: 1px solid var(--border); }
+    .feed-item:last-child { border-bottom: none; }
+    .feed-ico { width: 30px; height: 30px; border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: .85rem; background: var(--surface3); }
+    .feed-item.unread .feed-ico { box-shadow: 0 0 0 2px var(--orbit); }
+    .feed-body { flex: 1; min-width: 0; }
+    .feed-text { font-size: .85rem; color: var(--text-muted); word-break: break-word; }
+    .feed-text strong { color: var(--text); font-weight: 600; }
+    .feed-text .link { color: var(--text); font-weight: 600; cursor: pointer; text-decoration: underline; text-decoration-color: var(--border2); text-underline-offset: 3px; }
+    .feed-text .link:hover { color: var(--orbit); }
+    .feed-post { margin-top: .35rem; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: .6rem .8rem; font-size: .86rem; color: var(--text); white-space: pre-wrap; word-break: break-word; }
+    .feed-time { font-size: .7rem; color: var(--text-dim); margin-top: .2rem; display: flex; gap: .5rem; align-items: center; }
+    .composer { display: flex; gap: .5rem; align-items: flex-end; }
+    .composer textarea { min-height: 46px; }
+
+    .pool-hint { border-style: solid; border-color: rgba(69,217,200,.35); cursor: pointer; transition: background var(--t); }
+    .pool-hint svg { color: var(--sat); }
+    .pool-hint:hover { background: var(--surface3); }
+    .pool-hint strong { color: var(--sat); }
+    .claim-bar { display: flex; align-items: center; justify-content: space-between; gap: .6rem; flex-wrap: wrap; padding: .6rem .8rem; border: 1px dashed rgba(69,217,200,.45); border-radius: var(--radius); margin-bottom: .9rem; font-size: .82rem; color: var(--text-muted); }
+
+    /* recordatorios */
+    .switch { position: relative; display: inline-flex; width: 38px; height: 22px; flex-shrink: 0; cursor: pointer; }
+    .switch input { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; z-index: 1; }
+    .switch span { position: absolute; inset: 0; border-radius: 22px; background: var(--surface3); border: 1px solid var(--border2); transition: all var(--t); }
+    .switch span::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--text-muted); transition: all var(--t); }
+    .switch input:checked + span { background: var(--orbit-soft); border-color: var(--orbit); }
+    .switch input:checked + span::after { left: 18px; background: var(--orbit); }
+    .switch input:focus-visible + span { outline: 2px solid var(--orbit); outline-offset: 2px; }
+    .switch-line { display: inline-flex; align-items: center; gap: .6rem; font-size: .85rem; color: var(--text-muted); font-weight: 600; }
+    .rem-cats { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 1rem; }
+    .se { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.1rem 1.2rem; display: flex; flex-direction: column; gap: .9rem; transition: border-color var(--t); min-width: 0; }
+    .se:hover { border-color: var(--border2); }
+    .se-plain { background: var(--surface2); }
+    .se-head { display: flex; align-items: flex-start; justify-content: space-between; gap: .8rem; }
+    .se-title { font-family: var(--font-display); font-weight: 600; font-size: .98rem; }
+    .se-sub { font-size: .76rem; color: var(--text-muted); margin-top: .1rem; }
+    .se-body { display: flex; flex-direction: column; gap: .85rem; transition: opacity var(--t); }
+    .se.is-off .se-body { opacity: .4; pointer-events: none; }
+    .se-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .8rem; }
+    .se[data-mode="times"] .se-interval, .se[data-mode="interval"] .se-times,
+    .se[data-mode="due-only"] .se-times, .se[data-mode="due-only"] .se-interval,
+    .se[data-mode="due-only"] .se-days, .se[data-mode="due-only"] .se-content, .se[data-mode="due-only"] .se-avail { display: none; }
+    .se input[type="time"] { color-scheme: dark; padding: .5rem .6rem; }
+    .day-chips { display: flex; gap: .35rem; flex-wrap: wrap; align-items: center; }
+    .day-chip { min-width: 32px; height: 30px; padding: 0 .5rem; border-radius: 8px; border: 1px solid var(--border2); background: var(--bg2); color: var(--text-muted); font-size: .78rem; font-weight: 700; transition: all var(--t); }
+    .day-chip:hover { color: var(--text); border-color: var(--orbit-soft); }
+    .day-chip.on { background: var(--orbit-soft); border-color: var(--orbit); color: var(--orbit); }
+    .se-summary { font-size: .78rem; color: var(--sat); background: var(--sat-soft); border-radius: 8px; padding: .5rem .7rem; }
+    .se-summary.warn { color: var(--warning); background: var(--warning-soft); }
+    .rem-status { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .rem-status .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .rem-general { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+    .log-row { display: flex; align-items: center; gap: .7rem; padding: .55rem .3rem; border-bottom: 1px solid var(--border); font-size: .82rem; }
+    .log-row:last-child { border-bottom: none; }
+    .log-row .lt { margin-left: auto; color: var(--text-dim); font-size: .72rem; white-space: nowrap; }
+    .rem-task-row { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
+    .rem-task-row select { flex: 1; min-width: 220px; }
+    .badge-rem-inherit { background: var(--surface3); color: var(--text-muted); }
+    .badge-rem-custom  { background: var(--orbit-soft); color: var(--orbit); }
+    .badge-rem-off     { background: var(--danger-soft); color: var(--danger); }
+
+    /* subtareas */
+    .sub-parent { display: inline-flex; align-items: center; gap: .4rem; background: var(--surface2); border: 1px solid var(--border); color: var(--text-muted); border-radius: 20px; padding: .25rem .75rem; font-size: .76rem; margin-bottom: .6rem; max-width: 100%; }
+    .sub-parent strong { color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .sub-parent:hover { border-color: var(--orbit-soft); color: var(--orbit); }
+    .sub-list { display: flex; flex-direction: column; gap: .35rem; }
+    .sub-row { display: flex; align-items: center; gap: .6rem; padding: .5rem .65rem; border-radius: var(--radius); background: var(--surface2); border: 1px solid var(--border); flex-wrap: wrap; }
+    .sub-row:hover { border-color: var(--border2); }
+    .sub-row .task-checkbox { width: 18px; height: 18px; margin-top: 0; }
+    .sub-row .sub-title { flex: 1; min-width: 140px; font-size: .86rem; font-weight: 600; cursor: pointer; word-break: break-word; }
+    .sub-row .sub-title:hover { color: var(--orbit); }
+    .sub-row.done .sub-title { text-decoration: line-through; color: var(--text-muted); }
+    .sub-row .sub-meta { display: flex; align-items: center; gap: .35rem; flex-wrap: wrap; }
+    .sub-row .sub-del { background: transparent; border: none; color: var(--text-dim); font-size: .8rem; padding: 0 .2rem; }
+    .sub-row .sub-del:hover { color: var(--danger); }
+    .sub-add { display: flex; gap: .5rem; margin-top: .6rem; flex-wrap: wrap; }
+    .sub-add input { flex: 1; min-width: 180px; }
+    .sub-add select { width: auto; max-width: 220px; }
+    .sub-of { cursor: pointer; color: var(--sat); }
+    .sub-of:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      #gs-quick-form { flex-wrap: wrap; }
+      #gs-quick-form input { flex-basis: 100%; }
+      .composer { flex-direction: column; align-items: stretch; }
+    }
   </style>
 </head>
 <body>
@@ -841,17 +950,18 @@
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="6" height="18" rx="1"/><rect x="9" y="3" width="6" height="12" rx="1"/><rect x="15" y="3" width="6" height="8" rx="1"/></svg>
         Tablero
       </div>
+      <div class="nav-item" data-view="view-groups" tabindex="0">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9.5" r="2.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M15.5 14.4c.5-.1 1-.2 1.5-.2 2.8 0 4.5 1.9 4.5 4.8"/></svg>
+        Grupos
+        <span class="nav-badge sat hidden" id="nav-badge-groups" title="Tareas disponibles para tomar">0</span>
+        <span class="nav-count" id="nav-groups-count"></span>
+      </div>
 
       <div class="nav-section-label hidden" data-role="manager" id="nav-section-manage">Gestión</div>
       <div class="nav-item hidden" data-role="manager" data-view="view-team" tabindex="0">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
         <span id="nav-team-label">Tareas del equipo</span>
         <span class="nav-count" id="nav-team-count"></span>
-      </div>
-      <div class="nav-item hidden" data-role="manager" data-view="view-groups" tabindex="0">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9.5" r="2.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M15.5 14.4c.5-.1 1-.2 1.5-.2 2.8 0 4.5 1.9 4.5 4.8"/></svg>
-        Grupos
-        <span class="nav-count" id="nav-groups-count"></span>
       </div>
       <div class="nav-item hidden" data-role="manager" data-view="view-dashboard" tabindex="0">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
@@ -861,6 +971,11 @@
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
         <span id="nav-users-label">Usuarios</span>
         <span class="nav-count" id="nav-users-count"></span>
+      </div>
+      <div class="nav-item hidden" data-role="super" data-view="view-reminders" tabindex="0">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z"/><polyline points="22 6 12 13 2 6"/></svg>
+        Recordatorios
+        <span class="nav-count" id="nav-rem-state"></span>
       </div>
     </nav>
     <div class="sidebar-footer">
@@ -945,6 +1060,11 @@
         <div class="quick-preview mt-1" id="quick-preview"></div>
       </div>
 
+      <div class="scope-note pool-hint hidden" id="my-pool-hint" role="button" tabindex="0">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M18 8v6M15 11h6"/></svg>
+        <span id="my-pool-hint-text">—</span>
+      </div>
+
       <div class="filter-bar">
         <div class="search-wrap">
           <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -955,6 +1075,8 @@
           <option value="single">👤 Individuales</option>
           <option value="shared">👥 Compartidas</option>
           <option value="batch">📦 Asignación grupal</option>
+          <option value="pool">🙋 Del grupo (para tomar)</option>
+          <option value="sub">🌿 Subtareas</option>
         </select>
         <select id="my-filter-status" class="form-control">
           <option value="">Estado</option>
@@ -1100,6 +1222,8 @@
           <option value="single">👤 Individuales</option>
           <option value="shared">👥 Compartidas</option>
           <option value="batch">📦 Asignación grupal</option>
+          <option value="pool">🙋 Del grupo (para tomar)</option>
+          <option value="sub">🌿 Subtareas</option>
         </select>
         <select id="team-filter-user" class="form-control"><option value="">Asignado a</option></select>
         <select id="team-filter-creator" class="form-control hidden" data-role="super"><option value="">Creada por</option></select>
@@ -1211,7 +1335,7 @@
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             <input class="form-control" id="groups-search" placeholder="Buscar grupo o persona…" style="padding:.5rem .8rem;font-size:.85rem;"/>
           </div>
-          <button class="btn btn-primary" id="btn-new-group">
+          <button class="btn btn-primary hidden" data-role="manager" id="btn-new-group">
             <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             Nuevo grupo
           </button>
@@ -1219,9 +1343,136 @@
       </div>
       <div class="scope-note">
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/></svg>
-        <span>Guarda equipos de trabajo (turno matutino, cajeros, bodega…) y asígnales tareas con un clic: una tarea compartida o una copia para cada integrante.</span>
+        <span id="groups-scope-text">Abre un grupo para ver sus novedades y tomar tareas disponibles.</span>
       </div>
       <div class="groups-grid" id="groups-grid"></div>
+    </div>
+
+    <!-- ── ESPACIO DE GRUPO (todos los integrantes) ───── -->
+    <div class="view" id="view-group">
+      <div class="page-header">
+        <div class="flex items-center gap-2">
+          <button class="btn btn-ghost btn-sm btn-icon" id="btn-group-back" aria-label="Volver a grupos" data-tip="Volver a grupos">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div>
+            <h1 class="page-title" id="gs-title">Grupo</h1>
+            <p class="page-subtitle" id="gs-subtitle">—</p>
+          </div>
+        </div>
+        <div class="page-header-actions" id="gs-actions"></div>
+      </div>
+
+      <div class="panel gs-hero" id="gs-hero"></div>
+
+      <div>
+        <form class="quick-add" id="gs-quick-form" autocomplete="off">
+          <span class="plus">+</span>
+          <input id="gs-quick" placeholder="Nueva tarea del grupo: “Acomodar pasillo 4 !alta @hoy 17:00”" maxlength="200"/>
+          <select id="gs-quick-mode" class="form-control" aria-label="Para quién es la tarea">
+            <option value="pool">🙋 Disponible para el grupo</option>
+            <option value="me">👤 Para mí</option>
+          </select>
+          <button type="submit" class="btn btn-primary btn-sm">Agregar</button>
+        </form>
+        <div class="quick-preview mt-1" id="gs-quick-preview"></div>
+      </div>
+
+      <div class="panel">
+        <div class="gs-tabs flex gap-1" style="flex-wrap:wrap;" id="gs-tabs"></div>
+        <div class="composer mt-2" id="gs-composer">
+          <textarea class="form-control" id="gs-post-input" maxlength="1000" placeholder="Comparte una novedad con el grupo…  (Ctrl + Enter para publicar)"></textarea>
+          <button class="btn btn-primary btn-sm" id="btn-gs-post">Publicar</button>
+        </div>
+        <div id="gs-content" class="mt-2"></div>
+      </div>
+    </div>
+
+    <!-- ── RECORDATORIOS POR CORREO (super) ───────────── -->
+    <div class="view" id="view-reminders">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Recordatorios por correo</h1>
+          <p class="page-subtitle">Elige cuándo y cada cuánto recibe cada persona sus tareas por correo</p>
+        </div>
+        <div class="page-header-actions">
+          <button class="btn btn-ghost btn-sm hidden" id="btn-rem-discard">Descartar cambios</button>
+          <button class="btn btn-primary" id="btn-rem-save" disabled>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Guardar configuración
+          </button>
+        </div>
+      </div>
+
+      <div class="panel rem-status" id="rem-status"></div>
+
+      <div class="panel" id="rem-general-panel">
+        <div class="panel-header">
+          <div class="panel-title">⚙️ General</div>
+          <label class="switch-line" for="rem-enabled">Envíos activados
+            <span class="switch"><input type="checkbox" id="rem-enabled"/><span></span></span>
+          </label>
+        </div>
+        <div class="rem-general">
+          <div class="form-group">
+            <label for="rem-tz">Zona horaria</label>
+            <select id="rem-tz" class="form-control">
+              <option value="America/Mexico_City">Ciudad de México (Centro)</option>
+              <option value="America/Monterrey">Monterrey</option>
+              <option value="America/Merida">Mérida</option>
+              <option value="America/Cancun">Cancún (Sureste)</option>
+              <option value="America/Chihuahua">Chihuahua</option>
+              <option value="America/Mazatlan">Mazatlán (Pacífico)</option>
+              <option value="America/Hermosillo">Hermosillo</option>
+              <option value="America/Tijuana">Tijuana (Noroeste)</option>
+              <option value="America/Bogota">Bogotá</option>
+              <option value="America/Lima">Lima</option>
+              <option value="America/Santiago">Santiago</option>
+              <option value="America/Argentina/Buenos_Aires">Buenos Aires</option>
+              <option value="Europe/Madrid">Madrid</option>
+              <option value="UTC">UTC</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="rem-url">Enlace de la app (botón del correo)</label>
+            <input id="rem-url" type="url" class="form-control" placeholder="https://tareas.grupozoalum.com"/>
+          </div>
+          <div class="form-group">
+            <label for="rem-sender">Nombre del remitente</label>
+            <input id="rem-sender" type="text" class="form-control" maxlength="60" placeholder="Orbiscorp TaskFlow"/>
+          </div>
+        </div>
+        <label class="check-line mt-2"><input type="checkbox" id="rem-empty"/> Enviar el resumen aunque la persona no tenga tareas pendientes</label>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <div class="flex items-center justify-between gap-2" style="flex-wrap:wrap;">
+          <div class="panel-title">📬 Por tipo de tarea</div>
+          <span class="text-muted text-sm">Si a una persona le tocan varios tipos a la misma hora, recibe un solo correo.</span>
+        </div>
+        <div class="rem-cats" id="rem-cats"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">👤 Por persona</div>
+          <div class="search-wrap" style="min-width:220px;">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input class="form-control" id="rem-users-search" placeholder="Buscar persona…" style="padding:.5rem .8rem;font-size:.85rem;"/>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Persona</th><th>Recordatorios</th><th>Detalle</th><th>Último correo</th><th style="text-align:right;">Acciones</th></tr></thead>
+            <tbody id="rem-users-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">🧾 Últimos envíos</div>
+        <div id="rem-log"></div>
+      </div>
     </div>
 
     <!-- ── USUARIOS / MI EQUIPO ───────────────────────── -->
@@ -1300,7 +1551,7 @@
           <label>Grupos guardados</label>
           <div class="chip-row" id="task-group-chips"></div>
         </div>
-        <div class="form-group">
+        <div class="form-group" id="task-members-wrap">
           <label>Integrantes</label>
           <div class="picker" id="task-member-picker"></div>
         </div>
@@ -1309,9 +1560,11 @@
           <div class="radio-cards">
             <label class="radio-card"><input type="radio" name="task-dist" value="shared" checked/><span><strong>👥 Una tarea compartida</strong><small>Todos colaboran en la misma tarea, con comentarios y adjuntos en común.</small></span></label>
             <label class="radio-card"><input type="radio" name="task-dist" value="batch"/><span><strong>📦 Una copia para cada uno</strong><small>Cada integrante recibe su propia tarea y la completa por separado.</small></span></label>
+            <label class="radio-card"><input type="radio" name="task-dist" value="pool"/><span><strong>🙋 Disponible para tomar</strong><small>Se publica en el grupo y la primera persona que la tome queda asignada.</small></span></label>
           </div>
+          <span class="form-hint hidden" id="task-pool-hint">Elige arriba un grupo guardado: la tarea aparecerá en su espacio y cualquiera de sus integrantes podrá tomarla.</span>
         </div>
-        <div class="form-row">
+        <div class="form-row" id="task-group-meta-row">
           <div class="form-group">
             <label for="task-group-name">Nombre del grupo / lote</label>
             <input id="task-group-name" type="text" class="form-control" placeholder="Ej: Turno matutino" maxlength="60"/>
@@ -1384,9 +1637,15 @@
         <button class="modal-close" data-close="modal-task-detail" aria-label="Cerrar">✕</button>
       </div>
     </div>
+    <button type="button" class="sub-parent hidden" id="detail-parent" title="Abrir la tarea principal"></button>
     <div class="flex gap-1" style="flex-wrap:wrap;" id="detail-badges"></div>
     <div class="detail-meta" id="detail-meta"></div>
     <div class="detail-desc" id="detail-desc"></div>
+
+    <div class="claim-bar hidden" id="detail-claim-bar">
+      <span id="detail-claim-text"></span>
+      <button class="btn btn-sat btn-sm" id="btn-detail-claim" data-act="claim">🙋 Tomar esta tarea</button>
+    </div>
 
     <div class="detail-status-row">
       <div class="segmented" id="detail-status">
@@ -1417,6 +1676,37 @@
     <div class="comment-input-row" id="detail-cl-add-row">
       <input class="form-control" id="detail-cl-input" placeholder="Agregar paso… (Enter)" maxlength="200"/>
       <button class="btn btn-ghost btn-sm" id="btn-cl-add">+ Agregar</button>
+    </div>
+
+    <div id="detail-rem-wrap" class="hidden">
+      <div class="detail-section-label">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z"/><polyline points="22 6 12 13 2 6"/></svg>
+        Recordatorio por correo <span class="badge badge-super" style="margin-left:.3rem;">Super admin</span>
+      </div>
+      <div class="rem-task-row">
+        <select class="form-control" id="detail-rem-mode" aria-label="Recordatorio de esta tarea">
+          <option value="inherit">Según su tipo y la configuración de cada persona</option>
+          <option value="custom">Horario propio para esta tarea</option>
+          <option value="off">Sin recordatorios para esta tarea</option>
+        </select>
+        <button class="btn btn-primary btn-sm" id="btn-detail-rem-save" disabled>Guardar</button>
+      </div>
+      <div class="form-hint mt-1" id="detail-rem-hint"></div>
+      <div id="detail-rem-editor" class="mt-2"></div>
+    </div>
+
+    <div id="detail-sub-wrap">
+      <div class="detail-section-label">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 3v12"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 01-9 9"/></svg>
+        Subtareas <span class="mono text-xs" id="detail-sub-count"></span>
+      </div>
+      <div class="cl-progress hidden" id="detail-sub-progress"><div style="width:0%"></div></div>
+      <div class="sub-list" id="detail-subtasks"></div>
+      <form class="sub-add" id="detail-sub-form" autocomplete="off">
+        <input class="form-control" id="detail-sub-input" placeholder="Nueva subtarea…  (!alta  #etiqueta  @mañana 10:00)" maxlength="200"/>
+        <select class="form-control" id="detail-sub-assignee" aria-label="Asignar subtarea a"></select>
+        <button type="submit" class="btn btn-primary btn-sm">+ Agregar</button>
+      </form>
     </div>
 
     <div class="pomodoro-bar mt-3">
@@ -1518,6 +1808,29 @@
   </div>
 </div>
 
+<!-- Recordatorios de una persona (super) -->
+<div class="modal-overlay hidden" id="modal-user-rem">
+  <div class="modal modal-xl" role="dialog" aria-modal="true" aria-labelledby="user-rem-title">
+    <div class="modal-header">
+      <h3 id="user-rem-title">Recordatorios</h3>
+      <button class="modal-close" data-close="modal-user-rem" aria-label="Cerrar">✕</button>
+    </div>
+    <p class="text-muted" id="user-rem-email" style="margin:-.8rem 0 1rem;font-size:.84rem;"></p>
+    <input type="hidden" id="user-rem-uid"/>
+    <div class="radio-cards" id="user-rem-mode">
+      <label class="radio-card"><input type="radio" name="user-rem-mode" value="inherit"/><span><strong>Configuración general</strong><small>Recibe lo mismo que todos, según el tipo de tarea.</small></span></label>
+      <label class="radio-card"><input type="radio" name="user-rem-mode" value="custom"/><span><strong>Personalizada</strong><small>Horarios propios para esta persona.</small></span></label>
+      <label class="radio-card"><input type="radio" name="user-rem-mode" value="off"/><span><strong>Sin recordatorios</strong><small>No recibe ningún correo automático.</small></span></label>
+    </div>
+    <div class="rem-cats mt-3" id="user-rem-cats"></div>
+    <div class="modal-footer mt-3">
+      <button type="button" class="btn btn-ghost" id="btn-user-rem-preview" style="margin-right:auto;">✉ Vista previa a mi correo</button>
+      <button type="button" class="btn btn-ghost" data-close="modal-user-rem">Cancelar</button>
+      <button type="button" class="btn btn-primary" id="btn-user-rem-save">Guardar</button>
+    </div>
+  </div>
+</div>
+
 <!-- Recuperar contraseña -->
 <div class="modal-overlay hidden" id="modal-forgot">
   <div class="modal modal-sm" role="dialog" aria-modal="true">
@@ -1564,7 +1877,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 import {
   getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc, updateDoc, deleteDoc,
-  query, where, orderBy, onSnapshot, serverTimestamp, arrayUnion, arrayRemove, Timestamp, writeBatch, runTransaction,
+  query, where, orderBy, limit, onSnapshot, serverTimestamp, arrayUnion, arrayRemove, Timestamp, writeBatch, runTransaction,
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 import {
   getStorage, ref as storageRef, uploadBytes, getDownloadURL, deleteObject,
@@ -1600,8 +1913,10 @@ const PRIORITY_LABEL  = { alta: 'Alta', media: 'Media', baja: 'Baja' };
 const STATUS_LABEL    = { pending: 'Pendiente', in_progress: 'En progreso', done: 'Completada' };
 const STATUS_ORDER    = ['pending', 'in_progress', 'done'];
 const PRIORITY_WEIGHT = { alta: 3, media: 2, baja: 1 };
-const KIND_LABEL      = { single: 'Individual', shared: 'Compartida', batch: 'Asignación grupal' };
-const GROUP_COLORS    = ['#ff8a3d', '#45d9c8', '#a78bfa', '#60a5fa', '#34d399', '#fbbf24', '#f87171', '#f472b6'];
+const KIND_LABEL      = { single: 'Individual', shared: 'Compartida', batch: 'Asignación grupal', pool: 'Del grupo (para tomar)' };
+// Las reglas permiten máx. 20 lecturas get()/exists() por lote; cada persona asignada cuenta una.
+const WRITE_CHUNK     = 15;
+const GROUP_COLORS    =['#ff8a3d', '#45d9c8', '#a78bfa', '#60a5fa', '#34d399', '#fbbf24', '#f87171', '#f472b6'];
 
 /* ── ESTADO GLOBAL ──────────────────────────────────────── */
 const state = {
@@ -1614,7 +1929,22 @@ const state = {
   groupBatches: true,
   expandedBatches: new Set(),
   teamBatchFilter: null,
-  form: { mode: 'single', groupId: null },
+  form: { mode: 'single', groupId: null, poolEdit: false },
+  groupTasks: new Map(),      // gid → tareas del grupo (integrantes y admins)
+  groupTaskSubs: new Map(),   // gid → unsubscribe
+  openGroupId: null,
+  groupTab: 'feed',
+  groupPosts: [],
+  postsUnsub: null,
+  postsError: null,
+  groupSeenAt: 0,
+  usersLoaded: false,
+  groupsWarned: false,
+  rem: { settings: null, exists: false, users: new Map(), log: [], dirty: false, formReady: false, task: null, logLoaded: false },
+  detailSubs: [],             // subtareas de la tarea abierta en el detalle
+  subUnsub: null,
+  detailLive: null,           // copia en vivo de la tarea abierta si no está en ninguna lista
+  detailDocUnsub: null,
   groupForm: { color: GROUP_COLORS[0] },
   seenAssigned: new Set(),
   commentsUnsub: null,
@@ -1625,8 +1955,8 @@ const state = {
   bellPrimed: false,
   tickTimer: null,
   charts: {},
-  bulk: { mine: false, team: false },
-  selected: { mine: new Set(), team: new Set() },
+  bulk: { mine: false, team: false, group: false },
+  selected: { mine: new Set(), team: new Set(), group: new Set() },
   pomo: { interval: null, seconds: 25 * 60, running: false },
 };
 
@@ -1724,10 +2054,14 @@ document.querySelectorAll('.nav-item[data-view]').forEach(item => {
 function activeView() { return document.querySelector('.view.active')?.id; }
 function showView(id) {
   if (!state.me) return;
-  const needsManager = ['view-team', 'view-dashboard', 'view-users', 'view-groups'].includes(id);
+  const needsManager = ['view-team', 'view-dashboard', 'view-users'].includes(id);
   if (needsManager && !isManager()) id = 'view-tasks';
+  if (id === 'view-reminders' && !isSuper()) id = 'view-tasks';
+  if (id === 'view-group' && !groupById(state.openGroupId)) id = 'view-groups';
+  if (id !== 'view-group' && state.openGroupId) closeGroupSpace();
+  const navId = id === 'view-group' ? 'view-groups' : id;
   document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === id));
-  document.querySelectorAll('.nav-item[data-view]').forEach(n => n.classList.toggle('active', n.dataset.view === id));
+  document.querySelectorAll('.nav-item[data-view]').forEach(n => n.classList.toggle('active', n.dataset.view === navId));
   closeSidebar();
   renderView(id);
   window.scrollTo({ top: 0 });
@@ -1740,6 +2074,8 @@ function renderView(id = activeView()) {
   else if (id === 'view-dashboard') renderDashboard();
   else if (id === 'view-users') renderUsersTable();
   else if (id === 'view-groups') renderGroups();
+  else if (id === 'view-group') renderGroupSpace();
+  else if (id === 'view-reminders') renderRemindersView();
 }
 
 /* ── ATAJOS DE TECLADO ──────────────────────────────────── */
@@ -1758,6 +2094,7 @@ document.addEventListener('keydown', e => {
   if (k === 'n') {
     e.preventDefault();
     if (activeView() === 'view-groups' && isManager()) openGroupForm();
+    else if (activeView() === 'view-group') $('gs-quick').focus();
     else openTaskForm(null, { forTeam: activeView() === 'view-team' });
   }
   if (k === 'g' && isManager()) { e.preventDefault(); openTaskForm(null, { forTeam: true, mode: 'group' }); }
@@ -1851,10 +2188,17 @@ function teardown() {
   Object.values(state.charts).forEach(c => c?.destroy());
   state.charts = {};
   state.users = []; state.myTasks = []; state.teamTasks = []; state.groups = [];
+  state.groupTaskSubs.forEach(u => { try { u(); } catch (_) {} });
+  state.groupTaskSubs.clear(); state.groupTasks.clear();
+  if (state.postsUnsub) { state.postsUnsub(); state.postsUnsub = null; }
+  state.openGroupId = null; state.groupPosts = []; state.postsError = null;
+  state.usersLoaded = false; state.groupsWarned = false;
+  state.rem = { settings: null, exists: false, users: new Map(), log: [], dirty: false, formReady: false, task: null, logLoaded: false };
+  stopDetailExtras();
   state.notified.clear(); state.bellPrimed = false; state.seenAssigned.clear();
   state.expandedBatches.clear(); state.teamBatchFilter = null;
-  state.bulk = { mine: false, team: false };
-  state.selected.mine.clear(); state.selected.team.clear();
+  state.bulk = { mine: false, team: false, group: false };
+  state.selected.mine.clear(); state.selected.team.clear(); state.selected.group.clear();
   state.kanbanScope = 'mine';
   document.querySelectorAll('.modal-overlay').forEach(m => m.classList.add('hidden'));
   document.body.classList.remove('modal-open');
@@ -1888,7 +2232,12 @@ function initApp() {
 
   state.users = [state.me];
   subscribeMyTasks();
-  if (isManager()) { subscribeTeamTasks(); subscribeUsers(); subscribeGroups(); }
+  subscribeGroups();
+  if (isManager()) { subscribeTeamTasks(); subscribeUsers(); }
+  if (isSuper()) subscribeReminders();
+  $('groups-scope-text').textContent = isManager()
+    ? 'Guarda equipos de trabajo y asígnales tareas: compartidas, una copia por persona o “disponibles” para que los integrantes las tomen. Ellos ven el grupo, sus novedades y pueden publicar avisos.'
+    : 'Estos son los grupos a los que perteneces. Ábrelos para ver las novedades, tomar tareas disponibles o crear tareas para ti dentro del grupo.';
   $('btn-team-group-batches').classList.toggle('active', state.groupBatches);
   $('team-batch-chip').classList.add('hidden');
 
@@ -1912,6 +2261,7 @@ function renderIdentity() {
 function mapDocs(snap) { return snap.docs.map(d => ({ id: d.id, ...d.data() })); }
 
 function onDataChanged() {
+  backfillGroupNames();
   renderView();
   renderBell();
   updateNavBadge();
@@ -1949,27 +2299,71 @@ function subscribeMyTasks() {
 function announceNewAssignment(t) {
   if (state.seenAssigned.has(t.id)) return;
   state.seenAssigned.add(t.id);
-  if (!t.createdBy || t.createdBy === state.me.uid) return;
+  if (!t.createdBy || t.createdBy === state.me.uid || t.kind === 'pool') return;   // las tareas del grupo se toman, no se asignan
   const who = t.createdByName || 'Alguien';
-  const what = t.kind === 'shared' ? `te sumó a la tarea grupal “${t.title}”` : `te asignó “${t.title}”`;
+  const what = t.kind === 'shared' ? `te sumó a la tarea grupal “${t.title}”`
+    : t.parentId ? `te asignó la subtarea “${t.title}” (de “${parentTitleOf(t)}”)`
+    : `te asignó “${t.title}”`;
   toast(`${who} ${what}`, 'info');
   if ('Notification' in window && Notification.permission === 'granted' && document.hidden) {
     new Notification('Nueva tarea — Orbiscorp', { body: `${who} ${what}` });
   }
 }
 
+/* Grupos: super → todos · admin → los suyos + donde es integrante · usuario → donde es integrante */
 function subscribeGroups() {
-  const q = isSuper()
-    ? collection(db, 'groups')
-    : query(collection(db, 'groups'), where('ownerId', '==', state.me.uid));
-  state.unsubs.push(onSnapshot(q, snap => {
-    state.groups = mapDocs(snap).sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-    $('nav-groups-count').textContent = state.groups.length || '';
+  const sources = new Map();
+  const apply = () => {
+    const m = new Map();
+    sources.forEach(src => src.forEach((v, k) => m.set(k, v)));
+    state.groups = [...m.values()].sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+    syncGroupTaskSubs();
     onDataChanged();
-  }, err => {
-    console.warn('Grupos no disponibles', err);
-    if (err?.code === 'permission-denied') toast('Los grupos guardados necesitan las nuevas reglas de Firestore.', 'info');
-  }));
+  };
+  const listen = (key, q) => {
+    sources.set(key, new Map());
+    state.unsubs.push(onSnapshot(q, snap => {
+      sources.set(key, new Map(snap.docs.map(d => [d.id, { id: d.id, ...d.data() }])));
+      apply();
+    }, err => {
+      console.warn('Grupos no disponibles', key, err);
+      if (err?.code === 'permission-denied' && !state.groupsWarned) {
+        state.groupsWarned = true;
+        toast('Para ver los grupos hay que publicar las nuevas reglas de Firestore.', 'info');
+      }
+    }));
+  };
+  if (isSuper()) { listen('all', collection(db, 'groups')); return; }
+  if (isAdmin()) listen('own', query(collection(db, 'groups'), where('ownerId', '==', state.me.uid)));
+  listen('member', query(collection(db, 'groups'), where('members', 'array-contains', state.me.uid)));
+}
+
+/* Una suscripción por grupo para ver todas sus tareas (novedades, disponibles, avance) */
+function syncGroupTaskSubs() {
+  if (isSuper()) return;   // el super admin ya recibe todas las tareas
+  const ids = new Set(state.groups.map(g => g.id));
+  for (const [gid, unsub] of state.groupTaskSubs) {
+    if (!ids.has(gid)) { try { unsub(); } catch (_) {} state.groupTaskSubs.delete(gid); state.groupTasks.delete(gid); }
+  }
+  ids.forEach(gid => {
+    if (state.groupTaskSubs.has(gid)) return;
+    let primed = false;
+    const unsub = onSnapshot(query(collection(db, 'tasks'), where('groupId', '==', gid)), snap => {
+      state.groupTasks.set(gid, mapDocs(snap));
+      if (primed) {
+        snap.docChanges().filter(c => c.type === 'added').forEach(c => {
+          const t = { id: c.doc.id, ...c.doc.data() };
+          const g = groupById(gid);
+          if (kindOf(t) === 'pool' && !t.assignedTo && t.createdBy !== state.me.uid && g && isGroupMember(g)) {
+            toast(`🙋 Nueva tarea disponible en ${g.name}: “${t.title}”`, 'info');
+          }
+        });
+      }
+      primed = true;
+      onDataChanged();
+    }, err => { console.warn('Tareas del grupo no disponibles', gid, err); });
+    state.groupTaskSubs.set(gid, unsub);
+  });
 }
 
 function subscribeTeamTasks() {
@@ -1991,6 +2385,7 @@ function subscribeUsers() {
     let list = mapDocs(snap).map(u => SUPER_ADMINS.includes(u.id) ? { ...u, role: 'superadmin' } : u);
     if (!isSuper()) list = [state.me, ...list.filter(u => u.id !== state.me.uid)];
     state.users = list;
+    state.usersLoaded = true;
     const meFresh = list.find(u => u.id === state.me.uid);
     if (meFresh && isSuper()) { state.me = { ...state.me, ...meFresh, role: 'superadmin', uid: state.me.uid }; renderIdentity(); }
     populateUserFilters();
@@ -2005,13 +2400,24 @@ function subscribeUsers() {
 ══════════════════════════════════════════════════════════ */
 function userById(id) { return id === state.me?.uid ? state.me : state.users.find(u => u.id === id); }
 function userName(id, fallback) { const u = userById(id); return u?.displayName || u?.email || fallback || '—'; }
-function kindOf(t) { return t.kind === 'shared' || t.kind === 'batch' ? t.kind : 'single'; }
+function kindOf(t) { return ['shared', 'batch', 'pool'].includes(t.kind) ? t.kind : 'single'; }
+
+/* ── Grupos: acceso y tareas disponibles ── */
+function groupById(id) { return id ? state.groups.find(g => g.id === id) : null; }
+function isGroupMember(g) { return !!g && (g.members || []).includes(state.me?.uid); }
+function canManageGroup(g) { return !!g && (isSuper() || g.ownerId === state.me?.uid); }
+function managedGroups() { return state.groups.filter(canManageGroup); }
+function tasksOfGroup(gid) { return isSuper() ? state.teamTasks.filter(t => t.groupId === gid) : (state.groupTasks.get(gid) || []); }
+function isPoolOpen(t) { return kindOf(t) === 'pool' && !t.assignedTo && t.status !== 'done'; }
+function canClaim(t) { return isPoolOpen(t) && isGroupMember(groupById(t.groupId)); }
+function availableForMe() { return state.groups.filter(isGroupMember).flatMap(g => tasksOfGroup(g.id).filter(canClaim)); }
 function taskAssignees(t) {
   if (Array.isArray(t.assignees) && t.assignees.length) return t.assignees;
   return t.assignedTo ? [t.assignedTo] : [];
 }
 function memberName(t, uid) { return userName(uid, t.assigneeNames?.[uid] || (uid === t.assignedTo ? (t.assignedToName || t.assignedToEmail) : '')); }
 function assigneeName(t) {
+  if (kindOf(t) === 'pool' && !t.assignedTo) return 'Disponible';
   if (kindOf(t) === 'shared') {
     const n = taskAssignees(t).length;
     return t.groupName ? `${t.groupName} (${n})` : `Grupo de ${n}`;
@@ -2050,7 +2456,15 @@ function teamLabel(adminId) {
   return a.store ? `${a.displayName || a.email} · ${a.store}` : (a.displayName || a.email);
 }
 
-function findTask(id) { return state.myTasks.find(t => t.id === id) || state.teamTasks.find(t => t.id === id); }
+function findTaskInState(id) {
+  return state.myTasks.find(t => t.id === id) || state.teamTasks.find(t => t.id === id)
+    || [...state.groupTasks.values()].flat().find(t => t.id === id);
+}
+function findTask(id) {
+  return findTaskInState(id) || state.detailSubs.find(t => t.id === id)
+    || (state.detailLive?.id === id ? state.detailLive : null);
+}
+function parentTitleOf(t) { return findTaskInState(t.parentId)?.title || t.parentTitle || 'Tarea principal'; }
 function canEdit(t)         { return isSuper() || t.createdBy === state.me.uid; }
 function canChangeStatus(t) { return canEdit(t) || isAssignedToMe(t); }
 function assignableUsers() { return state.users.filter(u => u.active !== false); }
@@ -2130,7 +2544,7 @@ function sortTasks(tasks, sortVal) {
 
 function matchFilters(t, f) {
   if (f.search) {
-    const hay = `${t.title || ''} ${t.description || ''} ${(t.tags || []).join(' ')} ${t.groupName || ''} ${t.batchName || ''} ${f.withPeople ? peopleText(t) : ''}`.toLowerCase();
+    const hay = `${t.title || ''} ${t.description || ''} ${(t.tags || []).join(' ')} ${t.groupName || ''} ${t.batchName || ''} ${t.parentTitle || ''} ${f.withPeople ? peopleText(t) : ''}`.toLowerCase();
     if (!hay.includes(f.search)) return false;
   }
   const isDone = f.personal ? doneForMe(t) : t.status === 'done';
@@ -2140,7 +2554,8 @@ function matchFilters(t, f) {
   else if (f.status && t.status !== f.status) return false;
   if (f.priority && t.priority !== f.priority) return false;
   if (f.tag && !(t.tags || []).includes(f.tag)) return false;
-  if (f.kind && kindOf(t) !== f.kind) return false;
+  if (f.kind === 'sub') { if (!t.parentId) return false; }
+  else if (f.kind && kindOf(t) !== f.kind) return false;
   if (f.batch && t.batchId !== f.batch) return false;
   if (f.user && !taskAssignees(t).includes(f.user)) return false;
   if (f.creator && t.createdBy !== f.creator) return false;
@@ -2205,6 +2620,7 @@ function renderMyTasks() {
   $('ring-progress').style.strokeDashoffset = circumference - (pct / 100) * circumference;
   $('ring-pct').textContent = pct + '%';
   $('ring-sub').textContent = `${done} de ${total} completada${total !== 1 ? 's' : ''}`;
+  renderPoolHint();
 
   const f = myFilters();
   $('my-clear-filters').classList.toggle('hidden', !hasActiveFilters(f));
@@ -2443,7 +2859,14 @@ function renderTaskCard(t, { scope, showAssignee = false, showCreator = false, i
       ${partDone ? `<span class="badge badge-part">✓ Tu parte lista</span>` : ''}`;
   } else if (kind === 'batch' && !inBatch) {
     groupMeta = `<span class="badge badge-batch" ${scope === 'team' ? `data-action="batch" style="cursor:pointer;" title="Ver lote completo"` : ''}>📦 ${escHtml(t.batchName || 'Asignación grupal')}</span>`;
+  } else if (kind === 'pool') {
+    const g = groupById(t.groupId);
+    groupMeta = `<span class="badge badge-pool" ${scope !== 'group' && g ? `data-action="open-group" style="cursor:pointer;" title="Abrir el grupo"` : ''}>🙋 ${escHtml(t.groupName || g?.name || 'Grupo')}${t.assignedTo ? '' : ' · disponible'}</span>`;
   }
+  const claimBtn = canClaim(t)
+    ? `<button class="btn btn-sat btn-sm task-claim" data-action="claim">🙋 Tomar</button>`
+    : (scope === 'group' && kind === 'pool' && t.assignedTo === me && !isDone
+        ? `<button class="btn btn-ghost btn-sm task-claim" data-action="release" data-tip="Devolverla al grupo">↩ Soltar</button>` : '');
 
   return `
   <div class="${cls}" data-id="${escHtml(t.id)}">
@@ -2460,11 +2883,14 @@ function renderTaskCard(t, { scope, showAssignee = false, showCreator = false, i
         ${groupMeta}
         ${showAssignee && kind !== 'shared' ? `<span class="task-assignee"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>${escHtml(t.assignedTo === me ? 'Yo' : assigneeName(t))}</span>` : ''}
         ${(showCreator || assignedByOther) ? `<span class="task-assignee by" title="Creada por">↳ ${escHtml(t.createdBy === me ? 'ti' : creatorName(t))}</span>` : ''}
+        ${t.parentId ? `<span class="task-assignee sub-of" data-open="${escHtml(t.parentId)}" title="Abrir la tarea principal">↳ ${escHtml(parentTitleOf(t))}</span>` : ''}
+        ${t.subStats?.total ? `<span class="meta-icon" title="Subtareas completadas" style="${t.subStats.done === t.subStats.total ? 'color:var(--success);' : ''}">🌿 ${t.subStats.done}/${t.subStats.total}</span>` : ''}
         ${cl.length ? `<span class="meta-icon" title="Lista de verificación">☑ ${clDone}/${cl.length}</span>` : ''}
         ${nAtt ? `<span class="meta-icon">📎 ${nAtt}</span>` : ''}
         ${tags}
       </div>
     </div>
+    ${claimBtn}
     ${editable ? `
     <div class="task-actions">
       <button class="btn btn-ghost btn-sm btn-icon" data-action="edit" data-tip="Editar" aria-label="Editar">
@@ -2494,10 +2920,13 @@ function wireTaskList(containerId, scope) {
       case 'toggle': await setTaskStatus(t, t.status === 'done' ? 'pending' : 'done'); break;
       case 'part':   await toggleMyPart(t, !myPartDone(t) && t.status !== 'done'); break;
       case 'batch':  if (t.batchId) setTeamBatchFilter(t.batchId); break;
+      case 'claim':  await claimTask(t); break;
+      case 'release': await releaseTask(t); break;
+      case 'open-group': if (groupById(t.groupId)) openGroupSpace(t.groupId); break;
       case 'detail': openTaskDetail(id); break;
       case 'edit':   openTaskForm(t); break;
       case 'delete':
-        if (await confirmDialog(`¿Eliminar “${t.title}”? También se borrarán sus comentarios y adjuntos.`, { title: 'Eliminar tarea', confirmText: 'Eliminar' })) {
+        if (await confirmDialog(`¿Eliminar “${t.title}”? También se borrarán sus comentarios y adjuntos${t.subStats?.total ? ` y sus ${plural(t.subStats.total, 'subtarea', 'subtareas')}` : ''}.`, { title: 'Eliminar tarea', confirmText: 'Eliminar' })) {
           try { await deleteTask(t); toast('Tarea eliminada.', 'success'); }
           catch (err) { toast('Error: ' + errMsg(err), 'error'); }
         }
@@ -2507,6 +2936,7 @@ function wireTaskList(containerId, scope) {
 }
 wireTaskList('my-tasks-list', 'mine');
 wireTaskList('team-tasks-list', 'team');
+wireTaskList('gs-content', 'group');
 
 async function setTaskStatus(t, status) {
   if (!canChangeStatus(t)) { toast('No puedes cambiar el estado de esta tarea.', 'error'); return; }
@@ -2515,7 +2945,8 @@ async function setTaskStatus(t, status) {
     const upd = { status, completedAt: status === 'done' ? serverTimestamp() : null, updatedAt: serverTimestamp() };
     if (partMode(t) && status === 'pending') upd.doneBy = [];   // reiniciar avance del grupo
     await updateDoc(doc(db, 'tasks', t.id), upd);
-    if (status === 'done') toast('¡Tarea completada! 🚀', 'success');
+    if (t.parentId) touchParent(t.parentId);
+    if (status === 'done') toast(t.parentId ? 'Subtarea completada ✓' : '¡Tarea completada! 🚀', 'success');
   } catch (err) { toast('Error: ' + errMsg(err), 'error'); }
 }
 
@@ -2548,16 +2979,32 @@ async function toggleMyPart(t, done) {
   } catch (err) { toast('Error: ' + errMsg(err), 'error'); }
 }
 
-async function deleteTask(t) {
-  if (!canEdit(t)) throw new Error('Solo quien creó la tarea (o un super admin) puede eliminarla.');
+function canDeleteTask(t) { return canEdit(t) || (!!t.parentId && t.parentCreatedBy === state.me.uid); }
+
+async function deleteTaskDoc(t) {
   try {
     const cs = await getDocs(collection(db, 'tasks', t.id, 'comments'));
     await Promise.all(cs.docs.map(d => deleteDoc(d.ref)));
   } catch (e) { console.warn('No se pudieron borrar comentarios', e); }
   await Promise.all((t.attachments || []).filter(a => a.path).map(a => deleteObject(storageRef(storage, a.path)).catch(() => {})));
   await deleteDoc(doc(db, 'tasks', t.id));
+  if (isSuper()) deleteDoc(doc(db, 'reminderTasks', t.id)).catch(() => {});
   state.selected.mine.delete(t.id); state.selected.team.delete(t.id);
+}
+
+async function deleteTask(t) {
+  if (!canDeleteTask(t)) throw new Error('Solo quien creó la tarea (o un super admin) puede eliminarla.');
+  if (!t.parentId) {
+    // Cascada: al borrar una tarea principal se borran sus subtareas
+    try {
+      const subs = await getDocs(query(collection(db, 'tasks'), where('parentId', '==', t.id)));
+      await Promise.all(subs.docs.map(d => deleteTaskDoc({ id: d.id, ...d.data() })
+        .catch(e => console.warn('No se pudo borrar la subtarea', d.id, e))));
+    } catch (e) { console.warn('No se pudieron leer las subtareas', e); }
+  }
+  await deleteTaskDoc(t);
   if (state.detailId === t.id) closeDetail();
+  if (t.parentId) touchParent(t.parentId);
 }
 
 /* ── SELECCIÓN MÚLTIPLE ─────────────────────────────────── */
@@ -2592,16 +3039,17 @@ document.querySelectorAll('[data-bulk-action]').forEach(btn => btn.addEventListe
   try {
     if (action === 'done' || action === 'pending') {
       const allowed = tasks.filter(canChangeStatus);
-      for (let i = 0; i < allowed.length; i += 400) {
+      for (let i = 0; i < allowed.length; i += WRITE_CHUNK) {
         const batch = writeBatch(db);
-        allowed.slice(i, i + 400).forEach(t => batch.update(doc(db, 'tasks', t.id), {
+        allowed.slice(i, i + WRITE_CHUNK).forEach(t => batch.update(doc(db, 'tasks', t.id), {
           status: action, completedAt: action === 'done' ? serverTimestamp() : null, updatedAt: serverTimestamp(),
         }));
         await batch.commit();
       }
+      [...new Set(allowed.map(t => t.parentId).filter(Boolean))].forEach(touchParent);
       toast(`${plural(allowed.length, 'tarea actualizada', 'tareas actualizadas')}.${tasks.length - allowed.length ? ` ${tasks.length - allowed.length} sin permiso.` : ''}`, 'success');
     } else if (action === 'delete') {
-      const allowed = tasks.filter(canEdit);
+      const allowed = tasks.filter(canDeleteTask);
       const skipped = tasks.length - allowed.length;
       if (!allowed.length) { toast('Solo puedes eliminar tareas que tú creaste.', 'error'); return; }
       const ok = await confirmDialog(`¿Eliminar ${plural(allowed.length, 'tarea', 'tareas')}?${skipped ? ` (${skipped} no se pueden eliminar porque no las creaste tú.)` : ''}`, { title: 'Eliminar tareas', confirmText: 'Eliminar' });
@@ -2728,7 +3176,7 @@ function groupLiveMembers(g) {
   return (g.members || []).filter(id => ok.has(id));
 }
 function renderGroupChips() {
-  const groups = state.groups.map(g => ({ g, live: groupLiveMembers(g) })).filter(x => x.live.length);
+  const groups = managedGroups().map(g => ({ g, live: groupLiveMembers(g) })).filter(x => x.live.length);
   $('task-saved-groups-wrap').classList.toggle('hidden', !groups.length);
   $('task-group-chips').innerHTML = groups.map(({ g, live }) => `
     <button type="button" class="group-chip ${state.form.groupId === g.id ? 'active' : ''}" data-gid="${escHtml(g.id)}" title="${escHtml(live.map(id => userName(id)).join(', '))}">
@@ -2756,14 +3204,17 @@ function setFormMode(mode) {
   state.form.mode = mode;
   const mgr = isManager();
   document.querySelectorAll('#task-mode-switch .mode-opt').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
-  $('task-assignee-group').classList.toggle('hidden', !mgr || mode !== 'single');
+  $('task-assignee-group').classList.toggle('hidden', !mgr || mode !== 'single' || state.form.poolEdit);
   $('task-group-box').classList.toggle('hidden', !mgr || mode !== 'group');
   $('modal-task').querySelector('.modal').classList.toggle('modal-xl', mgr && mode === 'group');
   syncDist();
 }
 function syncDist() {
-  const shared = taskDist() === 'shared';
-  $('task-completion-wrap').classList.toggle('hidden', !shared);
+  const d = taskDist();
+  $('task-completion-wrap').classList.toggle('hidden', d !== 'shared');
+  $('task-members-wrap').classList.toggle('hidden', d === 'pool');
+  $('task-group-meta-row').classList.toggle('hidden', d === 'pool');
+  $('task-pool-hint').classList.toggle('hidden', d !== 'pool');
 }
 $('task-mode-switch').addEventListener('click', e => {
   const b = e.target.closest('[data-mode]'); if (!b || b.disabled) return;
@@ -2772,10 +3223,11 @@ $('task-mode-switch').addEventListener('click', e => {
 document.querySelectorAll('input[name="task-dist"]').forEach(r => r.addEventListener('change', syncDist));
 
 /* ── Abrir formulario ────────────────────────────────────── */
-function openTaskForm(t = null, { forTeam = false, mode = null, groupId = null, duplicate = false, applyBatch = false } = {}) {
+function openTaskForm(t = null, { forTeam = false, mode = null, groupId = null, duplicate = false, applyBatch = false, dist = null } = {}) {
   const editing = !!t && !duplicate;
   if (editing && !canEdit(t)) { toast('Solo quien creó la tarea puede editarla.', 'error'); return; }
   const kind = t ? kindOf(t) : null;
+  state.form.poolEdit = editing && (kind === 'pool' || !!t.parentId);   // quién la tiene no se cambia desde aquí
   $('task-form').reset();
   $('task-edit-id').value        = editing ? t.id : '';
   $('task-title-input').value    = t ? (duplicate ? `${t.title} (copia)` : t.title) : '';
@@ -2790,7 +3242,7 @@ function openTaskForm(t = null, { forTeam = false, mode = null, groupId = null, 
 
   state.form.groupId = null;
   const mgr = isManager();
-  $('task-mode-group').classList.toggle('hidden', !mgr || (editing && kind === 'batch'));
+  $('task-mode-group').classList.toggle('hidden', !mgr || (editing && (kind === 'batch' || kind === 'pool' || !!t.parentId)));
   $('task-apply-batch-wrap').classList.toggle('hidden', !(editing && kind === 'batch'));
   if (editing && kind === 'batch') {
     const n = batchTasks(t.batchId).length;
@@ -2801,8 +3253,8 @@ function openTaskForm(t = null, { forTeam = false, mode = null, groupId = null, 
   if (mgr) {
     let startMode = mode || 'single';
     if (kind === 'shared') startMode = 'group';
-    if (kind === 'batch') startMode = 'single';
-    if (groupId) startMode = 'group';
+    if (kind === 'batch' || kind === 'pool' || (editing && t.parentId)) startMode = 'single';
+    if (groupId && !editing) startMode = 'group';
 
     // Una persona
     const sel = $('task-assignee-input');
@@ -2815,13 +3267,13 @@ function openTaskForm(t = null, { forTeam = false, mode = null, groupId = null, 
     // Grupo
     let members = [];
     if (kind === 'shared') members = taskAssignees(t);
-    const g = groupId ? state.groups.find(x => x.id === groupId) : null;
+    const g = groupId ? managedGroups().find(x => x.id === groupId) : null;
     if (g) { members = groupLiveMembers(g); state.form.groupId = g.id; }
     else if (kind === 'shared' && t.groupId) state.form.groupId = t.groupId;
     taskPicker.set(members, assignableUsers());
     $('task-group-name').value = t?.groupName || g?.name || '';
     $('task-completion').value = t?.completion === 'any' ? 'any' : 'all';
-    document.querySelector(`input[name="task-dist"][value="shared"]`).checked = true;
+    document.querySelector(`input[name="task-dist"][value="${dist === 'pool' || dist === 'batch' ? dist : 'shared'}"]`).checked = true;
     $('task-distribution-wrap').classList.toggle('hidden', editing);
     renderGroupChips();
     setFormMode(startMode);
@@ -2830,9 +3282,9 @@ function openTaskForm(t = null, { forTeam = false, mode = null, groupId = null, 
   }
 
   $('modal-task-title').textContent = editing
-    ? (kind === 'shared' ? 'Editar tarea grupal' : kind === 'batch' ? 'Editar copia del lote' : 'Editar tarea')
+    ? (kind === 'shared' ? 'Editar tarea grupal' : kind === 'batch' ? 'Editar copia del lote' : kind === 'pool' ? 'Editar tarea del grupo' : t.parentId ? 'Editar subtarea' : 'Editar tarea')
     : duplicate ? 'Duplicar tarea'
-    : state.form.mode === 'group' ? 'Asignar tarea a un grupo'
+    : state.form.mode === 'group' ? (taskDist() === 'pool' ? 'Publicar tarea disponible' : 'Asignar tarea a un grupo')
     : forTeam ? 'Asignar nueva tarea' : 'Nueva tarea';
   openModal('modal-task');
 }
@@ -2849,9 +3301,9 @@ function personFields(uid) {
   return { assignedTo: uid, assignees: [uid], assignedToName: u?.displayName || '', assignedToEmail: u?.email || '' };
 }
 async function commitInChunks(ops) {
-  for (let i = 0; i < ops.length; i += 450) {
+  for (let i = 0; i < ops.length; i += WRITE_CHUNK) {
     const b = writeBatch(db);
-    ops.slice(i, i + 450).forEach(fn => fn(b));
+    ops.slice(i, i + WRITE_CHUNK).forEach(fn => fn(b));
     await b.commit();
   }
 }
@@ -2882,7 +3334,11 @@ $('task-form').addEventListener('submit', async e => {
 
   const btn = $('btn-save-task'); setBusy(btn, true);
   try {
-    if (mode === 'single') {
+    if (existing && (kindOf(existing) === 'pool' || existing.parentId)) {
+      // Tarea del grupo: solo se editan los datos; quién la tiene se decide al tomarla / soltarla
+      await updateDoc(doc(db, 'tasks', editId), base);
+      toast('Tarea actualizada.', 'success');
+    } else if (mode === 'single') {
       const assignTo = isManager() ? $('task-assignee-input').value : state.me.uid;
       if (!assignTo) { toast('Elige a quién asignar la tarea', 'error'); return; }
       const payload = { ...base, ...personFields(assignTo) };
@@ -2906,6 +3362,14 @@ $('task-form').addEventListener('submit', async e => {
         await addDoc(collection(db, 'tasks'), { ...payload, kind: 'single', attachments: [], checklist: parseChecklist(checklistRaw || ''), ...creator });
         toast(assignTo === state.me.uid ? 'Tarea creada.' : `Tarea asignada a ${userName(assignTo, 'la persona')}.`, 'success');
       }
+    } else if (!existing && taskDist() === 'pool') {
+      const g = groupById(state.form.groupId);
+      if (!g) { toast('Elige un grupo guardado para publicar la tarea disponible', 'error'); return; }
+      await addDoc(collection(db, 'tasks'), {
+        ...base, kind: 'pool', assignedTo: null, assignees: [], assignedToName: '', assignedToEmail: '',
+        groupId: g.id, groupName: g.name, attachments: [], checklist: parseChecklist(checklistRaw || ''), ...creator,
+      });
+      toast(`Publicada en “${g.name}”: cualquiera del grupo puede tomarla.`, 'success');
     } else {
       const members = taskPicker.values();
       if (!members.length) { toast('Elige al menos una persona del grupo', 'error'); return; }
@@ -2987,6 +3451,9 @@ function kanbanCardHtml(t, showPeople) {
       ${overdue ? `<span class="badge badge-overdue">⚠ Vencida</span>` : (today ? `<span class="badge badge-today">📅 Hoy</span>` : '')}
       ${kindOf(t) === 'shared' ? `<span class="badge badge-group">👥 ${sharedProgress(t).done}/${sharedProgress(t).total}</span>` : ''}
       ${kindOf(t) === 'batch' ? `<span class="badge badge-batch">📦</span>` : ''}
+      ${kindOf(t) === 'pool' ? `<span class="badge badge-pool" title="${escHtml(t.groupName || 'Grupo')}">🙋${t.assignedTo ? '' : ' Disponible'}</span>` : ''}
+      ${t.parentId ? `<span class="meta-icon" title="Subtarea de ${escHtml(parentTitleOf(t))}">↳</span>` : ''}
+      ${t.subStats?.total ? `<span class="meta-icon" title="Subtareas">🌿 ${t.subStats.done}/${t.subStats.total}</span>` : ''}
       ${(t.checklist || []).length ? `<span class="meta-icon">☑ ${(t.checklist || []).filter(i => i.done).length}/${t.checklist.length}</span>` : ''}
       ${(t.tags || []).slice(0, 2).map(tag => `<span class="tag-chip">#${escHtml(tag)}</span>`).join('')}
     </div>
@@ -3038,7 +3505,7 @@ function kanbanCardHtml(t, showPeople) {
 ══════════════════════════════════════════════════════════ */
 async function openTaskDetail(taskId) {
   let t = findTask(taskId);
-  state.detailFromCache = !!t;
+  state.detailFromCache = !!findTaskInState(taskId);
   if (!t) {
     try {
       const snap = await getDoc(doc(db, 'tasks', taskId));
@@ -3046,6 +3513,7 @@ async function openTaskDetail(taskId) {
       t = { id: snap.id, ...snap.data() };
     } catch (err) { toast('Error: ' + errMsg(err), 'error'); return; }
   }
+  stopDetailExtras();
   state.detailId = taskId;
   $('detail-comment-input').value = '';
   $('detail-cl-input').value = '';
@@ -3058,6 +3526,8 @@ async function openTaskDetail(taskId) {
   const q = query(collection(db, 'tasks', taskId, 'comments'), orderBy('createdAt', 'asc'));
   state.commentsUnsub = onSnapshot(q, csnap => renderComments(mapDocs(csnap)),
     err => { $('detail-comments').innerHTML = `<p class="text-muted text-sm">No se pudieron cargar los comentarios (${escHtml(errMsg(err))}).</p>`; });
+  subscribeDetailExtras(t);
+  loadTaskReminder(t);
 }
 
 function refreshDetail() {
@@ -3080,6 +3550,8 @@ function renderDetail(t) {
   $('detail-meta').innerHTML = `
     ${kind === 'shared'
       ? `<span>Tarea compartida · <strong>${escHtml(t.groupName || 'Grupo')}</strong></span>`
+      : kind === 'pool'
+      ? `<span>Del grupo <strong>${escHtml(t.groupName || 'Grupo')}</strong> · ${t.assignedTo ? `tomada por <strong>${escHtml(t.assignedTo === me ? 'ti' : assigneeName(t))}</strong>` : '<strong style="color:var(--sat);">disponible para tomar</strong>'}</span>`
       : `<span>Asignada a <strong>${escHtml(t.assignedTo === me ? 'ti' : assigneeName(t))}</strong></span>`}
     ${kind === 'batch' ? `<span>Lote <strong>${escHtml(t.batchName || 'grupal')}</strong>${t.batchSize ? ` · ${t.batchSize} personas` : ''}</span>` : ''}
     <span>Creada por <strong>${escHtml(t.createdBy === me ? 'ti' : creatorName(t))}</strong></span>
@@ -3098,6 +3570,8 @@ function renderDetail(t) {
   $('btn-detail-edit').classList.toggle('hidden', !canEdit(t));
   $('btn-detail-duplicate').classList.toggle('hidden', !(canEdit(t) || isManager()));
   renderMembers(t);
+  renderClaimBar(t);
+  renderSubtasks(t);
   renderChecklist(t);
   renderAttachments(t);
 }
@@ -3207,6 +3681,7 @@ $('btn-detail-edit').addEventListener('click', () => {
 function closeDetail() {
   hideModal('modal-task-detail');
   if (state.commentsUnsub) { state.commentsUnsub(); state.commentsUnsub = null; }
+  stopDetailExtras();
   stopPomo();
   state.detailId = null;
 }
@@ -3342,7 +3817,7 @@ function statsByAssignee(tasks) {
   tasks.forEach(t => {
     const people = taskAssignees(t);
     (people.length ? people : ['—']).forEach(k => {
-      map[k] ??= { id: k, total: 0, done: 0, inprog: 0, overdue: 0, name: memberName(t, k) };
+      map[k] ??= { id: k, total: 0, done: 0, inprog: 0, overdue: 0, name: k === '—' ? 'Sin asignar' : memberName(t, k) };
       const ok = memberDone(t, k);
       map[k].total++;
       if (ok) map[k].done++;
@@ -3596,6 +4071,7 @@ function renderUsersTable() {
         <td><span class="mono text-sm">${s.total}</span>${s.overdue ? ` <span class="text-xs" style="color:var(--danger);">· ${s.overdue} venc.</span>` : ''}</td>
         <td><div class="row-actions">
           <button class="btn btn-ghost btn-sm btn-icon" data-uaction="edit" data-tip="Editar" aria-label="Editar">${ICON_EDIT}</button>
+          <button class="btn btn-ghost btn-sm btn-icon" data-uaction="rem" data-tip="Recordatorios por correo" aria-label="Recordatorios por correo">🔔</button>
           <button class="btn btn-ghost btn-sm btn-icon" data-uaction="reset" data-tip="Enviar reset de contraseña" aria-label="Restablecer contraseña">${ICON_KEY}</button>
           ${!isSup && !isMe ? (active
             ? `<button class="btn btn-danger btn-sm btn-icon" data-uaction="toggle" data-tip="Desactivar" aria-label="Desactivar">${ICON_BLOCK}</button>`
@@ -3640,6 +4116,7 @@ $('users-tbody').addEventListener('click', async e => {
   const u = userById(btn.closest('[data-uid]')?.dataset.uid); if (!u) return;
   const name = u.displayName || u.email;
   if (btn.dataset.uaction === 'edit') openUserForm(u);
+  if (btn.dataset.uaction === 'rem') openUserReminders(u);
   if (btn.dataset.uaction === 'reset') {
     if (!await confirmDialog(`Se enviará un enlace para restablecer la contraseña a ${u.email}.`, { title: 'Restablecer contraseña', confirmText: 'Enviar', danger: false })) return;
     try { await sendPasswordResetEmail(auth, u.email); toast('Enlace enviado.', 'success'); }
@@ -3766,47 +4243,62 @@ $('user-form').addEventListener('submit', async e => {
 const groupPicker = createPicker($('group-member-picker'), { onChange: () => {} });
 
 function renderGroups() {
-  if (!isManager()) return;
+  const me = state.me.uid;
   const q = $('groups-search').value.trim().toLowerCase();
-  const list = state.groups.filter(g => !q || `${g.name || ''} ${g.description || ''} ${(g.members || []).map(id => userName(id)).join(' ')}`.toLowerCase().includes(q));
+  const list = state.groups.filter(g => !q || `${g.name || ''} ${g.description || ''} ${(g.members || []).map(id => userName(id, g.memberNames?.[id])).join(' ')}`.toLowerCase().includes(q));
+  const avail = availableForMe().length;
   $('groups-subtitle').textContent = state.groups.length
-    ? `${plural(state.groups.length, 'grupo guardado', 'grupos guardados')}${isSuper() ? ' en toda la organización' : ''}`
-    : 'Crea tu primer grupo para asignar tareas en bloque';
+    ? `${plural(state.groups.length, 'grupo', 'grupos')}${isSuper() ? ' en toda la organización' : ''}${avail ? ` · ${plural(avail, 'tarea disponible', 'tareas disponibles')} para tomar` : ''}`
+    : (isManager() ? 'Crea tu primer grupo para asignar tareas en bloque' : 'Aún no perteneces a ningún grupo');
   const grid = $('groups-grid');
   if (!list.length) {
-    grid.innerHTML = `<div class="panel" style="grid-column:1 / -1;"><div class="empty-state">${EMPTY_ICON}<p>${state.groups.length ? 'No hay grupos que coincidan.' : 'Todavía no tienes grupos guardados.'}</p>
-      ${state.groups.length ? '' : '<div class="empty-action"><button class="btn btn-primary btn-sm" data-group-new>+ Crear grupo</button></div>'}</div></div>`;
+    const msg = state.groups.length ? 'No hay grupos que coincidan.'
+      : isManager() ? 'Todavía no tienes grupos guardados.'
+      : 'Cuando un administrador te agregue a un grupo, aparecerá aquí.';
+    grid.innerHTML = `<div class="panel" style="grid-column:1 / -1;"><div class="empty-state">${EMPTY_ICON}<p>${msg}</p>
+      ${state.groups.length || !isManager() ? '' : '<div class="empty-action"><button class="btn btn-primary btn-sm" data-group-new>+ Crear grupo</button></div>'}</div></div>`;
     return;
   }
   grid.innerHTML = list.map(g => {
-    const live = groupLiveMembers(g);
-    const gone = (g.members || []).length - live.length;
-    const related = state.teamTasks.filter(t => t.groupId === g.id);
-    const open = related.filter(t => t.status !== 'done').length;
-    const over = related.filter(isOverdue).length;
-    const mine = g.ownerId === state.me.uid;
+    const mgr = canManageGroup(g);
+    const members = g.members || [];
+    const live = mgr && state.usersLoaded ? groupLiveMembers(g) : members;
+    const gone = members.length - live.length;
+    const nm = id => id === me ? 'Tú' : userName(id, g.memberNames?.[id]);
+    const tasks = tasksOfGroup(g.id);
+    const open = tasks.filter(t => t.status !== 'done').length;
+    const over = tasks.filter(isOverdue).length;
+    const pool = tasks.filter(isPoolOpen).length;
+    const fresh = unreadCount(g.id);
+    const owner = g.ownerId === me ? '' : (g.ownerName || (isSuper() ? teamLabel(g.ownerId) : ''));
     return `
-    <div class="group-card" style="--gc:${safeColor(g.color)};" data-group-id="${escHtml(g.id)}">
+    <div class="group-card" style="--gc:${safeColor(g.color)};" data-group-id="${escHtml(g.id)}" tabindex="0" role="button" aria-label="Abrir grupo ${escHtml(g.name)}">
       <div class="flex justify-between items-center gap-1">
         <h4>${escHtml(g.name)}</h4>
-        ${isSuper() && !mine ? `<span class="text-xs text-muted truncate" style="max-width:45%;">${escHtml(teamLabel(g.ownerId))}</span>` : ''}
+        ${owner ? `<span class="text-xs text-muted truncate" style="max-width:45%;" title="Administra el grupo">${escHtml(owner)}</span>` : ''}
       </div>
       ${g.description ? `<div class="gdesc">${escHtml(g.description)}</div>` : ''}
       <div class="flex items-center gap-2">
-        ${avatarStack(live, { max: 7 })}
-        <span class="text-xs text-muted">${plural(live.length, 'persona', 'personas')}${gone ? ` · ${gone} sin acceso` : ''}</span>
+        ${avatarStack(live, { max: 7, nameFn: nm })}
+        <span class="text-xs text-muted">${plural(live.length, 'persona', 'personas')}${gone > 0 ? ` · ${gone} sin acceso` : ''}${members.includes(me) ? ' · incluido tú' : ''}</span>
       </div>
+      ${pool || fresh ? `<div class="gnew">
+        ${pool ? `<span class="badge badge-pool">🙋 ${plural(pool, 'disponible', 'disponibles')}</span>` : ''}
+        ${fresh ? `<span class="badge badge-admin">● ${plural(fresh, 'novedad', 'novedades')}</span>` : ''}
+      </div>` : ''}
       <div class="gstats">
         <span><b>${open}</b> abiertas</span>
         <span><b style="color:${over ? 'var(--danger)' : 'inherit'};">${over}</b> vencidas</span>
-        <span><b>${related.length}</b> total</span>
+        <span><b>${tasks.length}</b> total</span>
       </div>
       <div class="gfoot">
-        <button class="btn btn-primary btn-sm" data-group-act="assign" ${live.length ? '' : 'disabled'}>👥 Asignar tarea</button>
+        <button class="btn ${mgr ? 'btn-ghost' : 'btn-primary'} btn-sm" data-group-act="open">Abrir grupo →</button>
+        ${mgr ? `
+        <button class="btn btn-primary btn-sm" data-group-act="assign" ${live.length ? '' : 'disabled'}>👥 Asignar</button>
         <button class="btn btn-ghost btn-sm btn-icon" data-group-act="edit" data-tip="Editar" aria-label="Editar grupo">${ICON_EDIT}</button>
         <button class="btn btn-danger btn-sm btn-icon" data-group-act="delete" data-tip="Eliminar" aria-label="Eliminar grupo">
           <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
-        </button>
+        </button>` : ''}
       </div>
     </div>`;
   }).join('');
@@ -3815,13 +4307,21 @@ $('groups-search').addEventListener('input', debounce(renderGroups, 120));
 $('btn-new-group').addEventListener('click', () => openGroupForm());
 document.addEventListener('click', e => { if (e.target.closest('[data-group-new]')) openGroupForm(); });
 
+$('groups-grid').addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const card = e.target.closest('.group-card');
+  if (card && e.target === card) { e.preventDefault(); openGroupSpace(card.dataset.groupId); }
+});
 $('groups-grid').addEventListener('click', async e => {
-  const b = e.target.closest('[data-group-act]'); if (!b) return;
-  const g = state.groups.find(x => x.id === b.closest('[data-group-id]')?.dataset.groupId); if (!g) return;
+  const card = e.target.closest('[data-group-id]'); if (!card) return;
+  const g = state.groups.find(x => x.id === card.dataset.groupId); if (!g) return;
+  const b = e.target.closest('[data-group-act]');
+  if (!b || b.dataset.groupAct === 'open') { openGroupSpace(g.id); return; }
+  if (!canManageGroup(g)) return;
   if (b.dataset.groupAct === 'assign') openTaskForm(null, { forTeam: true, mode: 'group', groupId: g.id });
   if (b.dataset.groupAct === 'edit') openGroupForm(g);
   if (b.dataset.groupAct === 'delete') {
-    if (!await confirmDialog(`¿Eliminar el grupo “${g.name}”? Las tareas ya asignadas no se borran.`, { title: 'Eliminar grupo', confirmText: 'Eliminar' })) return;
+    if (!await confirmDialog(`¿Eliminar el grupo “${g.name}”? Las tareas ya asignadas no se borran, pero las disponibles sin tomar dejarán de verse para sus integrantes.`, { title: 'Eliminar grupo', confirmText: 'Eliminar' })) return;
     try { await deleteDoc(doc(db, 'groups', g.id)); toast('Grupo eliminado.', 'success'); }
     catch (err) { toast('Error: ' + errMsg(err), 'error'); }
   }
@@ -3863,7 +4363,10 @@ $('group-form').addEventListener('submit', async e => {
   if (state.groups.some(g => g.id !== id && (g.name || '').toLowerCase() === name.toLowerCase() && g.ownerId === state.me.uid)) {
     toast('Ya tienes un grupo con ese nombre', 'error'); return;
   }
-  const data = { name, description: $('group-desc').value.trim(), color: safeColor(state.groupForm.color), members, updatedAt: serverTimestamp() };
+  // Los integrantes no pueden leer perfiles ajenos: guardamos los nombres en el grupo
+  const prevNames = state.groups.find(g => g.id === id)?.memberNames || {};
+  const memberNames = Object.fromEntries(members.map(uid => [uid, userName(uid, prevNames[uid] || '')]).filter(([, n]) => n && n !== '—'));
+  const data = { name, description: $('group-desc').value.trim(), color: safeColor(state.groupForm.color), members, memberNames, updatedAt: serverTimestamp() };
   const btn = $('btn-save-group'); setBusy(btn, true);
   try {
     if (id) await updateDoc(doc(db, 'groups', id), data);
@@ -3949,6 +4452,974 @@ $('quick-add-form').addEventListener('submit', async e => {
 });
 
 /* ══════════════════════════════════════════════════════════
+   ESPACIO DE GRUPO — novedades, tareas disponibles, avisos
+══════════════════════════════════════════════════════════ */
+
+/* ── Tomar / soltar una tarea disponible ─────────────────── */
+async function claimTask(t) {
+  const me = state.me;
+  try {
+    await runTransaction(db, async tx => {
+      const ref = doc(db, 'tasks', t.id);
+      const snap = await tx.get(ref);
+      if (!snap.exists()) throw new Error('La tarea ya no existe.');
+      const d = snap.data();
+      if (d.status === 'done') throw new Error('Esta tarea ya se completó.');
+      if (d.assignedTo === me.uid) return;
+      if (d.assignedTo) throw new Error('Alguien más la tomó primero.');
+      tx.update(ref, {
+        assignedTo: me.uid, assignees: [me.uid],
+        assignedToName: me.displayName || '', assignedToEmail: me.email || '',
+        claimedAt: serverTimestamp(), updatedAt: serverTimestamp(),
+      });
+    });
+    if (t.parentId) touchParent(t.parentId);
+    toast(`Tomaste “${t.title}”. Ya está en Mis tareas.`, 'success');
+  } catch (err) { toast(errMsg(err), 'error'); }
+}
+
+async function releaseTask(t) {
+  const ok = await confirmDialog(`“${t.title}” volverá a quedar disponible para que otra persona del grupo la tome.`,
+    { title: 'Soltar tarea', confirmText: 'Soltar', danger: false });
+  if (!ok) return;
+  try {
+    await runTransaction(db, async tx => {
+      const ref = doc(db, 'tasks', t.id);
+      const snap = await tx.get(ref);
+      if (!snap.exists()) throw new Error('La tarea ya no existe.');
+      const d = snap.data();
+      if (d.assignedTo !== state.me.uid && d.createdBy !== state.me.uid && !isSuper()) throw new Error('Solo quien la tomó puede soltarla.');
+      tx.update(ref, {
+        assignedTo: null, assignees: [], assignedToName: '', assignedToEmail: '',
+        claimedAt: null, status: 'pending', completedAt: null, updatedAt: serverTimestamp(),
+      });
+    });
+    if (t.parentId) touchParent(t.parentId);
+    toast('La tarea volvió a quedar disponible en el grupo.', 'success');
+  } catch (err) { toast(errMsg(err), 'error'); }
+}
+
+function renderClaimBar(t) {
+  const bar = $('detail-claim-bar'), btn = $('btn-detail-claim');
+  const claimable = canClaim(t);
+  const mine = kindOf(t) === 'pool' && t.assignedTo === state.me.uid && t.status !== 'done';
+  bar.classList.toggle('hidden', !(claimable || mine));
+  if (claimable) {
+    $('detail-claim-text').textContent = `Disponible en “${t.groupName || 'el grupo'}”. Tómala para que quede a tu nombre.`;
+    btn.textContent = '🙋 Tomar esta tarea'; btn.className = 'btn btn-sat btn-sm'; btn.dataset.act = 'claim';
+  } else if (mine) {
+    $('detail-claim-text').textContent = 'La tomaste del grupo. Si no podrás hacerla, devuélvela para que alguien más la tome.';
+    btn.textContent = '↩ Soltar tarea'; btn.className = 'btn btn-ghost btn-sm'; btn.dataset.act = 'release';
+  }
+}
+$('btn-detail-claim').addEventListener('click', () => {
+  const t = findTask(state.detailId); if (!t) return;
+  $('btn-detail-claim').dataset.act === 'claim' ? claimTask(t) : releaseTask(t);
+});
+
+/* ── Aviso en "Mis tareas" ───────────────────────────────── */
+function renderPoolHint() {
+  const avail = availableForMe();
+  const el = $('my-pool-hint');
+  el.classList.toggle('hidden', !avail.length);
+  if (!avail.length) return;
+  const groups = new Set(avail.map(t => t.groupId));
+  $('my-pool-hint-text').innerHTML = `🙋 Hay <strong>${avail.length}</strong> ${avail.length === 1 ? 'tarea disponible' : 'tareas disponibles'} en ${groups.size === 1 ? `“${escHtml(groupById([...groups][0])?.name || 'tu grupo')}”` : `${groups.size} de tus grupos`}. Haz clic para verlas y tomar una.`;
+}
+function openPoolHint() {
+  const gids = [...new Set(availableForMe().map(t => t.groupId))];
+  if (gids.length === 1) openGroupSpace(gids[0], 'available'); else showView('view-groups');
+}
+$('my-pool-hint').addEventListener('click', openPoolHint);
+$('my-pool-hint').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openPoolHint(); } });
+
+/* ── Novedades: qué ya vio cada persona (por navegador) ─── */
+function seenKey(gid) { return `orbis-gseen-${state.me?.uid}-${gid}`; }
+function getSeen(gid) {
+  try { const v = +localStorage.getItem(seenKey(gid)); if (v) return v; } catch (_) {}
+  return Date.now() - 3 * 86400000;   // primera vez: lo de los últimos 3 días cuenta como nuevo
+}
+function markSeen(gid) { try { localStorage.setItem(seenKey(gid), String(Date.now())); } catch (_) {} }
+function unreadCount(gid) {
+  if (gid === state.openGroupId) return 0;
+  const s = getSeen(gid);
+  return groupEvents(gid).filter(e => e.ms > s && e.actor !== state.me.uid).length;
+}
+
+/* Eventos derivados de las tareas del grupo: creada, tomada, completada */
+function groupEvents(gid) {
+  const ev = [], seenBatch = new Set();
+  const names = groupById(gid)?.memberNames || {};
+  const nameOf = (id, fb) => userName(id, fb || names[id] || '');
+  tasksOfGroup(gid).forEach(t => {
+    const created = tsMs(t.createdAt), claimed = tsMs(t.claimedAt), done = tsMs(t.completedAt);
+    const selfAssigned = kindOf(t) === 'pool' && t.assignedTo && t.assignedTo === t.createdBy
+      && claimed && created && Math.abs(claimed - created) < 5000;
+    if (created && !(t.batchId && seenBatch.has(t.batchId))) {
+      if (t.batchId) seenBatch.add(t.batchId);
+      ev.push({ type: selfAssigned ? 'self' : 'created', ms: created, actor: t.createdBy, actorName: creatorName(t), task: t });
+    }
+    if (claimed && t.assignedTo && !selfAssigned) {
+      ev.push({ type: 'claimed', ms: claimed, actor: t.assignedTo, actorName: nameOf(t.assignedTo, t.assignedToName), task: t });
+    }
+    if (t.status === 'done' && done) {
+      const actor = kindOf(t) === 'shared' ? null : (t.assignedTo || null);
+      ev.push({ type: 'done', ms: done, actor, actorName: actor ? nameOf(actor, t.assignedToName) : '', task: t });
+    }
+  });
+  return ev;
+}
+
+/* ── Abrir / cerrar ──────────────────────────────────────── */
+function openGroupSpace(gid, tab = null) {
+  const g = groupById(gid);
+  if (!g) { toast('No tienes acceso a ese grupo.', 'error'); return; }
+  if (state.openGroupId !== gid) {
+    closeGroupSpace();
+    state.openGroupId = gid;
+    state.groupSeenAt = getSeen(gid);
+    markSeen(gid);
+    state.groupTab = tab || (tasksOfGroup(gid).some(canClaim) ? 'available' : 'feed');
+    $('gs-quick').value = ''; $('gs-post-input').value = ''; $('gs-quick-mode').value = 'pool';
+    renderGsQuickPreview();
+    const q = query(collection(db, 'groups', gid, 'posts'), orderBy('createdAt', 'desc'), limit(50));
+    state.postsUnsub = onSnapshot(q, snap => {
+      state.postsError = null;
+      state.groupPosts = mapDocs(snap);
+      if (activeView() === 'view-group' && state.openGroupId === gid) renderGroupSpace();
+    }, err => {
+      console.warn('Publicaciones del grupo no disponibles', err);
+      state.postsError = errMsg(err);
+      if (activeView() === 'view-group') renderGroupSpace();
+    });
+  } else if (tab) state.groupTab = tab;
+  showView('view-group');
+}
+
+function closeGroupSpace() {
+  if (state.openGroupId) markSeen(state.openGroupId);
+  if (state.postsUnsub) { state.postsUnsub(); state.postsUnsub = null; }
+  state.openGroupId = null; state.groupPosts = []; state.postsError = null;
+}
+
+/* ── Render ──────────────────────────────────────────────── */
+function renderGroupSpace() {
+  const g = groupById(state.openGroupId);
+  if (!g) {
+    if (state.openGroupId) toast('Ya no tienes acceso a ese grupo.', 'info');
+    showView('view-groups');
+    return;
+  }
+  const me = state.me.uid;
+  const mgr = canManageGroup(g);
+  const members = g.members || [];
+  const nm = id => id === me ? 'Tú' : userName(id, g.memberNames?.[id]);
+  const tasks = tasksOfGroup(g.id);
+  const avail = sortTasks(tasks.filter(isPoolOpen), 'smart');
+  const mine  = sortTasks(tasks.filter(t => taskAssignees(t).includes(me)), 'smart');
+  const all   = sortTasks(tasks, 'smart');
+  const open  = tasks.filter(t => t.status !== 'done').length;
+
+  $('view-group').style.setProperty('--gc', safeColor(g.color));
+  $('gs-title').textContent = g.name;
+  const ownerTxt = g.ownerId === me ? 'Tú lo administras' : (g.ownerName ? `Administra: ${g.ownerName}` : '');
+  $('gs-subtitle').textContent = [plural(members.length, 'integrante', 'integrantes'), ownerTxt].filter(Boolean).join(' · ');
+  $('gs-actions').innerHTML = mgr ? `
+    <button class="btn btn-ghost btn-sm" data-gs-act="edit">✎ Editar grupo</button>
+    <button class="btn btn-sat btn-sm" data-gs-act="pool" data-tip="Que alguien del grupo la tome">🙋 Publicar disponible</button>
+    <button class="btn btn-primary btn-sm" data-gs-act="assign">👥 Asignar tarea</button>` : '';
+
+  const names = members.map(nm);
+  $('gs-hero').innerHTML = `
+    <div class="gs-desc">
+      ${g.description ? `<div style="color:var(--text);margin-bottom:.55rem;">${escHtml(g.description)}</div>` : ''}
+      <div class="flex items-center gap-2" style="flex-wrap:wrap;">
+        ${avatarStack(members, { max: 10, nameFn: nm })}
+        <span class="text-xs text-muted">${escHtml(names.slice(0, 6).join(', '))}${names.length > 6 ? ` y ${names.length - 6} más` : ''}</span>
+      </div>
+    </div>
+    <div class="gs-stats">
+      <div class="gs-stat"><b style="color:var(--sat);">${avail.length}</b><span>Disponibles</span></div>
+      <div class="gs-stat"><b style="color:var(--warning);">${open}</b><span>Abiertas</span></div>
+      <div class="gs-stat"><b style="color:var(--success);">${tasks.length - open}</b><span>Completadas</span></div>
+      <div class="gs-stat"><b style="color:var(--orbit);">${mine.filter(t => !doneForMe(t)).length}</b><span>Mías abiertas</span></div>
+    </div>`;
+
+  const unread = groupEvents(g.id).filter(e => e.ms > state.groupSeenAt && e.actor !== me).length;
+  const tabs = [
+    ['feed',      `📰 Novedades${unread ? ` <span class="nav-badge">${unread}</span>` : ''}`],
+    ['available', `🙋 Disponibles (${avail.length})`],
+    ['mine',      `👤 Mis tareas (${mine.length})`],
+    ['all',       `📋 Todo el grupo (${tasks.length})`],
+  ];
+  $('gs-tabs').innerHTML = tabs.map(([k, label]) =>
+    `<button class="btn btn-ghost btn-sm ${state.groupTab === k ? 'active' : ''}" data-gs-tab="${k}">${label}</button>`).join('');
+
+  $('gs-composer').classList.toggle('hidden', state.groupTab !== 'feed');
+  const box = $('gs-content');
+  if (state.groupTab === 'feed') { box.innerHTML = feedHtml(g, mgr); return; }
+  const list = { available: avail, mine, all }[state.groupTab] || all;
+  const empty = {
+    available: 'No hay tareas disponibles ahora. Publica una con la captura de arriba y cualquiera del grupo podrá tomarla.',
+    mine: 'No tienes tareas en este grupo. Toma una de “Disponibles” o créala “Para mí”.',
+    all: 'Este grupo aún no tiene tareas.',
+  }[state.groupTab];
+  box.innerHTML = list.length
+    ? `<div class="tasks-list">${list.map(t => renderTaskCard(t, { scope: 'group', showAssignee: true })).join('')}</div>`
+    : `<div class="empty-state" style="padding:2.2rem 1rem;">${EMPTY_ICON}<p>${empty}</p></div>`;
+}
+
+function feedHtml(g, mgr) {
+  const me = state.me.uid, seen = state.groupSeenAt || 0;
+  const posts = state.groupPosts.map(p => ({ type: 'post', ms: tsMs(p.createdAt) || Date.now(), actor: p.authorId, actorName: p.authorName, post: p }));
+  const items = [...posts, ...groupEvents(g.id)].sort((a, b) => b.ms - a.ms).slice(0, 60);
+  const warn = state.postsError
+    ? `<p class="text-xs text-muted" style="margin-bottom:.6rem;">Los avisos no están disponibles (${escHtml(state.postsError)}). Verifica que las reglas nuevas de Firestore estén publicadas.</p>` : '';
+  if (!items.length) return warn + `<div class="empty-state" style="padding:2.2rem 1rem;">${EMPTY_ICON}<p>Aún no hay novedades. Publica un aviso o crea una tarea para el grupo.</p></div>`;
+  const link = t => `<span class="link" data-open="${escHtml(t.id)}">${escHtml(t.title)}</span>${t.parentId ? ` <span class="text-xs">(subtarea de “${escHtml(parentTitleOf(t))}”)</span>` : ''}`;
+  const ICO = { post: ['💬', 'var(--orbit-soft)'], created: ['📌', 'var(--info-soft)'], self: ['👤', 'var(--purple-soft)'], claimed: ['🙋', 'var(--sat-soft)'], done: ['✅', 'var(--success-soft)'] };
+  return warn + `<div class="feed">${items.map(e => {
+    const isMe = e.actor === me;
+    const known = e.actorName && e.actorName !== '—';
+    const who = `<strong>${escHtml(isMe ? 'Tú' : (known ? e.actorName : 'Alguien'))}</strong>`;
+    const v = (third, second) => isMe ? second : third;   // “Ana tomó” / “Tú tomaste”
+    const t = e.task, k = t ? kindOf(t) : '';
+    let text;
+    if (e.type === 'post')         text = `${who} ${v('publicó', 'publicaste')} un aviso`;
+    else if (e.type === 'self')    text = `${who} ${v('se asignó', 'te asignaste')} ${link(t)}`;
+    else if (e.type === 'claimed') text = `${who} ${v('tomó', 'tomaste')} ${link(t)}`;
+    else if (e.type === 'done')    text = e.actor ? `${who} ${v('completó', 'completaste')} ${link(t)}` : `${link(t)} se completó`;
+    else if (k === 'pool')         text = `${who} ${v('publicó', 'publicaste')} ${link(t)} para que alguien la tome${t.assignedTo ? '' : ' · <span style="color:var(--sat);font-weight:600;">disponible</span>'}`;
+    else if (k === 'batch')        text = `${who} ${v('asignó', 'asignaste')} ${link(t)} a ${plural(t.batchSize || 1, 'persona', 'personas')}`;
+    else if (k === 'shared')       text = `${who} ${v('creó', 'creaste')} la tarea compartida ${link(t)}`;
+    else                           text = `${who} ${v('creó', 'creaste')} ${link(t)}`;
+    const [ico, bg] = ICO[e.type] || ICO.created;
+    const canDel = e.type === 'post' && (e.actor === me || mgr);
+    return `<div class="feed-item ${e.ms > seen && e.actor !== me ? 'unread' : ''}">
+      <div class="feed-ico" style="background:${bg};">${ico}</div>
+      <div class="feed-body">
+        <div class="feed-text">${text}</div>
+        ${e.type === 'post' ? `<div class="feed-post">${escHtml(e.post.text)}</div>` : ''}
+        <div class="feed-time">${timeAgo(e.ms)}${canDel ? `<button class="comment-del" data-del-post="${escHtml(e.post.id)}" aria-label="Borrar aviso">✕ borrar</button>` : ''}</div>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+/* ── Eventos del espacio de grupo ────────────────────────── */
+$('btn-group-back').addEventListener('click', () => showView('view-groups'));
+$('gs-tabs').addEventListener('click', e => {
+  const b = e.target.closest('[data-gs-tab]'); if (!b) return;
+  state.groupTab = b.dataset.gsTab;
+  renderGroupSpace();
+});
+$('gs-actions').addEventListener('click', e => {
+  const b = e.target.closest('[data-gs-act]'); if (!b) return;
+  const g = groupById(state.openGroupId); if (!g || !canManageGroup(g)) return;
+  if (b.dataset.gsAct === 'edit')   openGroupForm(g);
+  if (b.dataset.gsAct === 'assign') openTaskForm(null, { forTeam: true, mode: 'group', groupId: g.id });
+  if (b.dataset.gsAct === 'pool')   openTaskForm(null, { forTeam: true, mode: 'group', groupId: g.id, dist: 'pool' });
+});
+
+async function sendGroupPost() {
+  const input = $('gs-post-input');
+  const text = input.value.trim();
+  const gid = state.openGroupId;
+  if (!text || !gid) return;
+  input.value = '';
+  try {
+    await addDoc(collection(db, 'groups', gid, 'posts'), {
+      text: text.slice(0, 1000), authorId: state.me.uid, authorName: state.me.displayName || state.me.email, createdAt: serverTimestamp(),
+    });
+  } catch (err) { input.value = text; toast('Error: ' + errMsg(err), 'error'); }
+}
+$('btn-gs-post').addEventListener('click', sendGroupPost);
+$('gs-post-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); sendGroupPost(); }
+});
+$('gs-content').addEventListener('click', async e => {
+  const b = e.target.closest('[data-del-post]'); if (!b || !state.openGroupId) return;
+  const gid = state.openGroupId;
+  if (!await confirmDialog('¿Borrar este aviso del grupo?', { title: 'Borrar aviso', confirmText: 'Borrar' })) return;
+  try { await deleteDoc(doc(db, 'groups', gid, 'posts', b.dataset.delPost)); }
+  catch (err) { toast('Error: ' + errMsg(err), 'error'); }
+});
+
+/* Captura rápida dentro del grupo: disponible para todos o directo para mí */
+function renderGsQuickPreview() {
+  const raw = $('gs-quick').value, box = $('gs-quick-preview');
+  if (!raw.trim()) { box.innerHTML = '<span>Mismos atajos: <kbd>!alta</kbd> <kbd>#etiqueta</kbd> <kbd>@hoy</kbd> <kbd>@viernes 10:00</kbd></span>'; return; }
+  const p = parseQuick(raw);
+  box.innerHTML = `
+    <span class="badge badge-priority-${p.priority}">${PRIORITY_LABEL[p.priority]}</span>
+    ${p.due ? `<span class="due-chip">📅 ${p.due.toLocaleString('es-MX', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</span>` : ''}
+    ${p.tags.map(t => `<span class="tag-chip">#${escHtml(t)}</span>`).join('')}
+    <span>→ ${escHtml(p.title || '…')}</span>`;
+}
+$('gs-quick').addEventListener('input', renderGsQuickPreview);
+$('gs-quick').addEventListener('keydown', e => { if (e.key === 'Escape') { e.target.value = ''; renderGsQuickPreview(); e.target.blur(); } });
+$('gs-quick-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const g = groupById(state.openGroupId); if (!g) return;
+  const p = parseQuick($('gs-quick').value);
+  if (!p.title) { toast('Escribe el título de la tarea', 'error'); return; }
+  const forMe = $('gs-quick-mode').value === 'me';
+  const me = state.me;
+  try {
+    await addDoc(collection(db, 'tasks'), {
+      title: p.title.slice(0, 120), description: '', priority: p.priority, status: 'pending',
+      tags: [...new Set(p.tags)].slice(0, 10), dueDate: p.due ? Timestamp.fromDate(p.due) : null,
+      kind: 'pool', groupId: g.id, groupName: g.name,
+      ...(forMe
+        ? { ...personFields(me.uid), claimedAt: serverTimestamp() }
+        : { assignedTo: null, assignees: [], assignedToName: '', assignedToEmail: '' }),
+      attachments: [], checklist: [], completedAt: null,
+      createdBy: me.uid, createdByName: me.displayName || me.email,
+      createdAt: serverTimestamp(), updatedAt: serverTimestamp(),
+    });
+    $('gs-quick').value = ''; renderGsQuickPreview();
+    toast(forMe ? 'Tarea creada y asignada a ti.' : `Publicada en “${g.name}”: cualquiera del grupo puede tomarla.`, 'success');
+  } catch (err) { toast('Error: ' + errMsg(err), 'error'); }
+});
+
+/* Grupos antiguos sin nombres guardados: el dueño los completa una vez */
+const backfilledGroups = new Set();
+function backfillGroupNames() {
+  if (!state.me || !isManager() || !state.usersLoaded) return;
+  state.groups.filter(g => canManageGroup(g) && !g.memberNames && !backfilledGroups.has(g.id)).forEach(g => {
+    backfilledGroups.add(g.id);
+    const memberNames = Object.fromEntries((g.members || []).map(id => [id, userName(id, '')]).filter(([, n]) => n && n !== '—'));
+    updateDoc(doc(db, 'groups', g.id), { memberNames }).catch(err => console.warn('No se pudieron guardar nombres del grupo', g.id, err));
+  });
+}
+
+/* ══════════════════════════════════════════════════════════
+   SUBTAREAS — tareas reales dentro de una tarea principal
+   (un nivel; cualquiera que vea la tarea puede crearlas)
+══════════════════════════════════════════════════════════ */
+function stopDetailExtras() {
+  if (state.subUnsub) { state.subUnsub(); state.subUnsub = null; }
+  if (state.detailDocUnsub) { state.detailDocUnsub(); state.detailDocUnsub = null; }
+  state.detailSubs = []; state.detailLive = null;
+}
+
+function subscribeDetailExtras(t) {
+  stopDetailExtras();
+  const id = t.id;
+  // Si la tarea no está en ninguna lista (p. ej. una subtarea ajena), la seguimos en vivo
+  if (!findTaskInState(id)) {
+    state.detailLive = t;
+    state.detailDocUnsub = onSnapshot(doc(db, 'tasks', id), snap => {
+      if (state.detailId !== id) return;
+      if (!snap.exists()) { toast('Esta tarea fue eliminada.', 'info'); closeDetail(); return; }
+      state.detailLive = { id, ...snap.data() };
+      renderDetail(findTaskInState(id) || state.detailLive);
+    }, err => console.warn('No se pudo seguir la tarea', err));
+  }
+  if (t.parentId) return;   // las subtareas no tienen subtareas
+  $('detail-sub-input').value = '';
+  $('detail-sub-assignee').innerHTML = subAssigneeOptions(t);
+  state.subUnsub = onSnapshot(query(collection(db, 'tasks'), where('parentId', '==', id)), snap => {
+    if (state.detailId !== id) return;
+    state.detailSubs = mapDocs(snap);
+    const parent = findTask(id);
+    if (parent) renderSubtasks(parent);
+    // Auto-corrige el contador de la tarea principal si quedó desfasado
+    const total = state.detailSubs.length, done = state.detailSubs.filter(x => x.status === 'done').length;
+    if (parent && !snap.metadata?.hasPendingWrites && ((parent.subStats?.total || 0) !== total || (parent.subStats?.done || 0) !== done)) {
+      updateDoc(doc(db, 'tasks', id), { subStats: { total, done } }).catch(() => {});
+    }
+  }, err => {
+    console.warn('Subtareas no disponibles', err);
+    $('detail-subtasks').innerHTML = `<p class="text-muted text-sm">No se pudieron cargar las subtareas (${escHtml(errMsg(err))}). Verifica que las reglas nuevas estén publicadas.</p>`;
+  });
+}
+
+/* Recalcula {total, done} en la tarea principal (lo ven las tarjetas sin abrir el detalle) */
+async function touchParent(pid) {
+  if (!pid) return;
+  try {
+    const snap = await getDocs(query(collection(db, 'tasks'), where('parentId', '==', pid)));
+    const list = snap.docs.map(d => d.data());
+    await updateDoc(doc(db, 'tasks', pid), { subStats: { total: list.length, done: list.filter(x => x.status === 'done').length } });
+  } catch (err) { console.warn('No se pudo actualizar el avance de subtareas', err); }
+}
+
+/* A quién se puede asignar una subtarea: el círculo de la tarea principal */
+function subGroupOf(p) {
+  const g = groupById(p.groupId);
+  return g && (isSuper() || isGroupMember(g) || canManageGroup(g)) ? g : null;
+}
+function subPeople(p) {
+  const me = state.me.uid;
+  const people = new Map();
+  const add = (id, name) => {
+    if (!id || id === me || people.has(id)) return;
+    const n = userName(id, name || '');
+    if (n && n !== '—') people.set(id, n);
+  };
+  add(p.createdBy, p.createdByName);
+  taskAssignees(p).forEach(id => add(id, p.assigneeNames?.[id] || (id === p.assignedTo ? p.assignedToName : '')));
+  const g = groupById(p.groupId);
+  if (g) { (g.members || []).forEach(id => add(id, g.memberNames?.[id])); add(g.ownerId, g.ownerName); }
+  if (isManager()) assignableUsers().forEach(u => add(u.id, u.displayName || u.email));
+  return [...people].sort((a, b) => a[1].localeCompare(b[1]));
+}
+function subAssigneeOptions(p) {
+  const g = subGroupOf(p);
+  const people = subPeople(p);
+  return `<option value="${escHtml(state.me.uid)}">👤 Para mí</option>`
+    + (g ? `<option value="__pool">🙋 Disponible en “${escHtml(g.name)}”</option>` : '')
+    + (people.length ? `<optgroup label="Asignar a">${people.map(([id, n]) => `<option value="${escHtml(id)}">${escHtml(n)}</option>`).join('')}</optgroup>` : '');
+}
+
+function renderSubtasks(t) {
+  state.detailTask = t;
+  const isSub = !!t.parentId;
+  const pl = $('detail-parent');
+  pl.classList.toggle('hidden', !isSub);
+  if (isSub) {
+    pl.innerHTML = `↳ Subtarea de <strong>${escHtml(parentTitleOf(t))}</strong>`;
+    pl.dataset.open = t.parentId;
+  } else delete pl.dataset.open;
+  $('detail-sub-wrap').classList.toggle('hidden', isSub);
+  if (isSub) return;
+
+  const me = state.me.uid;
+  const subs = [...state.detailSubs].sort((a, b) =>
+    ((a.status === 'done') - (b.status === 'done')) || ((tsMs(a.createdAt) || Date.now()) - (tsMs(b.createdAt) || Date.now())));
+  const done = subs.filter(x => x.status === 'done').length;
+  $('detail-sub-count').textContent = subs.length ? `(${done}/${subs.length})` : '';
+  $('detail-sub-progress').classList.toggle('hidden', !subs.length);
+  $('detail-sub-progress').firstElementChild.style.width = (subs.length ? Math.round(done / subs.length * 100) : 0) + '%';
+  $('detail-subtasks').innerHTML = subs.length ? subs.map(s => {
+    const isDone = s.status === 'done';
+    const over = isOverdue(s);
+    const pool = kindOf(s) === 'pool' && !s.assignedTo;
+    const who = pool ? '' : (s.assignedTo === me ? 'Tú' : assigneeName(s));
+    return `
+    <div class="sub-row ${isDone ? 'done' : ''}" data-sub="${escHtml(s.id)}">
+      <button class="task-checkbox ${isDone ? 'checked' : ''}" data-sub-act="toggle" ${canChangeStatus(s) ? '' : 'disabled'} aria-label="${isDone ? 'Marcar pendiente' : 'Marcar completada'}"></button>
+      <span class="sub-title" data-open="${escHtml(s.id)}" title="Abrir subtarea">${escHtml(s.title)}</span>
+      <span class="sub-meta">
+        ${s.status === 'in_progress' ? '<span class="badge badge-progress">En progreso</span>' : ''}
+        ${s.priority === 'alta' ? '<span class="badge badge-priority-alta">Alta</span>' : ''}
+        ${over ? '<span class="badge badge-overdue">⚠ Vencida</span>' : (s.dueDate && !isDone ? `<span class="due-chip">${fmtDT(s)}</span>` : '')}
+        ${pool
+          ? (canClaim(s) ? '<button class="btn btn-sat btn-sm" data-sub-act="claim">🙋 Tomar</button>' : '<span class="badge badge-pool">🙋 Disponible</span>')
+          : `<span class="task-assignee"><span class="avatar av-xs av-${userRole(userById(s.assignedTo))}">${escHtml(initials(who))}</span>${escHtml(who)}</span>`}
+        ${canDeleteTask(s) ? `<button class="sub-del" data-sub-act="del" aria-label="Eliminar subtarea">✕</button>` : ''}
+      </span>
+    </div>`;
+  }).join('') : '<p class="text-muted text-sm">Sin subtareas. Divide el trabajo en tareas más pequeñas y asígnalas a quien corresponda.</p>';
+}
+
+$('detail-subtasks').addEventListener('click', async e => {
+  const b = e.target.closest('[data-sub-act]'); if (!b || b.disabled) return;
+  const s = state.detailSubs.find(x => x.id === b.closest('[data-sub]')?.dataset.sub); if (!s) return;
+  if (b.dataset.subAct === 'toggle') await setTaskStatus(s, s.status === 'done' ? 'pending' : 'done');
+  if (b.dataset.subAct === 'claim') await claimTask(s);
+  if (b.dataset.subAct === 'del') {
+    if (!await confirmDialog(`¿Eliminar la subtarea “${s.title}”?`, { title: 'Eliminar subtarea', confirmText: 'Eliminar' })) return;
+    try { await deleteTask(s); toast('Subtarea eliminada.', 'success'); }
+    catch (err) { toast('Error: ' + errMsg(err), 'error'); }
+  }
+});
+
+$('detail-sub-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const parent = findTask(state.detailId);
+  if (!parent || parent.parentId) return;
+  const input = $('detail-sub-input');
+  const p = parseQuick(input.value);
+  if (!p.title) { toast('Escribe el título de la subtarea', 'error'); input.focus(); return; }
+  const sel = $('detail-sub-assignee');
+  const who = sel.value || state.me.uid;
+  const g = subGroupOf(parent);
+  const me = state.me;
+
+  let assign;
+  if (who === '__pool') {
+    if (!g) { toast('Esta tarea no pertenece a un grupo al que tengas acceso.', 'error'); return; }
+    assign = { kind: 'pool', assignedTo: null, assignees: [], assignedToName: '', assignedToEmail: '' };
+  } else if (who === me.uid) {
+    assign = { kind: 'single', ...personFields(me.uid) };
+  } else {
+    const name = subPeople(parent).find(([id]) => id === who)?.[1] || '';
+    assign = { kind: 'single', assignedTo: who, assignees: [who], assignedToName: name, assignedToEmail: userById(who)?.email || '' };
+  }
+
+  const btn = $('detail-sub-form').querySelector('button[type="submit"]');
+  setBusy(btn, true, 'Agregando…');
+  try {
+    await addDoc(collection(db, 'tasks'), {
+      title: p.title.slice(0, 120), description: '', priority: p.priority, status: 'pending',
+      tags: [...new Set(p.tags)].slice(0, 10), dueDate: p.due ? Timestamp.fromDate(p.due) : null,
+      ...assign,
+      parentId: parent.id, parentTitle: parent.title, parentCreatedBy: parent.createdBy,
+      ...(g ? { groupId: g.id, groupName: g.name } : {}),
+      attachments: [], checklist: [], completedAt: null,
+      createdBy: me.uid, createdByName: me.displayName || me.email,
+      createdAt: serverTimestamp(), updatedAt: serverTimestamp(),
+    });
+    input.value = '';
+    touchParent(parent.id);
+    toast(who === me.uid ? 'Subtarea creada.' : who === '__pool' ? `Subtarea publicada en “${g.name}”.` : `Subtarea asignada a ${sel.selectedOptions[0]?.textContent || 'la persona'}.`, 'success');
+  } catch (err) { toast('Error: ' + errMsg(err), 'error'); }
+  finally { setBusy(btn, false); input.focus(); }
+});
+
+/* ══════════════════════════════════════════════════════════
+   RECORDATORIOS POR CORREO (solo super admins)
+   La app guarda la configuración; la Cloud Function
+   `sendTaskReminders` la lee cada 15 min y envía los correos.
+══════════════════════════════════════════════════════════ */
+const REM_CATS = [
+  { id: 'individual', title: '👤 Individuales', sub: 'Asignadas a una persona por un admin u otra persona' },
+  { id: 'own',        title: '✍️ Propias',      sub: 'Las que cada quien se creó a sí mismo' },
+  { id: 'shared',     title: '👥 Grupales',     sub: 'Compartidas entre varias personas y copias por persona (lotes)' },
+  { id: 'group',      title: '🙋 De grupos',    sub: 'Tomadas de un grupo y, si quieres, las disponibles sin tomar' },
+];
+const REM_CAT_IDS = REM_CATS.map(c => c.id);
+const REM_DAYS = [[1, 'L'], [2, 'M'], [3, 'M'], [4, 'J'], [5, 'V'], [6, 'S'], [0, 'D']];
+const REM_DAY_NAMES = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'];
+const REM_BEFORE = [1, 2, 4, 12, 24, 48, 72];
+
+/* Igual que functions/reminders.js */
+function remDefaultSchedule(cat) {
+  return {
+    enabled: cat !== 'own', mode: 'times', days: [1, 2, 3, 4, 5], times: [cat === 'own' ? '08:30' : '09:00'],
+    everyHours: 4, windowStart: '08:00', windowEnd: '19:00', scope: 'all', dueSoonHours: 24,
+    includeAvailable: cat === 'group', beforeDue: cat === 'own' ? [] : [24, 2],
+  };
+}
+function remMerge(raw) {
+  const r = raw || {};
+  return {
+    enabled: false, timezone: 'America/Mexico_City', appUrl: '', senderName: 'Orbiscorp TaskFlow', sendIfEmpty: false,
+    ...r,
+    categories: Object.fromEntries(REM_CAT_IDS.map(c => [c, { ...remDefaultSchedule(c), ...((r.categories || {})[c] || {}) }])),
+  };
+}
+function remSettings() { return state.rem.settings || remMerge(null); }
+function reminderCategory(t) {
+  if (t.kind === 'pool') return 'group';
+  if (t.kind === 'shared' || t.kind === 'batch') return 'shared';
+  if (t.assignedTo && t.createdBy === t.assignedTo) return 'own';
+  return 'individual';
+}
+function capFirst(x) { x = String(x || ''); return x.charAt(0).toUpperCase() + x.slice(1); }
+function remFmtDays(days) {
+  const set = new Set(days || []);
+  if (set.size === 7) return 'todos los días';
+  if (set.size === 5 && [1, 2, 3, 4, 5].every(d => set.has(d))) return 'de lunes a viernes';
+  if (!set.size) return 'ningún día';
+  return REM_DAYS.filter(([d]) => set.has(d)).map(([d]) => REM_DAY_NAMES[d]).join(', ');
+}
+function describeSchedule(s, { content = true } = {}) {
+  if (!s || s.enabled === false) return 'desactivado';
+  const parts = [];
+  if (s.mode === 'interval') parts.push(`cada ${s.everyHours} h de ${s.windowStart} a ${s.windowEnd}, ${remFmtDays(s.days)}`);
+  else if (s.mode === 'times') parts.push(`${remFmtDays(s.days)} a las ${(s.times || []).join(', ') || '—'}`);
+  else parts.push('sin resumen, solo avisos de vencimiento');
+  if (content && s.mode !== 'due-only') parts.push(s.scope === 'urgent' ? `solo vencidas y las que vencen en ${s.dueSoonHours} h` : 'todas las abiertas');
+  const bd = [...(s.beforeDue || [])].sort((a, b) => b - a);
+  parts.push(bd.length ? `aviso ${bd.map(h => h + ' h').join(' y ')} antes de vencer` : 'sin aviso de vencimiento');
+  return parts.join(' · ');
+}
+function normTime(x) {
+  const m = /^(\d{1,2})(?::(\d{2}))?$/.exec(String(x).trim());
+  if (!m) return null;
+  const h = +m[1], mi = +(m[2] || 0);
+  return h > 23 || mi > 59 ? null : `${String(h).padStart(2, '0')}:${String(mi).padStart(2, '0')}`;
+}
+function validateSchedule(s) {
+  if (s.enabled === false) return '';
+  if (s.mode !== 'due-only' && !s.days.length) return 'Elige al menos un día.';
+  if (s.mode === 'times' && !s.times.length) return 'Escribe al menos una hora válida (HH:MM).';
+  if (s.mode === 'interval' && s.windowStart >= s.windowEnd) return 'La hora “desde” debe ser antes de “hasta”.';
+  if (s.mode === 'due-only' && !s.beforeDue.length) return 'Elige al menos un aviso de vencimiento.';
+  return '';
+}
+
+/* ── Editor de horario reutilizable ──────────────────────── */
+function editorHtml(s, { cat = null, title = '', sub = '', toggle = true, content = true, plain = false } = {}) {
+  s = { ...remDefaultSchedule(cat || 'individual'), ...(s || {}) };
+  const days = new Set(s.days || []), bd = new Set(s.beforeDue || []);
+  const opt = (v, cur, label) => `<option value="${v}" ${String(v) === String(cur) ? 'selected' : ''}>${label}</option>`;
+  return `
+  <div class="se ${plain ? 'se-plain' : ''} ${s.enabled === false ? 'is-off' : ''}" ${cat ? `data-cat="${cat}"` : ''} data-mode="${escHtml(s.mode)}" data-content="${content ? 1 : 0}">
+    ${title || toggle ? `<div class="se-head">
+      <div>${title ? `<div class="se-title">${title}</div>` : ''}${sub ? `<div class="se-sub">${escHtml(sub)}</div>` : ''}</div>
+      ${toggle ? `<span class="switch" title="Activar o desactivar"><input type="checkbox" data-se="enabled" ${s.enabled !== false ? 'checked' : ''} aria-label="Activar"/><span></span></span>` : ''}
+    </div>` : ''}
+    <div class="se-body">
+      <div class="se-grid">
+        <div class="form-group"><label>Frecuencia</label>
+          <select class="form-control" data-se="mode">${opt('times', s.mode, '🕘 A horas fijas')}${opt('interval', s.mode, '🔁 Cada cierto número de horas')}${opt('due-only', s.mode, '⏰ Solo avisos de vencimiento')}</select></div>
+        <div class="form-group se-times"><label>Horas (HH:MM)</label>
+          <input class="form-control" data-se="times" value="${escHtml((s.times || []).join(', '))}" placeholder="09:00, 16:00"/></div>
+        <div class="form-group se-interval"><label>Cada</label>
+          <select class="form-control" data-se="everyHours">${[1, 2, 3, 4, 6, 8, 12].map(h => opt(h, s.everyHours, h === 1 ? '1 hora' : h + ' horas')).join('')}</select></div>
+      </div>
+      <div class="se-grid se-interval">
+        <div class="form-group"><label>Desde</label><input type="time" class="form-control" data-se="windowStart" value="${escHtml(s.windowStart)}"/></div>
+        <div class="form-group"><label>Hasta</label><input type="time" class="form-control" data-se="windowEnd" value="${escHtml(s.windowEnd)}"/></div>
+      </div>
+      <div class="form-group se-days"><label>Días</label>
+        <div class="day-chips">
+          ${REM_DAYS.map(([d, l]) => `<button type="button" class="day-chip ${days.has(d) ? 'on' : ''}" data-day="${d}" title="${REM_DAY_NAMES[d]}" aria-pressed="${days.has(d)}">${l}</button>`).join('')}
+          <button type="button" class="btn btn-ghost btn-sm" data-days="weekdays">L–V</button>
+          <button type="button" class="btn btn-ghost btn-sm" data-days="all">Todos</button>
+        </div></div>
+      ${content ? `<div class="se-grid se-content">
+        <div class="form-group"><label>Qué incluir</label>
+          <select class="form-control" data-se="scope">${opt('all', s.scope, 'Todas las tareas abiertas')}${opt('urgent', s.scope, 'Solo vencidas y próximas')}</select></div>
+        <div class="form-group"><label>“Próximas” = vencen en</label>
+          <select class="form-control" data-se="dueSoonHours">${[4, 8, 12, 24, 48, 72].map(h => opt(h, s.dueSoonHours, h + ' h')).join('')}</select></div>
+      </div>
+      ${cat === 'group' ? `<label class="check-line se-avail"><input type="checkbox" data-se="includeAvailable" ${s.includeAvailable ? 'checked' : ''}/> Incluir las tareas disponibles sin tomar de sus grupos</label>` : ''}` : ''}
+      <div class="form-group"><label>Aviso antes de vencer</label>
+        <div class="day-chips">${REM_BEFORE.map(h => `<button type="button" class="day-chip ${bd.has(h) ? 'on' : ''}" data-bd="${h}" aria-pressed="${bd.has(h)}">${h} h</button>`).join('')}</div>
+        <span class="form-hint">Un correo por tarea cuando falten esas horas. Sin selección, no hay aviso.</span></div>
+      <div class="se-summary" data-se-summary></div>
+    </div>
+  </div>`;
+}
+function readEditor(box) {
+  const q = f => box.querySelector(`[data-se="${f}"]`);
+  const times = [...new Set((q('times')?.value || '').split(/[,;\s]+/).map(normTime).filter(Boolean))].sort();
+  return {
+    enabled: q('enabled') ? q('enabled').checked : true,
+    mode: q('mode').value,
+    times,
+    everyHours: +q('everyHours').value,
+    windowStart: q('windowStart').value || '08:00',
+    windowEnd: q('windowEnd').value || '19:00',
+    days: [...box.querySelectorAll('[data-day].on')].map(b => +b.dataset.day).sort(),
+    scope: q('scope')?.value || 'all',
+    dueSoonHours: +(q('dueSoonHours')?.value || 24),
+    includeAvailable: !!q('includeAvailable')?.checked,
+    beforeDue: [...box.querySelectorAll('[data-bd].on')].map(b => +b.dataset.bd).sort((a, b) => b - a),
+  };
+}
+function refreshEditor(box) {
+  const s = readEditor(box);
+  box.dataset.mode = s.mode;
+  box.classList.toggle('is-off', !s.enabled);
+  const sum = box.querySelector('[data-se-summary]');
+  if (!sum) return;
+  const err = validateSchedule(s);
+  sum.textContent = err ? '⚠ ' + err : capFirst(describeSchedule(s, { content: box.dataset.content === '1' }));
+  sum.classList.toggle('warn', !!err);
+}
+function refreshAllEditors(root) { root.querySelectorAll('.se').forEach(refreshEditor); }
+function wireEditors(root, onChange = () => {}) {
+  root.addEventListener('click', e => {
+    const box = e.target.closest('.se'); if (!box) return;
+    const day = e.target.closest('[data-day]'), bd = e.target.closest('[data-bd]'), preset = e.target.closest('[data-days]');
+    if (day || bd) { const b = day || bd; b.classList.toggle('on'); b.setAttribute('aria-pressed', b.classList.contains('on')); }
+    else if (preset) box.querySelectorAll('[data-day]').forEach(b => {
+      const on = preset.dataset.days === 'all' || !['0', '6'].includes(b.dataset.day);
+      b.classList.toggle('on', on); b.setAttribute('aria-pressed', on);
+    });
+    else return;
+    refreshEditor(box); onChange(box);
+  });
+  const onInput = e => { const box = e.target.closest('.se'); if (!box) return; refreshEditor(box); onChange(box); };
+  root.addEventListener('input', onInput);
+  root.addEventListener('change', onInput);
+}
+
+/* ── Datos (solo super) ──────────────────────────────────── */
+function subscribeReminders() {
+  state.unsubs.push(onSnapshot(doc(db, 'settings', 'reminders'), snap => {
+    state.rem.exists = snap.exists();
+    state.rem.settings = remMerge(snap.exists() ? snap.data() : null);
+    if (!state.rem.dirty) state.rem.formReady = false;   // volver a pintar con lo guardado
+    updateRemNav();
+    if (activeView() === 'view-reminders') renderRemindersView();
+  }, err => console.warn('Configuración de recordatorios no disponible', err)));
+  state.unsubs.push(onSnapshot(collection(db, 'reminderUsers'), snap => {
+    state.rem.users = new Map(snap.docs.map(d => [d.id, d.data()]));
+    if (activeView() === 'view-reminders') renderRemUsers();
+  }, err => console.warn('Recordatorios por persona no disponibles', err)));
+  state.unsubs.push(onSnapshot(query(collection(db, 'reminderLog'), orderBy('at', 'desc'), limit(40)), snap => {
+    state.rem.log = mapDocs(snap); state.rem.logLoaded = true;
+    if (activeView() === 'view-reminders') { renderRemStatus(); renderRemLog(); renderRemUsers(); }
+  }, err => console.warn('Registro de envíos no disponible', err)));
+}
+function updateRemNav() {
+  const s = remSettings();
+  $('nav-rem-state').textContent = state.rem.exists ? (s.enabled ? '● on' : 'off') : '';
+  $('nav-rem-state').style.color = s.enabled ? 'var(--success)' : '';
+}
+
+/* ── Vista ───────────────────────────────────────────────── */
+function renderRemindersView() {
+  if (!isSuper()) return;
+  if (!state.rem.formReady) renderRemForm();
+  renderRemStatus();
+  renderRemUsers();
+  renderRemLog();
+}
+function renderRemForm() {
+  const s = remSettings();
+  $('rem-enabled').checked = !!s.enabled;
+  $('rem-tz').value = [...$('rem-tz').options].some(o => o.value === s.timezone) ? s.timezone : 'America/Mexico_City';
+  $('rem-url').value = s.appUrl || 'https://tareas.grupozoalum.com';
+  $('rem-sender').value = s.senderName || '';
+  $('rem-empty').checked = !!s.sendIfEmpty;
+  $('rem-cats').innerHTML = REM_CATS.map(c => editorHtml(s.categories[c.id], { cat: c.id, title: c.title, sub: c.sub })).join('');
+  refreshAllEditors($('rem-cats'));
+  state.rem.formReady = true;
+  setRemDirty(false);
+}
+function setRemDirty(on) {
+  state.rem.dirty = on;
+  $('btn-rem-save').disabled = !on;
+  $('btn-rem-discard').classList.toggle('hidden', !on);
+}
+function lastSendMs() { return tsMs(state.rem.log.find(l => l.type !== 'preview')?.at); }
+function renderRemStatus() {
+  const s = remSettings();
+  const last = lastSendMs();
+  const custom = [...state.rem.users.values()].filter(u => u.mode === 'custom').length;
+  const off = [...state.rem.users.values()].filter(u => u.mode === 'off').length;
+  const color = !state.rem.exists ? 'var(--text-dim)' : s.enabled ? 'var(--success)' : 'var(--warning)';
+  const label = !state.rem.exists ? 'Sin configurar' : s.enabled ? 'Envíos activos' : 'Envíos en pausa';
+  $('rem-status').innerHTML = `
+    <span class="dot" style="background:${color};box-shadow:0 0 8px ${color};"></span>
+    <div style="flex:1;min-width:220px;">
+      <div class="font-semibold">${label}</div>
+      <div class="text-xs text-muted">${last ? `Último correo programado ${timeAgo(last)}` : (state.rem.logLoaded ? 'Aún no hay envíos registrados. Si ya activaste los envíos, revisa que la función <span class="mono">sendTaskReminders</span> esté desplegada (ver LEEME).' : 'Cargando registro…')}</div>
+    </div>
+    <div class="gs-stats">
+      <div class="gs-stat"><b>${REM_CAT_IDS.filter(c => s.categories[c].enabled !== false).length}/4</b><span>Tipos activos</span></div>
+      <div class="gs-stat"><b style="color:var(--orbit);">${custom}</b><span>Personalizados</span></div>
+      <div class="gs-stat"><b style="color:var(--danger);">${off}</b><span>Sin correos</span></div>
+    </div>`;
+}
+function remUserSummary(u) {
+  const o = state.rem.users.get(u.id);
+  if (!u.email) return { badge: '<span class="badge badge-rem-off">Sin correo</span>', text: 'No tiene correo registrado.' };
+  if (u.active === false) return { badge: '<span class="badge badge-inactive">Inactivo</span>', text: 'Usuario desactivado: no recibe correos.' };
+  if (o?.mode === 'off') return { badge: '<span class="badge badge-rem-off">Sin recordatorios</span>', text: 'No recibe correos automáticos.' };
+  if (o?.mode === 'custom') {
+    const on = REM_CATS.filter(c => (o.categories?.[c.id] || {}).enabled !== false);
+    return { badge: '<span class="badge badge-rem-custom">Personalizado</span>', text: on.length ? on.map(c => `${c.title.split(' ')[0]} ${describeSchedule(o.categories?.[c.id] || remDefaultSchedule(c.id), { content: false })}`).join(' — ') : 'Todos los tipos desactivados.' };
+  }
+  return { badge: '<span class="badge badge-rem-inherit">General</span>', text: 'Usa la configuración general.' };
+}
+function renderRemUsers() {
+  const q = $('rem-users-search').value.trim().toLowerCase();
+  const list = sortPeople(state.users.filter(u => !q || `${u.displayName || ''} ${u.email || ''} ${u.store || ''}`.toLowerCase().includes(q)));
+  $('rem-users-tbody').innerHTML = list.length ? list.map(u => {
+    const r = userRole(u), sm = remUserSummary(u);
+    const last = state.rem.log.find(l => l.uid === u.id && l.type !== 'preview');
+    return `<tr data-rem-uid="${escHtml(u.id)}">
+      <td><div class="cell-user"><div class="avatar av-sm av-${r}">${escHtml(initials(u.displayName || u.email))}</div>
+        <div style="min-width:0;"><div class="font-semibold">${escHtml(u.displayName || '—')}</div><div class="sub truncate">${escHtml(u.email || 'sin correo')}</div></div></div></td>
+      <td>${sm.badge}</td>
+      <td class="text-xs text-muted" style="max-width:340px;">${escHtml(sm.text)}</td>
+      <td class="text-xs text-muted" style="white-space:nowrap;">${last ? timeAgo(tsMs(last.at) || Date.now()) : '—'}</td>
+      <td><div class="row-actions">
+        <button class="btn btn-ghost btn-sm" data-rem-act="edit">✎ Ajustar</button>
+        <button class="btn btn-ghost btn-sm btn-icon" data-rem-act="preview" data-tip="Vista previa a mi correo" aria-label="Vista previa" ${u.email ? '' : 'disabled'}>✉</button>
+      </div></td>
+    </tr>`;
+  }).join('') : '<tr><td colspan="5" style="text-align:center;padding:1.5rem;color:var(--text-muted);">No hay personas que coincidan.</td></tr>';
+}
+function renderRemLog() {
+  const TYPE = { digest: ['📬', 'Resumen'], due: ['⏰', 'Aviso de vencimiento'], task: ['🔔', 'Recordatorio de tarea'], preview: ['✉', 'Vista previa'] };
+  $('rem-log').innerHTML = state.rem.log.length ? state.rem.log.slice(0, 25).map(l => {
+    const [ico, label] = TYPE[l.type] || ['•', l.type];
+    return `<div class="log-row"><span>${ico}</span>
+      <span><strong>${escHtml(l.name || l.email || '—')}</strong> <span class="text-muted">· ${label} · ${plural(l.count || 0, 'tarea', 'tareas')}${l.to && l.to !== l.email ? ` · a ${escHtml(l.to)}` : ''}</span></span>
+      <span class="lt">${l.at ? fmtStamp(l.at) : 'en cola…'}</span></div>`;
+  }).join('') : '<p class="text-muted text-sm">Sin envíos todavía.</p>';
+}
+
+wireEditors($('rem-cats'), () => setRemDirty(true));
+['rem-enabled', 'rem-tz', 'rem-url', 'rem-sender', 'rem-empty'].forEach(id => {
+  $(id).addEventListener('input', () => setRemDirty(true));
+  $(id).addEventListener('change', () => setRemDirty(true));
+});
+$('rem-users-search').addEventListener('input', debounce(renderRemUsers, 120));
+$('btn-rem-discard').addEventListener('click', () => { state.rem.dirty = false; renderRemForm(); toast('Cambios descartados.', 'info'); });
+$('btn-rem-save').addEventListener('click', async () => {
+  const categories = {};
+  for (const box of $('rem-cats').querySelectorAll('.se[data-cat]')) {
+    const sch = readEditor(box);
+    const err = validateSchedule(sch);
+    if (err) { toast(`${REM_CATS.find(c => c.id === box.dataset.cat).title}: ${err}`, 'error'); box.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+    categories[box.dataset.cat] = sch;
+  }
+  const url = $('rem-url').value.trim();
+  if (url && !/^https:\/\//.test(url)) { toast('El enlace de la app debe empezar con https://', 'error'); $('rem-url').focus(); return; }
+  const btn = $('btn-rem-save'); setBusy(btn, true);
+  try {
+    await setDoc(doc(db, 'settings', 'reminders'), {
+      enabled: $('rem-enabled').checked, timezone: $('rem-tz').value, appUrl: url,
+      senderName: $('rem-sender').value.trim() || 'Orbiscorp TaskFlow', sendIfEmpty: $('rem-empty').checked,
+      categories, updatedAt: serverTimestamp(), updatedBy: state.me.uid, updatedByName: state.me.displayName || state.me.email,
+    });
+    state.rem.dirty = false;
+    setBusy(btn, false);
+    setRemDirty(false);
+    toast($('rem-enabled').checked ? 'Configuración guardada. Los envíos están activos.' : 'Configuración guardada (envíos en pausa).', 'success');
+  } catch (err) { setBusy(btn, false); toast('Error: ' + errMsg(err), 'error'); }
+});
+$('rem-users-tbody').addEventListener('click', e => {
+  const b = e.target.closest('[data-rem-act]'); if (!b || b.disabled) return;
+  const u = userById(b.closest('[data-rem-uid]')?.dataset.remUid); if (!u) return;
+  if (b.dataset.remAct === 'edit') openUserReminders(u);
+  if (b.dataset.remAct === 'preview') requestReminderPreview(u.id);
+});
+
+/* ── Vista previa (la función responde en reminderJobs/{id}) ── */
+async function requestReminderPreview(uid) {
+  const u = userById(uid);
+  const name = u?.displayName || u?.email || 'la persona';
+  try {
+    const ref = await addDoc(collection(db, 'reminderJobs'), {
+      type: 'preview', targetUid: uid, sendTo: 'me', status: 'queued',
+      requestedBy: state.me.uid, requestedByEmail: state.me.email, createdAt: serverTimestamp(),
+    });
+    toast(`Generando vista previa de ${name}…`, 'info');
+    let settled = false, unsub = null;
+    const finish = () => { settled = true; if (unsub) unsub(); };
+    unsub = onSnapshot(ref, snap => {
+      const j = snap.data();
+      if (!j || j.status === 'queued' || settled) return;
+      finish();
+      if (j.status === 'sent') toast(`Vista previa de ${name} enviada a ${j.to} (${plural(j.count || 0, 'tarea', 'tareas')}).`, 'success');
+      else toast('No se pudo generar la vista previa: ' + (j.message || 'error desconocido'), 'error');
+    }, () => {});
+    setTimeout(() => { if (!settled) { finish(); toast('La función de recordatorios no respondió. ¿Ya la desplegaste? (ver LEEME)', 'error'); } }, 45000);
+  } catch (err) { toast('Error: ' + errMsg(err), 'error'); }
+}
+
+/* ── Por persona ─────────────────────────────────────────── */
+function remUserMode() { return document.querySelector('input[name="user-rem-mode"]:checked')?.value || 'inherit'; }
+function renderUserRemCats() {
+  const uid = $('user-rem-uid').value;
+  const mode = remUserMode();
+  const box = $('user-rem-cats');
+  if (mode !== 'custom') {
+    box.innerHTML = `<div class="scope-note" style="grid-column:1 / -1;">${mode === 'off'
+      ? 'Esta persona no recibirá resúmenes ni avisos de vencimiento. Los recordatorios con horario propio de una tarea tampoco le llegarán.'
+      : 'Recibirá lo que marca la configuración general: ' + REM_CATS.map(c => `${c.title}: ${describeSchedule(remSettings().categories[c.id], { content: false })}`).join(' · ')}</div>`;
+    return;
+  }
+  const saved = state.rem.users.get(uid);
+  const base = saved?.mode === 'custom' && saved.categories ? saved.categories : remSettings().categories;
+  box.innerHTML = REM_CATS.map(c => editorHtml(base[c.id] || remDefaultSchedule(c.id), { cat: c.id, title: c.title, sub: c.sub })).join('');
+  refreshAllEditors(box);
+}
+function openUserReminders(u) {
+  if (!isSuper() || !u) return;
+  $('user-rem-uid').value = u.id;
+  $('user-rem-title').textContent = `Recordatorios · ${u.displayName || u.email}`;
+  $('user-rem-email').textContent = u.email ? `Se envían a ${u.email}` : 'Esta persona no tiene correo registrado: no podrá recibir recordatorios.';
+  const mode = state.rem.users.get(u.id)?.mode || 'inherit';
+  document.querySelectorAll('input[name="user-rem-mode"]').forEach(r => { r.checked = r.value === mode; });
+  $('btn-user-rem-preview').disabled = !u.email;
+  renderUserRemCats();
+  openModal('modal-user-rem');
+}
+document.querySelectorAll('input[name="user-rem-mode"]').forEach(r => r.addEventListener('change', renderUserRemCats));
+wireEditors($('user-rem-cats'));
+$('btn-user-rem-preview').addEventListener('click', () => requestReminderPreview($('user-rem-uid').value));
+$('btn-user-rem-save').addEventListener('click', async () => {
+  const uid = $('user-rem-uid').value, mode = remUserMode();
+  const u = userById(uid);
+  const btn = $('btn-user-rem-save');
+  const data = { mode, name: u?.displayName || '', email: u?.email || '', updatedAt: serverTimestamp(), updatedBy: state.me.uid };
+  if (mode === 'custom') {
+    data.categories = {};
+    for (const box of $('user-rem-cats').querySelectorAll('.se[data-cat]')) {
+      const sch = readEditor(box);
+      const err = validateSchedule(sch);
+      if (err) { toast(`${REM_CATS.find(c => c.id === box.dataset.cat).title}: ${err}`, 'error'); return; }
+      data.categories[box.dataset.cat] = sch;
+    }
+  }
+  setBusy(btn, true);
+  try {
+    if (mode === 'inherit') await deleteDoc(doc(db, 'reminderUsers', uid));
+    else await setDoc(doc(db, 'reminderUsers', uid), data);
+    toast('Recordatorios de la persona guardados.', 'success');
+    hideModal('modal-user-rem');
+  } catch (err) { toast('Error: ' + errMsg(err), 'error'); }
+  finally { setBusy(btn, false); }
+});
+
+/* ── Por tarea (en el detalle) ───────────────────────────── */
+async function loadTaskReminder(t) {
+  const wrap = $('detail-rem-wrap');
+  wrap.classList.toggle('hidden', !isSuper());
+  if (!isSuper()) return;
+  state.rem.task = { id: t.id, data: null };
+  $('detail-rem-mode').value = 'inherit';
+  $('btn-detail-rem-save').disabled = true;
+  renderTaskRemEditor(t);
+  try {
+    const snap = await getDoc(doc(db, 'reminderTasks', t.id));
+    if (state.detailId !== t.id) return;
+    state.rem.task.data = snap.exists() ? snap.data() : null;
+    $('detail-rem-mode').value = state.rem.task.data?.mode || 'inherit';
+    renderTaskRemEditor(t);
+  } catch (err) { console.warn('No se pudo leer el recordatorio de la tarea', err); }
+}
+function renderTaskRemEditor(t) {
+  const mode = $('detail-rem-mode').value;
+  const cat = reminderCategory(t);
+  const catInfo = REM_CATS.find(c => c.id === cat);
+  const hint = {
+    inherit: `Tipo: ${catInfo.title} → ${describeSchedule(remSettings().categories[cat])}. Si alguien tiene horario personalizado, se usa el suyo.`,
+    custom: 'Se envía un correo solo de esta tarea a quien la tenga asignada, con este horario. Deja de incluirse en los resúmenes generales.',
+    off: 'Esta tarea no aparecerá en resúmenes ni generará avisos de vencimiento.',
+  }[mode];
+  $('detail-rem-hint').textContent = hint;
+  const box = $('detail-rem-editor');
+  if (mode !== 'custom') { box.innerHTML = ''; return; }
+  const saved = state.rem.task?.data?.mode === 'custom' ? state.rem.task.data.schedule : null;
+  box.innerHTML = editorHtml(saved || { ...remDefaultSchedule(cat), days: [0, 1, 2, 3, 4, 5, 6] }, { cat, toggle: false, content: false, plain: true });
+  refreshAllEditors(box);
+}
+$('detail-rem-mode').addEventListener('change', () => {
+  const t = findTask(state.detailId); if (!t) return;
+  renderTaskRemEditor(t);
+  $('btn-detail-rem-save').disabled = false;
+});
+wireEditors($('detail-rem-editor'), () => { $('btn-detail-rem-save').disabled = false; });
+$('btn-detail-rem-save').addEventListener('click', async () => {
+  const t = findTask(state.detailId); if (!t || !isSuper()) return;
+  const mode = $('detail-rem-mode').value;
+  const btn = $('btn-detail-rem-save');
+  const ref = doc(db, 'reminderTasks', t.id);
+  let data = null;
+  if (mode === 'custom') {
+    const box = $('detail-rem-editor').querySelector('.se');
+    const sch = readEditor(box);
+    const err = validateSchedule(sch);
+    if (err) { toast(err, 'error'); return; }
+    const { enabled, scope, dueSoonHours, includeAvailable, ...schedule } = sch;
+    data = { mode: 'custom', schedule };
+  } else if (mode === 'off') data = { mode };
+  setBusy(btn, true, '…');
+  try {
+    if (data) await setDoc(ref, { ...data, taskTitle: t.title, updatedAt: serverTimestamp(), updatedBy: state.me.uid });
+    else await deleteDoc(ref);
+    if (state.rem.task?.id === t.id) state.rem.task.data = data;
+    toast(mode === 'inherit' ? 'La tarea vuelve a usar la configuración general.' : 'Recordatorio de la tarea guardado.', 'success');
+    setBusy(btn, false);
+    btn.disabled = true;
+  } catch (err) { setBusy(btn, false); toast('Error: ' + errMsg(err), 'error'); }
+});
+
+/* ══════════════════════════════════════════════════════════
    NOTIFICACIONES
 ══════════════════════════════════════════════════════════ */
 $('bell-btn').addEventListener('click', e => {
@@ -3991,6 +5462,12 @@ function updateNavBadge() {
   const badge = $('nav-badge-tasks');
   if (overdue > 0) { badge.textContent = overdue; badge.classList.remove('hidden'); }
   else badge.classList.add('hidden');
+  // Grupos: tareas disponibles para tomar (si no hay, el total de grupos)
+  const avail = availableForMe().length;
+  const gb = $('nav-badge-groups');
+  gb.textContent = avail > 9 ? '9+' : avail;
+  gb.classList.toggle('hidden', !avail);
+  $('nav-groups-count').textContent = !avail && state.groups.length ? state.groups.length : '';
 }
 
 /* ══════════════════════════════════════════════════════════
